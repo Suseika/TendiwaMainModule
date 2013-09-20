@@ -1,14 +1,11 @@
 package tests.content;
 
-import static org.junit.Assert.*;
-
+import org.junit.Assert;
 import org.junit.Test;
 
-public class MainModuleTest {
+public class MainModuleTest extends Assert {
 
-@Test
-public void test() {
-
-}
-
+    @Test
+    public void test() {
+    }
 }

@@ -14,8 +14,7 @@ public void draw(WorldRectangleBuilder builder, int width, int height) {
 	builder
 		.place(rectangle(width / 2, height), atPoint(0, 0))
 		.place(rectangle(width - width / 2, height), near(LAST_RECTANGLE).fromSide(E).align(N))
-		.setLocationFeatures(0, Forest.class);
-
+		.setLocationFeatures(0, new Forest());
 }
 
 }

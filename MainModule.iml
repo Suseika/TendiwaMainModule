@@ -20,6 +20,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="guava" level="project" />
+    <orderEntry type="library" name="tendiwa" level="project" />
   </component>
 </module>
 

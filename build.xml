@@ -5,11 +5,12 @@ You should not change this file.
 This build file is supposed to be used in all tendiwa modules.
 When you need to customize build process for a module, edit build.properties file.
 -->
-<project>
+<project name="Tendiwa Main Module">
     <property file="build.properties"/>
     <fail unless="frameworkPath">
         You must set frameworkPath property in build.properties!
     </fail>
+    <import file="${frameworkPath}/build.xml" />
     <property name="staticDataDir" value="staticData"/>
     <property environment="env"/>
     <path id="tendiwa.jars">
@@ -20,23 +21,23 @@ When you need to customize build process for a module, edit build.properties fil
             <include name="tendiwa.jar"/>
         </fileset>
     </path>
+
     <description>
         Main module for tendiwa rogue-like framework
     </description>
-
 
     <target name="buildModuleJar" depends="generateResourcesSourceCode">
         <jar destfile="MainModule.jar" basedir="."/>
         <echo message="Module source code built to ${user.dir}/MainModule.jar"/>
     </target>
 
-    <target name="generateResourcesSourceCode">
+    <target name="generateResourcesSourceCode" depends="frameworkBuildJar">
         <description>
             Transforms xml descriptions of game objects to source code and places them in module's src/
             directory.
         </description>
         <echo>Classpath ${frameworkPath}/bin</echo>
-        <java classname="tendiwa.core.Main">
+        <java classname="tendiwa.core.Main" failonerror="true">
             <arg value="build"/>
             <arg value="."/>
             <classpath >
@@ -45,6 +46,4 @@ When you need to customize build process for a module, edit build.properties fil
         </java>
         <echo>Resources source code generated</echo>
     </target>
-
-
 </project>

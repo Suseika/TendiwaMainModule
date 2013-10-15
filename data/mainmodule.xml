@@ -342,6 +342,22 @@
 		</character>
 	</characters>
 	<objects>
+        <object>
+            <name>chair1</name>
+            <class>default</class>
+            <passability>
+                <visual />
+            </passability>
+            <material>wood</material>
+        </object>
+        <object>
+            <name>stairsDown</name>
+            <class>interlevel</class>
+            <passability>
+                <visual />
+            </passability>
+            <material>stone</material>
+        </object>
 		<object>
 			<name>wall_grey_stone</name>
 			<class>wall</class>
@@ -360,6 +376,15 @@
 			<material>stone</material>
 			<nonUsable/>
 		</object>
+        <object>
+            <name>bench</name>
+            <class>default</class>
+            <passability>
+                <none />
+            </passability>
+            <material>wood</material>
+            <nonUsable/>
+        </object>
 		<object>
 			<name>wall_wooden</name>
 			<class>wall</class>
@@ -405,6 +430,22 @@
 			<material>wood</material>
 			<usable/>
 		</object>
+        <object>
+            <name>tree1</name>
+            <class>default</class>
+            <passability>
+                <none />
+            </passability>
+            <material>wood</material>
+        </object>
+        <object>
+            <name>tree2</name>
+            <class>default</class>
+            <passability>
+                <none/>
+            </passability>
+            <material>wood</material>
+        </object>
 	</objects>
 	<materials>
 		<material>
@@ -519,5 +560,8 @@
 		<floor>
 			<name>water</name>
 		</floor>
+        <floor>
+            <name>dry_grass</name>
+        </floor>
 	</floors>
 </root>

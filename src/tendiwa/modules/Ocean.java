@@ -4,6 +4,7 @@ import tendiwa.core.*;
 import tendiwa.geometry.LocationPlace;
 import tendiwa.geometry.PathSegment;
 import tendiwa.locationFeatures.FeatureOcean;
+import tendiwa.resources.FloorTypes;
 
 import java.util.Set;
 
@@ -15,10 +16,9 @@ public boolean meetsRequirements(Set<LocationFeature> features) {
 
 @Override
 public void draw(Location location, LocationPlace place) {
-	int water = StaticData.getFloorType("water").getId();
 	int width = place.getRectangle().width;
 	int height = place.getRectangle().height;
-	location.square(0, 0, width, height, TerrainBasics.ELEMENT_OBJECT, water);
+	location.square(0, 0, width, height, FloorTypes.water);
 }
 
 @Override

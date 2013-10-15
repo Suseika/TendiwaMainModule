@@ -1,10 +1,13 @@
 package tendiwa.modules;
 
-import tendiwa.core.*;
+import tendiwa.core.Location;
+import tendiwa.core.LocationDrawer;
+import tendiwa.core.LocationFeature;
 import tendiwa.geometry.LocationPlace;
 import tendiwa.geometry.PathSegment;
 import tendiwa.locationFeatures.Road;
 import tendiwa.locationFeatures.VolcanicTerrain;
+import tendiwa.resources.ObjectTypes;
 
 import java.util.Set;
 
@@ -12,10 +15,10 @@ public class Forest implements LocationDrawer {
 
 @Override
 public void draw(Location location, LocationPlace place) {
-	int greyWall = StaticData.getObjectType("wall_grey_stone").getId();
-//	location.line(1, 1, width - 3, height - 3, ELEMENT_OBJECT, greyWall);
-//	location.line(width - 3, 1, 1, height - 3, ELEMENT_OBJECT, greyWall);
-
+	int width = place.getRectangle().width;
+	int height = place.getRectangle().height;
+	location.line(1, 1, width - 3, height - 3, ObjectTypes.wall_grey_stone);
+	location.line(width - 3, 1, 1, height - 3, ObjectTypes.wall_grey_stone);
 }
 
 @Override

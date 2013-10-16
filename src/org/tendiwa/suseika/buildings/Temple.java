@@ -4,9 +4,9 @@ import tendiwa.core.Building;
 import tendiwa.core.StaticData;
 import tendiwa.core.meta.Coordinate;
 import tendiwa.core.terrain.settlements.BuildingPlace;
-import tendiwa.geometry.CardinalDirection;
-import tendiwa.geometry.EnhancedRectangle;
-import tendiwa.geometry.RectangleSystem;
+import tendiwa.core.CardinalDirection;
+import tendiwa.core.EnhancedRectangle;
+import tendiwa.core.RectangleSystem;
 import tendiwa.resources.FloorTypes;
 import tendiwa.resources.ObjectTypes;
 
@@ -116,7 +116,7 @@ public class Temple extends Building {
 		}
 
 		// Ceilings
-		for (EnhancedRectangle ceiling : terrainModifier.getRectangleSystem().rectangleList()) {
+		for (EnhancedRectangle ceiling : terrainModifier.getRectangleSystem().getRectangles()) {
 			settlement.createCeiling(ceiling, 1);
 		}
 	}

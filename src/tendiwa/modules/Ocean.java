@@ -1,8 +1,8 @@
 package tendiwa.modules;
 
 import tendiwa.core.*;
-import tendiwa.geometry.LocationPlace;
-import tendiwa.geometry.PathSegment;
+import tendiwa.core.LocationPlace;
+import tendiwa.core.PathSegment;
 import tendiwa.locationFeatures.FeatureOcean;
 import tendiwa.resources.FloorTypes;
 
@@ -16,9 +16,9 @@ public boolean meetsRequirements(Set<LocationFeature> features) {
 
 @Override
 public void draw(Location location, LocationPlace place) {
-	int width = place.getRectangle().width;
-	int height = place.getRectangle().height;
-	location.square(0, 0, width, height, FloorTypes.water);
+	int width = place.width;
+	int height = place.height;
+	location.square(0, 0, width, height, FloorTypes.water, true);
 }
 
 @Override

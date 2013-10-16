@@ -1,46 +1,44 @@
 package org.tendiwa.suseika.buildings;
 
-import tendiwa.core.Building;
-import tendiwa.core.StaticData;
+import tendiwa.core.*;
 import tendiwa.core.terrain.settlements.BuildingPlace;
-import tendiwa.geometry.*;
 import tendiwa.resources.FloorTypes;
 import tendiwa.resources.ObjectTypes;
 
 public class Inn extends Building {
 public static final long serialVersionUID = 11672547L;
 
-public Inn(BuildingPlace bp, CardinalDirection side) {
+public Inn(BuildingPlace bp, tendiwa.core.CardinalDirection side) {
 	super(bp, side);
 }
 
 public void draw() {
 	int wallGreyStone = StaticData.getObjectType("wall_gray_stone").getId();
 
-	RectangleSystem crs = new RectangleSystem(1);
+	tendiwa.core.RectangleSystem crs = new tendiwa.core.RectangleSystem(1);
 		/* BASIS */
 	// Lobby
-	Orientation dir;
-	CardinalDirection side = Directions.S;
+	tendiwa.core.Orientation dir;
+	tendiwa.core.CardinalDirection side = tendiwa.core.Directions.S;
 	int lobbyWidth = 5;
-	if (side == Directions.N || side == Directions.S) {
-		dir = Orientation.HORIZONTAL;
+	if (side == tendiwa.core.Directions.N || side == tendiwa.core.Directions.S) {
+		dir = tendiwa.core.Orientation.HORIZONTAL;
 	} else {
-		dir = Orientation.VERTICAL;
+		dir = tendiwa.core.Orientation.VERTICAL;
 	}
-	EnhancedRectangle rightRooms = crs.addRectangle(new EnhancedRectangle(x, y, width, height));
+	tendiwa.core.EnhancedRectangle rightRooms = crs.addRectangle(new tendiwa.core.EnhancedRectangle(x, y, width, height));
 	// Separate middle rectangle (lobby) and left rectangle, get left rooms
-	EnhancedRectangle leftRooms = crs.cutRectangleFromSide(rightRooms, side.clockwiseQuarter(), ((((dir.isHorizontal()) ? width
+	tendiwa.core.EnhancedRectangle leftRooms = crs.cutRectangleFromSide(rightRooms, side.clockwiseQuarter(), ((((dir.isHorizontal()) ? width
 			: height) - lobbyWidth) / 2 - 1));
 	// Separate middle rectangle (lobby) and right rectangle, get lobby
-	EnhancedRectangle lobby = crs.cutRectangleFromSide(rightRooms, side.clockwiseQuarter(), lobbyWidth);
+	tendiwa.core.EnhancedRectangle lobby = crs.cutRectangleFromSide(rightRooms, side.clockwiseQuarter(), lobbyWidth);
 
 	// Separate rectangle above lobby
-	EnhancedRectangle aboveLobby = crs.cutRectangleFromSide(lobby, side.opposite(), 4);
+	tendiwa.core.EnhancedRectangle aboveLobby = crs.cutRectangleFromSide(lobby, side.opposite(), 4);
 	// Left hall
-	EnhancedRectangle leftHall = crs.cutRectangleFromSide(leftRooms, side.counterClockwiseQuarter(), 2);
+	tendiwa.core.EnhancedRectangle leftHall = crs.cutRectangleFromSide(leftRooms, side.counterClockwiseQuarter(), 2);
 	// Right hall
-	EnhancedRectangle rightHall = crs.cutRectangleFromSide(rightRooms, side.clockwiseQuarter(), 2);
+	tendiwa.core.EnhancedRectangle rightHall = crs.cutRectangleFromSide(rightRooms, side.clockwiseQuarter(), 2);
 	// 1 - left rooms, 4 - left hall, 3 - above middle, 2 - middle, 5 -
 	// right hall, 0 - right rooms
 	// crs.cutRectangleFromSide(rightRoomsId, side, 1);

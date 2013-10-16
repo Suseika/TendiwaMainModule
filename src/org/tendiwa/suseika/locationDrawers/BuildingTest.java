@@ -6,7 +6,7 @@ import tendiwa.core.Settlement;
 import tendiwa.core.StaticData;
 import tendiwa.core.meta.Coordinate;
 import tendiwa.core.terrain.settlements.BuildingPlace;
-import tendiwa.geometry.Directions;
+import tendiwa.core.Directions;
 import tendiwa.resources.FloorTypes;
 
 public class BuildingTest extends Settlement {

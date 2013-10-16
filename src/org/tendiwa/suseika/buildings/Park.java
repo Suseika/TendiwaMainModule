@@ -2,13 +2,12 @@ package org.tendiwa.suseika.buildings;
 
 import tendiwa.core.Building;
 import tendiwa.core.StaticData;
-import tendiwa.core.TerrainBasics;
 import tendiwa.core.meta.Chance;
 import tendiwa.core.meta.Coordinate;
 import tendiwa.core.terrain.settlements.BuildingPlace;
-import tendiwa.geometry.CardinalDirection;
-import tendiwa.geometry.EnhancedRectangle;
-import tendiwa.geometry.RectangleSystem;
+import tendiwa.core.CardinalDirection;
+import tendiwa.core.EnhancedRectangle;
+import tendiwa.core.RectangleSystem;
 import tendiwa.resources.FloorTypes;
 import tendiwa.resources.ObjectTypes;
 
@@ -69,7 +68,7 @@ public void draw() {
 			settlement.setObject(recCenter.x + recCenter.width / 2, recCenter.y + recCenter.height / 2, objStatueDefender1);
 			settlement.setFloor(recCenter.x + recCenter.width / 2, recCenter.y + recCenter.height / 2, floorGrass);
 		}
-		for (EnhancedRectangle r : crs.rectangleList()) {
+		for (EnhancedRectangle r : crs.getRectangles()) {
 			settlement.fillRectangle(r, ObjectTypes.tree1);
 			settlement.fillRectangle(r, ObjectTypes.tree2);
 			settlement.fillRectangle(r, FloorTypes.dry_grass);

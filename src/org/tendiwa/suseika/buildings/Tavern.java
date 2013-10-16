@@ -11,11 +11,10 @@ import tendiwa.core.DialoguePoint;
 import tendiwa.core.ItemPile;
 import tendiwa.core.PlayerCharacter;
 import tendiwa.core.StaticData;
-import tendiwa.core.TerrainBasics;
 import tendiwa.core.meta.Chance;
 import tendiwa.core.terrain.settlements.BuildingPlace;
-import tendiwa.geometry.CardinalDirection;
-import tendiwa.geometry.Directions;
+import tendiwa.core.CardinalDirection;
+import tendiwa.core.Directions;
 import tendiwa.resources.FloorTypes;
 import tendiwa.resources.ObjectTypes;
 

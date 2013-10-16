@@ -4,10 +4,10 @@ import tendiwa.core.Building;
 import tendiwa.core.Location;
 import tendiwa.core.StaticData;
 import tendiwa.core.terrain.settlements.BuildingPlace;
-import tendiwa.geometry.CardinalDirection;
-import tendiwa.geometry.EnhancedRectangle;
-import tendiwa.geometry.RectangleSystem;
-import tendiwa.geometry.RecursivelySplitRectangleSystemFactory;
+import tendiwa.core.CardinalDirection;
+import tendiwa.core.EnhancedRectangle;
+import tendiwa.core.RectangleSystem;
+import tendiwa.core.RecursivelySplitRectangleSystemFactory;
 import tendiwa.resources.ObjectTypes;
 
 import java.util.ArrayList;

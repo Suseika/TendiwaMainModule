@@ -5,14 +5,14 @@ import tendiwa.core.ResourcesRegistry;
 import tendiwa.core.TerrainBasics;
 import tendiwa.core.World;
 import tendiwa.drawing.*;
-import tendiwa.geometry.EnhancedRectangle;
-import tendiwa.geometry.RectangleSidePiece;
-import tendiwa.geometry.RectangleSystem;
-import tendiwa.geometry.Segment;
+import tendiwa.core.EnhancedRectangle;
+import tendiwa.core.RectangleSidePiece;
+import tendiwa.core.RectangleSystem;
+import tendiwa.core.Segment;
 
 import java.awt.*;
 
-import static tendiwa.geometry.DSL.*;
+import static tendiwa.core.DSL.*;
 
 public class MainModule extends Module {
 

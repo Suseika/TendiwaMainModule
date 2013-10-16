@@ -1,21 +1,19 @@
 package tendiwa.modules;
 
-import tendiwa.core.meta.Range;
 import tendiwa.drawing.DrawingRectangleSystem;
 import tendiwa.drawing.TestCanvas;
-import tendiwa.geometry.*;
 
 import java.awt.*;
 
-import static tendiwa.geometry.DSL.*;
-import static tendiwa.geometry.Directions.E;
-import static tendiwa.geometry.Directions.N;
+import static tendiwa.core.DSL.*;
+import static tendiwa.core.Directions.E;
+import static tendiwa.core.Directions.N;
 
-public class DidYouEatPatternsDemo extends RectangleBuilderTemplate {
+public class DidYouEatPatternsDemo extends tendiwa.core.RectangleBuilderTemplate {
 public static void main(String[] args) {
-	RectangleBuilderTemplate template = new DidYouEatPatternsDemo();
+	tendiwa.core.RectangleBuilderTemplate template = new DidYouEatPatternsDemo();
 	TestCanvas canvas = canvas();
-	RectangleSystem phrases = builder(0).
+	tendiwa.core.RectangleSystem phrases = builder(0).
 		place(
 			builder(0)
 				.place(template, atPoint(5, 8))
@@ -40,24 +38,24 @@ public static void main(String[] args) {
 }
 
 @Override
-public RectangleSystem build() {
+public tendiwa.core.RectangleSystem build() {
 	int letterIntervalLength = 2;
 	int wordIntervalLength = 8;
-	Placement letterInterval = awayFrom(LAST_BOUNDING_REC).fromSide(E).margin(letterIntervalLength).align(N);
-	Placement wordInterval = awayFrom(LAST_BOUNDING_REC).fromSide(E).margin(wordIntervalLength).align(N);
+	tendiwa.core.Placement letterInterval = awayFrom(LAST_BOUNDING_REC).fromSide(E).margin(letterIntervalLength).align(N);
+	tendiwa.core.Placement wordInterval = awayFrom(LAST_BOUNDING_REC).fromSide(E).margin(wordIntervalLength).align(N);
 
 	return builder(0)
-		.place(CyrillicTemplates.YE, somewhere())
-		.place(CyrillicTemplates.EL, letterInterval)
-		.place(CyrillicTemplates.EL, wordInterval)
-		.place(CyrillicTemplates.I, letterInterval)
-		.place(CyrillicTemplates.TE, wordInterval)
-		.place(CyrillicTemplates.YERY, letterInterval)
-		.place(CyrillicTemplates.U, wordInterval)
-		.place(CyrillicTemplates.ZE, letterInterval)
-		.place(CyrillicTemplates.O, letterInterval)
-		.place(CyrillicTemplates.ER, letterInterval)
-		.place(CyrillicTemplates.YERY, letterInterval)
+		.place(tendiwa.core.CyrillicTemplates.YE, somewhere())
+		.place(tendiwa.core.CyrillicTemplates.EL, letterInterval)
+		.place(tendiwa.core.CyrillicTemplates.EL, wordInterval)
+		.place(tendiwa.core.CyrillicTemplates.I, letterInterval)
+		.place(tendiwa.core.CyrillicTemplates.TE, wordInterval)
+		.place(tendiwa.core.CyrillicTemplates.YERY, letterInterval)
+		.place(tendiwa.core.CyrillicTemplates.U, wordInterval)
+		.place(tendiwa.core.CyrillicTemplates.ZE, letterInterval)
+		.place(tendiwa.core.CyrillicTemplates.O, letterInterval)
+		.place(tendiwa.core.CyrillicTemplates.ER, letterInterval)
+		.place(tendiwa.core.CyrillicTemplates.YERY, letterInterval)
 		.done();
 }
 }

@@ -26,13 +26,13 @@ When you need to customize build process for a module, edit build.properties fil
         Main module for tendiwa rogue-like framework
     </description>
 
-    <target name="buildModuleJar" depends="generateResourcesSourceCode">
+    <target name="jar" depends="generateEntityClasses,compile">
         <delete file="MainModule.jar"/>
         <jar destfile="MainModule.jar" basedir="."/>
         <echo message="Module source code built to ${user.dir}/MainModule.jar"/>
     </target>
 
-    <target name="generateResourcesSourceCode" depends="frameworkBuildJar">
+    <target name="generateEntityClasses" depends="tendiwa_framework.jar">
         <description>
             Transforms xml descriptions of game objects to source code and places them in module's src/
             directory.
@@ -46,5 +46,12 @@ When you need to customize build process for a module, edit build.properties fil
             </classpath>
         </java>
         <echo>Resources source code generated</echo>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target name="compile" depends="generateEntityClasses">
+        <mkdir dir="bin"/>
+        <javac srcdir="src" destdir="bin"/>
     </target>
 </project>

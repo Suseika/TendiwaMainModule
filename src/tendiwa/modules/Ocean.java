@@ -11,7 +11,13 @@ import java.util.Set;
 public class Ocean implements LocationDrawer {
 @Override
 public boolean meetsRequirements(Set<LocationFeature> features) {
-	return features.stream().anyMatch((f) -> f instanceof FeatureOcean);
+//	return features.stream().anyMatch((f) -> f instanceof FeatureOcean);
+	for(LocationFeature feature : features) {
+		if (feature instanceof FeatureOcean) {
+			return true;
+		}
+	}
+	return false;
 }
 
 @Override

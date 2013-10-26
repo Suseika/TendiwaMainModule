@@ -27,8 +27,8 @@ public boolean meetsRequirements(Set<LocationFeature> features) {
 
 @Override
 public boolean canHandlePaths(Set<PathSegment> paths) {
-	return paths.size() <= 2
-		&& paths.stream().allMatch(ps -> ps.getType() == Road.class);
+	return paths.size() <= 2;
+//		&& paths.stream().allMatch(ps -> ps.getType() == Road.class);
 }
 
 }

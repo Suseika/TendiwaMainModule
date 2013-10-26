@@ -13,6 +13,7 @@ import tendiwa.core.Segment;
 import java.awt.*;
 
 import static tendiwa.core.DSL.*;
+import static tendiwa.core.World.create;
 
 public class MainModule extends Module {
 
@@ -30,12 +31,13 @@ public MainModule() {
 	ResourcesRegistry.registerDrawer(new TestLocationDrawer());
 	ResourcesRegistry.registerDrawer(new Forest());
 	ResourcesRegistry.registerDrawer(new Ocean());
-	World world = World.create(new SuseikaWorld(), 800, 600);
-	canvas().draw(world);
 }
 
 public static void main(String[] args) {
 	new MainModule();
+}
+public World createWorld() {
+	return World.create(new SuseikaWorld(), 800, 600);
 }
 
 }

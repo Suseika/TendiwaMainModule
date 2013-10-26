@@ -349,6 +349,7 @@
                 <visual />
             </passability>
             <material>wood</material>
+            <usable/>
         </object>
         <object>
             <name>stairsDown</name>
@@ -357,6 +358,7 @@
                 <visual />
             </passability>
             <material>stone</material>
+            <usable/>
         </object>
 		<object>
 			<name>wall_grey_stone</name>
@@ -437,6 +439,7 @@
                 <none />
             </passability>
             <material>wood</material>
+            <nonUsable/>
         </object>
         <object>
             <name>tree2</name>
@@ -445,6 +448,7 @@
                 <none/>
             </passability>
             <material>wood</material>
+            <nonUsable/>
         </object>
 	</objects>
 	<materials>

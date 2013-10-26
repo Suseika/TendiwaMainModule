@@ -25,10 +25,10 @@ public static DrawingAlgorithm<World> defaultAlgorithm() {
 				for (int x = 0; x < width; x++) {
 					Cell cell = cellContents[x][y];
 					if (cell.object() != StaticData.VOID) {
-						drawPoint(x, y, Color.DARK_GRAY);
+						drawPoint(x, y, Color.GRAY);
 					} else if (cell.floor() != StaticData.VOID) {
 						if (cell.contains(FloorTypes.water)) {
-							drawPoint(x, y, Color.CYAN);
+							drawPoint(x, y, new Color(50, 50, 180));
 						} else {
 							drawPoint(x, y, Color.GREEN);
 						}

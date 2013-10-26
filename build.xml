@@ -27,6 +27,7 @@ When you need to customize build process for a module, edit build.properties fil
     </description>
 
     <target name="buildModuleJar" depends="generateResourcesSourceCode">
+        <delete file="MainModule.jar"/>
         <jar destfile="MainModule.jar" basedir="."/>
         <echo message="Module source code built to ${user.dir}/MainModule.jar"/>
     </target>

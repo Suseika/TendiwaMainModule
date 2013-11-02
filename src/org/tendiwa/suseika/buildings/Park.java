@@ -73,7 +73,7 @@ public void draw() {
 			settlement.fillRectangle(r, ObjectTypes.tree2);
 			settlement.fillRectangle(r, FloorTypes.dry_grass);
 		}
-		// Get coordinates for roads and draw roads
+		// Get coordinates for roads and drawWorld roads
 		c1 = leftTop
 				.getCellFromSide(frontSide, leftSide, 0)
 				.moveToSide(frontSide, 1)

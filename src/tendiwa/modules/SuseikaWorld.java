@@ -9,7 +9,7 @@ import static tendiwa.core.DSL.*;
 public class SuseikaWorld implements WorldDrawer {
 
 @Override
-public void draw(WorldRectangleBuilder builder, int width, int height) {
+public void drawWorld(WorldRectangleBuilder builder, int width, int height) {
 	final EnhancedRectangle worldRectangle = new EnhancedRectangle(0, 0, width, height);
 	builder
 		.place(recursivelySplitRec(width, height).minWidth(70).borderWidth(0), atPoint(0,0))

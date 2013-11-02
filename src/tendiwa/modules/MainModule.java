@@ -1,21 +1,15 @@
 package tendiwa.modules;
 
-import tendiwa.core.Module;
-import tendiwa.core.ResourcesRegistry;
-import tendiwa.core.TerrainBasics;
-import tendiwa.core.World;
+import tendiwa.core.*;
 import tendiwa.drawing.*;
-import tendiwa.core.EnhancedRectangle;
-import tendiwa.core.RectangleSidePiece;
-import tendiwa.core.RectangleSystem;
-import tendiwa.core.Segment;
+import tendiwa.resources.CharacterTypes;
 
 import java.awt.*;
 
 import static tendiwa.core.DSL.*;
 import static tendiwa.core.World.create;
 
-public class MainModule extends Module {
+public class MainModule extends Module implements WorldProvider {
 
 public MainModule() {
 	DefaultDrawingAlgorithms.register(EnhancedRectangle.class, DrawingRectangle.withColorLoop(Color.GRAY, Color.BLACK, Color.BLUE));
@@ -36,8 +30,11 @@ public MainModule() {
 public static void main(String[] args) {
 	new MainModule();
 }
-public World createWorld() {
-	return World.create(new SuseikaWorld(), 800, 600);
-}
 
+@Override
+public World createWorld() {
+	World world = World.create(new SuseikaWorld(), 800, 600);
+	world.setPlayerCharacter(new PlayerCharacter(world.getDefaultPlane(), 100, 100, "Suseika", CharacterTypes.human, "warrior"));
+	return world;
+}
 }

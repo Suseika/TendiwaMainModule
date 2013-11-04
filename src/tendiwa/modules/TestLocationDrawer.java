@@ -25,7 +25,7 @@ public void draw(Location location, LocationPlace place) {
 	int width = place.width;
 	int height = place.height;
 	location.square(0, 0, width, height, FloorTypes.grass, true);
-	location.square(40, 15, 15, 15, FloorTypes.water, true);
+	location.square(40, 15, 15, 15, FloorTypes.stone, true);
 	HelperCoastline.INSTANCE.draw(location, place);
 //	location.square(1, 1, width - 2, height - 2, ObjectTypes.wall_grey_stone, false);
 //	location.line(1, 1, width - 3, height - 3, ObjectTypes.wall_grey_stone);

@@ -33,8 +33,8 @@ public static void main(String[] args) {
 
 @Override
 public World createWorld() {
-	World world = World.create(new SuseikaWorld(), 800, 600);
-	world.setPlayerCharacter(new PlayerCharacter(world.getDefaultPlane(), 100, 100, "Suseika", CharacterTypes.human, "warrior"));
+	World world = World.create(new SuseikaWorld(), 2000, 2000);
+	world.setPlayerCharacter(new PlayerCharacter(world.getDefaultPlane(), 120, 120, "Suseika", CharacterTypes.human, "warrior"));
 	return world;
 }
 }

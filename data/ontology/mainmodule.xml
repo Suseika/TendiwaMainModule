@@ -567,5 +567,17 @@
         <floor>
             <name>dry_grass</name>
         </floor>
+        <floor>
+            <name>snow</name>
+        </floor>
+        <floor>
+            <name>swamp</name>
+        </floor>
+        <floor>
+            <name>wood</name>
+        </floor>
+        <floor>
+            <name>emptiness</name>
+        </floor>
 	</floors>
 </root>

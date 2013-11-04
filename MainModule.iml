@@ -24,7 +24,9 @@
           <root url="jar://$MODULE_DIR$/../tendiwa-ontology.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="file:///tmp/tendiwa494861326/ontology/src" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="library" name="guava-15.0" level="project" />

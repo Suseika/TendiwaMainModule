@@ -4,7 +4,7 @@ import tendiwa.core.*;
 import tendiwa.core.LocationPlace;
 import tendiwa.core.PathSegment;
 import tendiwa.locationFeatures.FeatureOcean;
-import tendiwa.resources.FloorTypes;
+import tendiwa.resources.TerrainTypes;
 
 import java.util.Set;
 
@@ -24,7 +24,7 @@ public boolean meetsRequirements(Set<LocationFeature> features) {
 public void draw(Location location, LocationPlace place) {
 	int width = place.width;
 	int height = place.height;
-	location.square(0, 0, width, height, FloorTypes.water, true);
+	location.square(0, 0, width, height, TerrainTypes.water, true);
 }
 
 @Override

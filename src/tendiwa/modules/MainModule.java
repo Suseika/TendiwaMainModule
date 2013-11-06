@@ -19,7 +19,7 @@ public MainModule() {
 		RectangleSidePiece.class,
 		DrawingRectangleSidePiece.withColor(Color.MAGENTA));
 	DefaultDrawingAlgorithms.register(Segment.class, DrawingSegment.withColor(Color.BLUE));
-	DefaultDrawingAlgorithms.register(TerrainBasics.class, DrawingTerrain.defaultAlgorithm());
+	DefaultDrawingAlgorithms.register(Chunk.class, DrawingTerrain.defaultAlgorithm());
 	DefaultDrawingAlgorithms.register(World.class, DrawingWorld.defaultAlgorithm());
 
 	ResourcesRegistry.registerDrawer(new TestLocationDrawer());

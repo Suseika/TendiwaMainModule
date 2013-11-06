@@ -341,6 +341,43 @@
 			</body>
 		</character>
 	</characters>
+    <walls>
+        <wall>
+            <name>wall_grey_stone</name>
+            <passability>
+                <none />
+            </passability>
+            <material>stone</material>
+        </wall>
+        <wall>
+            <name>wall_red_stone</name>
+            <passability>
+                <none />
+            </passability>
+            <material>stone</material>
+        </wall>
+        <wall>
+            <name>wall_wooden</name>
+            <passability>
+                <none />
+            </passability>
+            <material>stone</material>
+        </wall>
+        <wall>
+            <name>wall_cave</name>
+            <passability>
+                <none />
+            </passability>
+            <material>stone</material>
+        </wall>
+        <wall>
+            <name>lattice</name>
+            <passability>
+                <visual />
+            </passability>
+            <material>stone</material>
+        </wall>
+    </walls>
 	<objects>
         <object>
             <name>chair1</name>
@@ -360,24 +397,6 @@
             <material>stone</material>
             <usable/>
         </object>
-		<object>
-			<name>wall_grey_stone</name>
-			<class>wall</class>
-			<passability>
-				<none />
-			</passability>
-			<material>stone</material>
-			<nonUsable/>
-		</object>
-		<object>
-			<name>wall_red_stone</name>
-			<class>wall</class>
-			<passability>
-				<none />
-			</passability>
-			<material>stone</material>
-			<nonUsable/>
-		</object>
         <object>
             <name>bench</name>
             <class>default</class>
@@ -387,33 +406,6 @@
             <material>wood</material>
             <nonUsable/>
         </object>
-		<object>
-			<name>wall_wooden</name>
-			<class>wall</class>
-			<passability>
-				<none />
-			</passability>
-			<material>stone</material>
-			<nonUsable/>
-		</object>
-		<object>
-			<name>wall_cave</name>
-			<class>wall</class>
-			<passability>
-				<none />
-			</passability>
-			<material>stone</material>
-			<nonUsable/>
-		</object>
-		<object>
-			<name>lattice</name>
-			<class>wall</class>
-			<passability>
-				<visual />
-			</passability>
-			<material>stone</material>
-			<nonUsable/>
-		</object>
 		<object>
 			<name>door_blue</name>
 			<class>door</class>

@@ -23,7 +23,7 @@ public MainModule() {
 	DefaultDrawingAlgorithms.register(World.class, DrawingWorld.defaultAlgorithm());
 
 	ResourcesRegistry.registerDrawer(new TestLocationDrawer());
-	ResourcesRegistry.registerDrawer(new Forest());
+//	ResourcesRegistry.registerDrawer(new Forest());
 	ResourcesRegistry.registerDrawer(new Ocean());
 }
 

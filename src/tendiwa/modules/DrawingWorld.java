@@ -1,10 +1,10 @@
 package tendiwa.modules;
 
-import tendiwa.core.TerrainType;
+import tendiwa.core.FloorType;
 import tendiwa.core.HorizontalPlane;
+import tendiwa.core.WallType;
 import tendiwa.core.World;
 import tendiwa.drawing.DrawingAlgorithm;
-import tendiwa.resources.TerrainTypes;
 
 import java.awt.*;
 
@@ -23,18 +23,20 @@ public static DrawingAlgorithm<World> defaultAlgorithm() {
 			drawRectangle(new Rectangle(0, 0, width, height), Color.BLACK);
 			for (int y = 0; y < height; y++) {
 				for (int x = 0; x < width; x++) {
-					TerrainType terrainType = TerrainType.getById(defaultPlane.getTerrainElement(x, y));
-					TerrainType.TerrainClass terrainClass = terrainType.getTerrainClass();
-					if (terrainClass == TerrainType.TerrainClass.WALL) {
-						drawPoint(x, y, Color.GRAY);
-					} else if (terrainClass == TerrainType.TerrainClass.FLOOR) {
-						if (terrainType == TerrainTypes.water) {
+					FloorType floorType = FloorType.getById(defaultPlane.getFloor(x, y));
+					WallType wallType = WallType.getById(defaultPlane.getWall(x, y));
+					if (defaultPlane.getCharacter(x, y) != null) {
+						drawPoint(x, y, Color.YELLOW);
+					} else if (wallType == WallType.NO_WALL) {
+						// Draw floor
+						if (floorType.isLiquid()) {
 							drawPoint(x, y, new Color(50, 50, 180));
 						} else {
 							drawPoint(x, y, Color.GREEN);
 						}
-					} else if (defaultPlane.getCharacter(x, y) != null) {
-						drawPoint(x, y, Color.YELLOW);
+					} else {
+						// Draw wall
+						drawPoint(x, y, Color.GRAY);
 					}
 				}
 			}

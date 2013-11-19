@@ -1,10 +1,8 @@
 package tendiwa.modules;
 
 import tendiwa.core.*;
-import tendiwa.core.LocationPlace;
-import tendiwa.core.PathSegment;
 import tendiwa.locationFeatures.FeatureOcean;
-import tendiwa.resources.TerrainTypes;
+import tendiwa.resources.FloorTypes;
 
 import java.util.Set;
 
@@ -12,7 +10,7 @@ public class Ocean implements LocationDrawer {
 @Override
 public boolean meetsRequirements(Set<LocationFeature> features) {
 //	return features.stream().anyMatch((f) -> f instanceof FeatureOcean);
-	for(LocationFeature feature : features) {
+	for (LocationFeature feature : features) {
 		if (feature instanceof FeatureOcean) {
 			return true;
 		}
@@ -24,7 +22,7 @@ public boolean meetsRequirements(Set<LocationFeature> features) {
 public void draw(Location location, LocationPlace place) {
 	int width = place.width;
 	int height = place.height;
-	location.square(0, 0, width, height, TerrainTypes.water, true);
+	location.square(0, 0, width, height, FloorTypes.water, true);
 }
 
 @Override

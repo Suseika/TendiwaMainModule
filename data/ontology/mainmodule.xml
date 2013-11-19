@@ -546,30 +546,39 @@
 	<floors>
 		<floor>
 			<name>grass</name>
+            <solid/>
 		</floor>
 		<floor>
 			<name>stone</name>
+            <solid/>
 		</floor>
 		<floor>
 			<name>ground</name>
+            <solid/>
 		</floor>
 		<floor>
 			<name>water</name>
+            <liquid/>
 		</floor>
         <floor>
             <name>dry_grass</name>
+            <solid/>
         </floor>
         <floor>
             <name>snow</name>
+            <solid/>
         </floor>
         <floor>
             <name>swamp</name>
+            <solid/>
         </floor>
         <floor>
             <name>wood</name>
+            <solid/>
         </floor>
         <floor>
             <name>emptiness</name>
+            <solid/>
         </floor>
 	</floors>
 </root>

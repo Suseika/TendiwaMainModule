@@ -18,18 +18,25 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="guava-15.0" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES />
+        <JAVADOC />
+        <SOURCES>
+          <root url="file:///tmp/tendiwa1887964119/ontology/src" />
+        </SOURCES>
+      </library>
+    </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../tendiwa-ontology.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES>
-          <root url="file:///tmp/tendiwa494861326/ontology/src" />
-        </SOURCES>
+        <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="guava-15.0" level="project" />
   </component>
 </module>
 

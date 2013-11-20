@@ -28,7 +28,9 @@ public MainModule() {
 }
 
 public static void main(String[] args) {
-	new MainModule();
+	MainModule mainModule = new MainModule();
+	TestCanvas canvas = canvas();
+	canvas.draw(mainModule.createWorld());
 }
 
 @Override

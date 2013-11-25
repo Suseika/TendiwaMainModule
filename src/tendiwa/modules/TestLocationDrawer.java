@@ -3,6 +3,7 @@ package tendiwa.modules;
 import tendiwa.core.*;
 import tendiwa.locationFeatures.FeatureForest;
 import tendiwa.resources.FloorTypes;
+import tendiwa.resources.ItemTypes;
 import tendiwa.resources.WallTypes;
 
 import java.util.Set;
@@ -44,7 +45,7 @@ public void draw(Location location, LocationPlace place) {
 		.transitionBuilder()
 		.setDepth(8)
 		.setRectangle(rectangle)
-		.setFrom(WallTypes.wall_grey_stone)
+		.setFrom(ItemTypes.short_bow)
 		.addFromDirection(Directions.NE)
 		.addFromDirection(Directions.S)
 		.build();

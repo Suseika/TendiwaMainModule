@@ -27,6 +27,9 @@ public static DrawingAlgorithm<World> defaultAlgorithm() {
 					WallType wallType = WallType.getById(defaultPlane.getWall(x, y));
 					if (defaultPlane.getCharacter(x, y) != null) {
 						drawPoint(x, y, Color.YELLOW);
+					} else if (defaultPlane.hasAnyItems(x, y)) {
+						System.out.println("Penis");
+						drawPoint(x, y, Color.ORANGE);
 					} else if (wallType == WallType.NO_WALL) {
 						// Draw floor
 						if (floorType.isLiquid()) {

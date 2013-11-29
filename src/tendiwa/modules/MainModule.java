@@ -35,8 +35,8 @@ public static void main(String[] args) {
 
 @Override
 public World createWorld() {
-	World world = World.create(new SuseikaWorld(), 800, 600);
-	world.setPlayerCharacter(new PlayerCharacter(world.getDefaultPlane(), 200, 200, "Suseika", CharacterTypes.human, "warrior"));
+	World world = World.create(new SuseikaWorld(), 400, 300);
+	world.setPlayerCharacter(new PlayerCharacter(world.getDefaultPlane(), 200, 150, "Suseika", CharacterTypes.human, "warrior"));
 	return world;
 }
 }

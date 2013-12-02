@@ -36,7 +36,7 @@
 			<aspects>
 				<container>
 					<volume>20</volume>
-					<nonLiquidAllowing/>
+					<liquidAllowing/>
 				</container>
 				<apparel>
 					<form>
@@ -61,8 +61,38 @@
 			<damage>blunt</damage>
 			<nonStackable/>
 		</item>
+        <item>
+            <name>iron_helm</name>
+            <aspects>
+                <container>
+                    <volume>10</volume>
+                    <liquidAllowing/>
+                </container>
+                <apparel>
+                    <form>
+                        <neck>
+                            <head/>
+                        </neck>
+                    </form>
+                    <covers>
+                        <head/>
+                    </covers>
+                    <blocks>
+                        <head/>
+                    </blocks>
+                </apparel>
+            </aspects>
+            <weight>1.5</weight>
+            <form>hollow</form>
+            <length>30</length>
+            <material>iron</material>
+            <aerodynamics>5</aerodynamics>
+            <volume>11</volume>
+            <damage>blunt</damage>
+            <nonStackable/>
+        </item>
 		<item>
-			<name>boot</name>
+			<name>boots</name>
 			<aspects>
 				<apparel>
 					<covers>

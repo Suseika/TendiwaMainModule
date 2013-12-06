@@ -21,6 +21,9 @@
                     <aimTime>400</aimTime>
                     <magazine>0</magazine>
                 </rangedWeapon>
+                <wieldable>
+                    <two_hands/>
+                </wieldable>
             </aspects>
             <weight>3.0</weight>
             <volume>3.0</volume>

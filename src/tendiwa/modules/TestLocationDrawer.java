@@ -1,5 +1,6 @@
 package tendiwa.modules;
 
+import org.tendiwa.entities.Items;
 import tendiwa.core.*;
 import tendiwa.locationFeatures.FeatureForest;
 import tendiwa.resources.FloorTypes;
@@ -45,7 +46,7 @@ public void draw(Location location, LocationPlace place) {
 		.transitionBuilder()
 		.setDepth(8)
 		.setRectangle(rectangle)
-		.setFrom(ItemTypes.short_bow)
+		.setFrom(Items.shortBow)
 		.addFromDirection(Directions.NE)
 		.addFromDirection(Directions.S)
 		.build();

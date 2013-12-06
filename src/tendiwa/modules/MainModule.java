@@ -1,9 +1,10 @@
 package tendiwa.modules;
 
+import org.tendiwa.entities.Characters;
+import org.tendiwa.entities.Items;
+import tendiwa.core.Character;
 import tendiwa.core.*;
 import tendiwa.drawing.*;
-import tendiwa.resources.CharacterTypes;
-import tendiwa.resources.ItemTypes;
 
 import java.awt.*;
 
@@ -36,24 +37,17 @@ public static void main(String[] args) {
 @Override
 public World createWorld() {
 	World world = World.create(new SuseikaWorld(), 400, 300);
-	PlayerCharacter playerCharacter = new PlayerCharacter(world.getDefaultPlane(), 200, 150, "Suseika", CharacterTypes.human, "warrior");
+	Character playerCharacter = world.createCharacter(120, 130, Characters.human, "Suseika");
 	world.setPlayerCharacter(playerCharacter);
-	playerCharacter.getItem(new UniqueItem(ItemTypes.short_bow));
-	playerCharacter.getItem(new UniqueItem(ItemTypes.short_bow));
-	playerCharacter.getItem(new UniqueItem(ItemTypes.short_bow));
-	playerCharacter.getItem(new UniqueItem(ItemTypes.short_bow));
-	playerCharacter.getItem(new UniqueItem(ItemTypes.short_bow));
-	playerCharacter.getItem(new UniqueItem(ItemTypes.short_bow));
-	playerCharacter.getItem(new UniqueItem(ItemTypes.short_bow));
-	playerCharacter.getItem(new UniqueItem(ItemTypes.short_bow));
-	playerCharacter.getItem(new UniqueItem(ItemTypes.short_bow));
-	playerCharacter.getItem(new UniqueItem(ItemTypes.short_bow));
-	playerCharacter.getItem(new UniqueItem(ItemTypes.short_bow));
-	playerCharacter.getItem(new UniqueItem(ItemTypes.short_bow));
-	playerCharacter.getItem(new UniqueItem(ItemTypes.short_bow));
-	playerCharacter.getItem(new UniqueItem(ItemTypes.short_bow));
-	playerCharacter.getItem(new UniqueItem(ItemTypes.iron_armor));
-	playerCharacter.getItem(new UniqueItem(ItemTypes.iron_helm));
+	playerCharacter.getItem(Items.shortBow);
+	playerCharacter.getItem(Items.shortBow);
+	playerCharacter.getItem(Items.shortBow);
+	playerCharacter.getItem(Items.shortBow);
+	playerCharacter.getItem(Items.shortBow);
+	playerCharacter.getItem(Items.shortBow);
+	playerCharacter.getItem(Items.shortBow);
+	playerCharacter.getItem(Items.ironArmor);
+	playerCharacter.getItem(Items.ironHelm);
 	return world;
 }
 }

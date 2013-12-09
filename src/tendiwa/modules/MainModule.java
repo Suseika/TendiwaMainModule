@@ -47,6 +47,7 @@ public World createWorld() {
 	playerCharacter.getItem(Items.shortBow);
 	playerCharacter.getItem(Items.shortBow);
 	playerCharacter.getItem(Items.ironArmor);
+	playerCharacter.getItem(Items.woodenArrow, 100);
 	playerCharacter.getItem(Items.ironHelm);
 	return world;
 }

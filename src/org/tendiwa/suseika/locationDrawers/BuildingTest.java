@@ -4,7 +4,6 @@ import tendiwa.core.HorizontalPlane;
 import tendiwa.core.Settlement;
 import tendiwa.core.meta.Coordinate;
 import tendiwa.core.terrain.settlements.BuildingPlace;
-import tendiwa.resources.FloorTypes;
 
 public class BuildingTest extends Settlement {
 public BuildingTest(HorizontalPlane plane, int x, int y, int width, int height) {
@@ -23,7 +22,6 @@ public BuildingTest(HorizontalPlane plane, int x, int y, int width, int height) 
 	roadSystem.createRoad(ne.x, ne.y, se.x, se.y);
 	roadSystem.createRoad(se.x, se.y, sw.x, sw.y);
 	roadSystem.createRoad(sw.x, sw.y, nw.x, nw.y);
-	roadSystem.drawRoads(FloorTypes.ground);
 	quarterSystem.build(roadSystem.getReferencePoints());
 	for (BuildingPlace place : quarterSystem.buildingPlaces) {
 		if (place.contains(nw.x + buildingSizeX / 2, nw.y + buildingSizeY / 2)) {

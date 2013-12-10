@@ -3,7 +3,7 @@ package org.tendiwa.items;
 import org.tendiwa.entities.Materials;
 import tendiwa.core.*;
 
-public class ShortBow extends UniqueItemType implements Wieldable {
+public class ShortBow extends UniqueItemType implements RangedWeapon {
 public ShortBow() {
 }
 
@@ -16,7 +16,6 @@ public Material getMaterial() {
 public String getResourceName() {
 	return "short_bow";
 }
-
 
 @Override
 public double getWeight() {
@@ -31,5 +30,10 @@ public double getVolume() {
 @Override
 public Handedness getHandedness() {
 	return Handedness.TWO_HANDS;
+}
+
+@Override
+public AmmunitionType getAmmunitionType() {
+	return AmmunitionTypes.arrow;
 }
 }

@@ -1,10 +1,12 @@
 package org.tendiwa.items;
 
 import org.tendiwa.entities.Materials;
+import tendiwa.core.AmmunitionType;
 import tendiwa.core.Material;
+import tendiwa.core.Shootable;
 import tendiwa.core.StackableItemType;
 
-public class WoodenArrow extends StackableItemType {
+public class WoodenArrow extends StackableItemType implements Shootable {
 @Override
 public Material getMaterial() {
 	return Materials.wood;
@@ -28,5 +30,10 @@ public double getVolume() {
 @Override
 public boolean isStackable() {
 	return true;
+}
+
+@Override
+public AmmunitionType getAmmunitionType() {
+	return AmmunitionTypes.arrow;
 }
 }

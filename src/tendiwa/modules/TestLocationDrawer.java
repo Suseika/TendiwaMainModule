@@ -1,10 +1,10 @@
 package tendiwa.modules;
 
+import org.tendiwa.entities.FloorTypes;
 import org.tendiwa.entities.ItemsTypes;
+import org.tendiwa.entities.WallTypes;
 import tendiwa.core.*;
 import tendiwa.locationFeatures.FeatureForest;
-import tendiwa.resources.FloorTypes;
-import tendiwa.resources.WallTypes;
 
 import java.util.Set;
 
@@ -25,9 +25,9 @@ public boolean meetsRequirements(Set<LocationFeature> features) {
 public void draw(Location location, LocationPlace place) {
 	int width = place.width;
 	int height = place.height;
-	location.square(0, 0, width, height, FloorTypes.grass, true);
+	location.square(0, 0, width, height, FloorTypes.GRASS, true);
 //	location.square(0, 0, width, height, WallTypes.wall_grey_stone, false);
-	location.square(40, 15, 15, 15, FloorTypes.stone, true);
+	location.square(40, 15, 15, 15, FloorTypes.STONE, true);
 	HelperCoastline.INSTANCE.draw(location, place);
 //	location.square(1, 1, width - 2, height - 2, ObjectTypes.wall_grey_stone, false);
 //	location.line(1, 1, width - 3, height - 3, ObjectTypes.wall_grey_stone);
@@ -38,7 +38,7 @@ public void draw(Location location, LocationPlace place) {
 		.place(recursivelySplitRec(20, 20).minWidth(2).borderWidth(1), unitedWith(LAST_RECTANGLE).fromSide(W).align(N))
 		.done();
 	for (EnhancedRectangle r : rs) {
-		location.fillRectangle(r, WallTypes.wall_grey_stone);
+		location.fillRectangle(r, WallTypes.GREY_STONE);
 	}
 	EnhancedRectangle rectangle = new EnhancedRectangle(20, 20, 20, 30);
 	location

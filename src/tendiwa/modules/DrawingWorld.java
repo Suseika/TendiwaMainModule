@@ -23,13 +23,13 @@ public static DrawingAlgorithm<World> defaultAlgorithm() {
 			drawRectangle(new Rectangle(0, 0, width, height), Color.BLACK);
 			for (int y = 0; y < height; y++) {
 				for (int x = 0; x < width; x++) {
-					FloorType floorType = FloorType.getById(defaultPlane.getFloor(x, y));
-					WallType wallType = WallType.getById(defaultPlane.getWall(x, y));
+					FloorType floorType = defaultPlane.getFloor(x, y);
+					WallType wallType = defaultPlane.getWall(x, y);
 					if (defaultPlane.getCharacter(x, y) != null) {
 						drawPoint(x, y, Color.YELLOW);
 					} else if (defaultPlane.hasAnyItems(x, y)) {
 						drawPoint(x, y, Color.ORANGE);
-					} else if (wallType == WallType.NO_WALL) {
+					} else if (wallType == null) {
 						// Draw floor
 						if (floorType.isLiquid()) {
 							drawPoint(x, y, new Color(50, 50, 180));

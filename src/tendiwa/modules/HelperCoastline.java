@@ -1,15 +1,15 @@
 package tendiwa.modules;
 
+import org.tendiwa.entities.FloorTypes;
 import tendiwa.core.*;
 import tendiwa.locationFeatures.FeatureOcean;
-import tendiwa.resources.FloorTypes;
 
 public enum HelperCoastline implements LocationHelper {
 	INSTANCE;
 
 @Override
 public void draw(Location location, LocationPlace place) {
-	location.square(5, 5, 5, 5, FloorTypes.water);
+	location.square(5, 5, 5, 5, FloorTypes.WATER);
 	// Transition to oceans
 	int diffusionRadius = 10;
 	for (LocationNeighborship neighborship : place.getNeighborships()) {
@@ -32,7 +32,7 @@ public void draw(Location location, LocationPlace place) {
 			.setRectangle(borderRectangle)
 			.setDepth(diffusionRadius)
 			.addFromDirection(neighborship.getSide())
-			.setFrom(FloorTypes.water)
+			.setFrom(FloorTypes.WATER)
 			.build();
 
 	}

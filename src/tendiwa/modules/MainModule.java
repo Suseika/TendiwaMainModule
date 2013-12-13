@@ -5,6 +5,7 @@ import org.tendiwa.entities.ItemsTypes;
 import org.tendiwa.entities.Spells;
 import tendiwa.core.Character;
 import tendiwa.core.*;
+import tendiwa.core.meta.Condition;
 import tendiwa.drawing.*;
 
 import java.awt.*;
@@ -52,6 +53,12 @@ public World createWorld() {
 	playerCharacter.getItem(ItemsTypes.ironHelm);
 	playerCharacter.learnSpell(Spells.FIREBALL);
 	playerCharacter.learnSpell(Spells.BLINK);
+	playerCharacter.wield(playerCharacter.getInventory().getItem(new Condition<Item>() {
+		@Override
+		public boolean check(Item item) {
+			return item.getType() == ItemsTypes.shortBow;
+		}
+	}));
 	return world;
 }
 }

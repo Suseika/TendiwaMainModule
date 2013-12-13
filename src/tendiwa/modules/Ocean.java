@@ -1,8 +1,8 @@
 package tendiwa.modules;
 
+import org.tendiwa.entities.FloorTypes;
 import tendiwa.core.*;
 import tendiwa.locationFeatures.FeatureOcean;
-import tendiwa.resources.FloorTypes;
 
 import java.util.Set;
 
@@ -22,7 +22,7 @@ public boolean meetsRequirements(Set<LocationFeature> features) {
 public void draw(Location location, LocationPlace place) {
 	int width = place.width;
 	int height = place.height;
-	location.square(0, 0, width, height, FloorTypes.water, true);
+	location.square(0, 0, width, height, FloorTypes.WATER, true);
 }
 
 @Override

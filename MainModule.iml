@@ -28,6 +28,31 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx.jar!/" />
+          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-setup.jar!/" />
+          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-openal.jar!/" />
+          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-natives.jar!/" />
+          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-setup-ui.jar!/" />
+          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-backend-gwt.jar!/" />
+          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-backend-jglfw.jar!/" />
+          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-backend-lwjgl.jar!/" />
+          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-backend-robovm.jar!/" />
+          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-backend-android.jar!/" />
+          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-backend-jglfw-natives.jar!/" />
+          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-backend-lwjgl-natives.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="file://$MODULE_DIR$/../libs/libgdx/docs/api" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../libs/libgdx/sources/gdx-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/../libs/libgdx/sources/gdx-backend-lwjgl-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>
 

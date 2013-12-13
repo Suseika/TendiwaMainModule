@@ -4,12 +4,11 @@ import com.google.common.collect.ImmutableSet;
 import org.tendiwa.entities.Materials;
 import tendiwa.core.ApparelSlot;
 import tendiwa.core.Material;
-import tendiwa.core.UniqueItemType;
 import tendiwa.core.Wearable;
 
 import java.util.Collection;
 
-public class IronHelm extends UniqueItemType implements Wearable {
+public class IronHelm implements Wearable {
 ImmutableSet<ApparelSlot> slots = ImmutableSet.of(ApparelSlot.HEADGEAR);
 
 public IronHelm() {
@@ -33,6 +32,11 @@ public double getWeight() {
 @Override
 public double getVolume() {
 	return 100;
+}
+
+@Override
+public boolean isStackable() {
+	return false;
 }
 
 @Override

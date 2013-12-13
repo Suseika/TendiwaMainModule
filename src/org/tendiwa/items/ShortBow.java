@@ -3,7 +3,7 @@ package org.tendiwa.items;
 import org.tendiwa.entities.Materials;
 import tendiwa.core.*;
 
-public class ShortBow extends UniqueItemType implements RangedWeapon {
+public class ShortBow implements RangedWeapon {
 public ShortBow() {
 }
 
@@ -25,6 +25,11 @@ public double getWeight() {
 @Override
 public double getVolume() {
 	return 200;
+}
+
+@Override
+public boolean isStackable() {
+	return false;
 }
 
 @Override

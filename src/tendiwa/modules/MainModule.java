@@ -1,7 +1,8 @@
 package tendiwa.modules;
 
 import org.tendiwa.entities.Characters;
-import org.tendiwa.entities.Items;
+import org.tendiwa.entities.ItemsTypes;
+import org.tendiwa.entities.Spells;
 import tendiwa.core.Character;
 import tendiwa.core.*;
 import tendiwa.drawing.*;
@@ -39,16 +40,18 @@ public World createWorld() {
 	World world = World.create(new SuseikaWorld(), 400, 300);
 	Character playerCharacter = world.createCharacter(120, 130, Characters.human, "Suseika");
 	world.setPlayerCharacter(playerCharacter);
-	playerCharacter.getItem(Items.shortBow);
-	playerCharacter.getItem(Items.shortBow);
-	playerCharacter.getItem(Items.shortBow);
-	playerCharacter.getItem(Items.shortBow);
-	playerCharacter.getItem(Items.shortBow);
-	playerCharacter.getItem(Items.shortBow);
-	playerCharacter.getItem(Items.shortBow);
-	playerCharacter.getItem(Items.ironArmor);
-	playerCharacter.getItem(Items.woodenArrow, 100);
-	playerCharacter.getItem(Items.ironHelm);
+	playerCharacter.getItem(ItemsTypes.shortBow);
+	playerCharacter.getItem(ItemsTypes.shortBow);
+	playerCharacter.getItem(ItemsTypes.shortBow);
+	playerCharacter.getItem(ItemsTypes.shortBow);
+	playerCharacter.getItem(ItemsTypes.shortBow);
+	playerCharacter.getItem(ItemsTypes.shortBow);
+	playerCharacter.getItem(ItemsTypes.shortBow);
+	playerCharacter.getItem(ItemsTypes.ironArmor);
+	playerCharacter.getItem(ItemsTypes.woodenArrow, 100);
+	playerCharacter.getItem(ItemsTypes.ironHelm);
+	playerCharacter.learnSpell(Spells.FIREBALL);
+	playerCharacter.learnSpell(Spells.BLINK);
 	return world;
 }
 }

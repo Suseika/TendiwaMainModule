@@ -4,9 +4,8 @@ import org.tendiwa.entities.Materials;
 import tendiwa.core.AmmunitionType;
 import tendiwa.core.Material;
 import tendiwa.core.Shootable;
-import tendiwa.core.StackableItemType;
 
-public class WoodenArrow extends StackableItemType implements Shootable {
+public class WoodenArrow implements Shootable {
 @Override
 public Material getMaterial() {
 	return Materials.wood;

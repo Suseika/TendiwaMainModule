@@ -2,16 +2,16 @@ package org.tendiwa.entities;
 
 import org.tendiwa.events.EventExplosion;
 import org.tendiwa.events.EventProjectileFly;
-import tendiwa.core.Character;
 import tendiwa.core.*;
+import tendiwa.core.Character;
 
 public enum Spells implements Spell {
 	BLINK() {
 		@Override
-		public SpellToCell getAction() {
-			return new SpellToCell() {
+		public ActionToCell getAction() {
+			return new ActionToCell() {
 				@Override
-				public void effect(Character caster, int x, int y) {
+				public void act(Character caster, int x, int y) {
 					caster.move(x, y, MovingStyle.BLINK);
 				}
 			};
@@ -30,10 +30,10 @@ public enum Spells implements Spell {
 	},
 	FIREBALL() {
 		@Override
-		public SpellTargetType getAction() {
-			return new SpellToCell() {
+		public ActionTargetType getAction() {
+			return new ActionToCell() {
 				@Override
-				public void effect(Character caster, int x, int y) {
+				public void act(Character caster, int x, int y) {
 					synchronized (Character.renderLockObject) {
 						Tendiwa.getClientEventManager().event(new EventProjectileFly(
 							new SpellProjectile(getResourceName()),
@@ -61,6 +61,5 @@ public enum Spells implements Spell {
 		public String getResourceName() {
 			return "fireball";
 		}
-
-	};
+	},
 }

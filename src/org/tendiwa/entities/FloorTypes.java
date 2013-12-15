@@ -90,6 +90,17 @@ public enum FloorTypes implements FloorType {
 		public String getResourceName() {
 			return "swamp";
 		}
-	};
+	},
+EMPTINESS {
+	@Override
+	public boolean isLiquid() {
+		return false;
+	}
+
+	@Override
+	public String getResourceName() {
+		return "emptiness";
+	}
+}
 
 }

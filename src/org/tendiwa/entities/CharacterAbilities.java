@@ -28,7 +28,6 @@ public enum CharacterAbilities implements CharacterAbility {
 				@Override
 				public void act(Character actor) {
 					actor.getTimeStream().makeSound(actor.getX(), actor.getY(), Sounds.shout);
-					Tendiwa.getClientEventManager().event(new EventSound(Sounds.shout, actor.getX(), actor.getY()));
 				}
 			};
 		}

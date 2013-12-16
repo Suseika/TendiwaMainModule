@@ -1,6 +1,6 @@
 package tendiwa.modules;
 
-import org.tendiwa.entities.Characters;
+import org.tendiwa.entities.CharacterTypes;
 import org.tendiwa.entities.ItemsTypes;
 import org.tendiwa.entities.Spells;
 import tendiwa.core.Character;
@@ -39,10 +39,10 @@ public static void main(String[] args) {
 @Override
 public World createWorld() {
 	World world = World.create(new SuseikaWorld(), 400, 300);
-	Character playerCharacter = world.createPlayerCharacter(120, 130, Characters.human, "Suseika");
+	Character playerCharacter = world.createPlayerCharacter(120, 130, CharacterTypes.human, "Suseika");
 	world.setPlayerCharacter(playerCharacter);
-	world.createCharacter(125, 131, Characters.bear, "mishka");
-	world.createCharacter(125, 132, Characters.bear, "mishka");
+	world.createCharacter(125, 131, CharacterTypes.bear, "mishka");
+	world.createCharacter(125, 132, CharacterTypes.bear, "mishka");
 	playerCharacter.getItem(ItemsTypes.shortBow);
 	playerCharacter.getItem(ItemsTypes.shortBow);
 	playerCharacter.getItem(ItemsTypes.shortBow);

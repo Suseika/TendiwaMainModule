@@ -44,6 +44,16 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="liblexeme" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/data" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

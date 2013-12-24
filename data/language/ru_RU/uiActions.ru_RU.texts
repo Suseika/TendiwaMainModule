@@ -1,0 +1,78 @@
+action.cameraMoveWest() {
+    Двигать камеру на запад
+}
+action.cameraMoveEast() {
+    Двигать камеру на восток
+}
+action.cameraMoveNorth() {
+    Двигать камеру на север
+}
+action.cameraMoveSouth() {
+    Двигать камеру на юг
+}
+action.stepNorth() {
+    Идти на север
+}
+action.stepSouth() {
+    Идти на юг
+}
+action.stepEast() {
+    Идти на восток
+}
+action.stepWest() {
+    Идти на запад
+}
+action.stepNorthEast() {
+    Идти на северо-восток
+}
+action.stepNorthWest() {
+    Идти на северо-запад
+}
+action.stepSouthEast() {
+    Идти на юго-восток
+}
+action.stepSouthWest() {
+    Идти на юго-запад
+}
+action.actionsMenu() {
+    Меню действий
+}
+action.toggleWorldMapScreen() {
+    Вкл/Выкл карту мира
+}
+action.toggleAnimations() {
+    Вкл/Выкл анимации
+}
+action.toggleStatusBar() {
+    Вкл/Выкл информацию о рендеринге
+}
+action.pickUp() {
+    Поднять предмет с пола
+}
+action.quiver() {
+    Выбрать снаряды
+}
+action.throw() {
+    Метнуть
+}
+action.fire() {
+    Стрелять из оружия дальнего боя
+}
+action.wield() {
+    Взять в руку
+}
+action.wear() {
+    Надеть
+}
+action.shout() {
+    Крикнуть
+}
+action.castMenu() {
+    Заклинания
+}
+action.idle() {
+    Ждать один ход
+}
+action.key_hints() {
+    Подсказки к комбинациям
+}

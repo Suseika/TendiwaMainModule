@@ -51,7 +51,7 @@ public World createWorld() {
 	playerCharacter.getItem(ItemsTypes.shortBow);
 	playerCharacter.getItem(ItemsTypes.shortBow);
 	playerCharacter.getItem(ItemsTypes.ironArmor);
-	playerCharacter.getItem(ItemsTypes.woodenArrow, 100);
+	playerCharacter.getItem(ItemsTypes.woodenArrow, 94);
 	playerCharacter.getItem(ItemsTypes.ironHelm);
 	playerCharacter.learnSpell(Spells.FIREBALL);
 	playerCharacter.learnSpell(Spells.BLINK);

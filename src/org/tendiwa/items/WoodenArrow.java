@@ -35,4 +35,9 @@ public boolean isStackable() {
 public AmmunitionType getAmmunitionType() {
 	return AmmunitionTypes.arrow;
 }
+
+@Override
+public String getLocalizationId() {
+	return getResourceName();
+}
 }

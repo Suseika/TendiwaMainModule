@@ -27,7 +27,7 @@ public enum CharacterAbilities implements CharacterAbility {
 			return new ActionWithoutTarget() {
 				@Override
 				public void act(Character actor) {
-					actor.getTimeStream().makeSound(actor.getX(), actor.getY(), Sounds.shout);
+					actor.getTimeStream().makeSound(actor.getX(), actor.getY(), Sounds.shout, actor);
 				}
 			};
 		}

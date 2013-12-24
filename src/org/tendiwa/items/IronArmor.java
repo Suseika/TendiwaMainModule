@@ -40,4 +40,9 @@ public boolean isStackable() {
 public Collection<ApparelSlot> getSlots() {
 	return of;
 }
+
+@Override
+public String getLocalizationId() {
+	return getResourceName();
+}
 }

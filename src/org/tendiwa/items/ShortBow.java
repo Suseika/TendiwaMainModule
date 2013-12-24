@@ -41,4 +41,9 @@ public Handedness getHandedness() {
 public AmmunitionType getAmmunitionType() {
 	return AmmunitionTypes.arrow;
 }
+
+@Override
+public String getLocalizationId() {
+	return getResourceName();
+}
 }

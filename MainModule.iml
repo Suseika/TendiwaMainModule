@@ -54,6 +54,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="artemis" level="project" />
   </component>
 </module>
 

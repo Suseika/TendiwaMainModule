@@ -38,7 +38,7 @@ public static DrawingAlgorithm<World> defaultAlgorithm() {
 						}
 					} else {
 						// Draw wall
-						drawPoint(x, y, Color.GRAY);
+//						drawPoint(x, y, Color.GRAY);
 					}
 				}
 			}

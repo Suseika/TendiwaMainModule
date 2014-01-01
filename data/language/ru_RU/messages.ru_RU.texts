@@ -6,3 +6,7 @@ log.make_sound(shouter, action) {
 	// Медведь рычит!
 	[Shouter] [action][III]!
 }
+log.death(dier) {
+    // Медведь умирает
+    [Dier] умирает.
+}

@@ -32,6 +32,7 @@ public enum WallTypes implements WallType {
 		public String getResourceName() {
 			return "wall_cave";
 		}
-	}
+	};
+public static final WallType VOID = WallType.VOID;
 
 }

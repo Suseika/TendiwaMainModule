@@ -12,7 +12,7 @@ public class SuseikaWorld implements WorldDrawer {
 public void drawWorld(WorldRectangleBuilder builder, int width, int height) {
 	final EnhancedRectangle worldRectangle = new EnhancedRectangle(0, 0, width, height);
 	builder
-		.place(recursivelySplitRec(width, height).minWidth(70).borderWidth(0), atPoint(0,0))
+		.place(recursivelySplitRec(width, height).minWidth(15).borderWidth(0), atPoint(0,0))
 		.findAllRectangles(new FindCriteria() {
 			@Override
 			public boolean check(EnhancedRectangle rectangle, RectangleSystem rs, RectangleSystemBuilder builder) {

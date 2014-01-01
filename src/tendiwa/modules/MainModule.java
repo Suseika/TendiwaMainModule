@@ -9,6 +9,7 @@ import tendiwa.core.meta.Condition;
 import tendiwa.drawing.*;
 
 import java.awt.*;
+import java.io.IOException;
 
 import static tendiwa.core.DSL.canvas;
 
@@ -25,14 +26,16 @@ public MainModule() {
 	DefaultDrawingAlgorithms.register(Chunk.class, DrawingTerrain.defaultAlgorithm());
 	DefaultDrawingAlgorithms.register(World.class, DrawingWorld.defaultAlgorithm());
 
-	ResourcesRegistry.registerDrawer(new TestLocationDrawer());
+//	ResourcesRegistry.registerDrawer(new TestLocationDrawer());
+	ResourcesRegistry.registerDrawer(new BuildingsLocationDrawer());
 //	ResourcesRegistry.registerDrawer(new Forest());
 	ResourcesRegistry.registerDrawer(new Ocean());
 }
 
 public static void main(String[] args) {
+	Tendiwa.initWithDummyClient();
 	MainModule mainModule = new MainModule();
-	TestCanvas canvas = canvas();
+	TestCanvas canvas = canvas(2);
 	canvas.draw(mainModule.createWorld());
 }
 
@@ -41,17 +44,17 @@ public World createWorld() {
 	World world = World.create(new SuseikaWorld(), 400, 300);
 	Character playerCharacter = world.createPlayerCharacter(120, 130, CharacterTypes.human, "Suseika");
 	world.setPlayerCharacter(playerCharacter);
-	world.createCharacter(125, 131, CharacterTypes.bear, "mishka");
-	world.createCharacter(125, 132, CharacterTypes.bear, "mishka");
-	playerCharacter.getItem(ItemsTypes.shortBow);
-	playerCharacter.getItem(ItemsTypes.shortBow);
-	playerCharacter.getItem(ItemsTypes.shortBow);
-	playerCharacter.getItem(ItemsTypes.shortBow);
-	playerCharacter.getItem(ItemsTypes.shortBow);
-	playerCharacter.getItem(ItemsTypes.shortBow);
+//	world.createCharacter(125, 131, CharacterTypes.bear, "mishka");
+//	world.createCharacter(125, 132, CharacterTypes.bear, "mishka");
+//	playerCharacter.getItem(ItemsTypes.shortBow);
+//	playerCharacter.getItem(ItemsTypes.shortBow);
+//	playerCharacter.getItem(ItemsTypes.shortBow);
+//	playerCharacter.getItem(ItemsTypes.shortBow);
+//	playerCharacter.getItem(ItemsTypes.shortBow);
+//	playerCharacter.getItem(ItemsTypes.shortBow);
 	playerCharacter.getItem(ItemsTypes.shortBow);
 	playerCharacter.getItem(ItemsTypes.ironArmor);
-	playerCharacter.getItem(ItemsTypes.woodenArrow, 94);
+	playerCharacter.getItem(ItemsTypes.woodenArrow, 10);
 	playerCharacter.getItem(ItemsTypes.ironHelm);
 	playerCharacter.learnSpell(Spells.FIREBALL);
 	playerCharacter.learnSpell(Spells.BLINK);

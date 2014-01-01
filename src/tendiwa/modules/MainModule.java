@@ -45,8 +45,8 @@ public World createWorld() {
 	World world = World.create(new SuseikaWorld(), 400, 300);
 	Character playerCharacter = world.createPlayerCharacter(120, 130, CharacterTypes.human, "Suseika");
 	world.setPlayerCharacter(playerCharacter);
-	world.createCharacter(125, 131, CharacterTypes.bear, "mishka");
-	world.createCharacter(125, 132, CharacterTypes.bear, "mishka");
+//	world.createCharacter(125, 131, CharacterTypes.bear, "mishka");
+//	world.createCharacter(125, 132, CharacterTypes.bear, "mishka");
 //	playerCharacter.getItem(ItemsTypes.shortBow);
 //	playerCharacter.getItem(ItemsTypes.shortBow);
 //	playerCharacter.getItem(ItemsTypes.shortBow);

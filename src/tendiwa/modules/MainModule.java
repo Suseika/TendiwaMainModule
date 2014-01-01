@@ -24,7 +24,7 @@ public MainModule() {
 		DrawingRectangleSidePiece.withColor(Color.MAGENTA));
 	DefaultDrawingAlgorithms.register(Segment.class, DrawingSegment.withColor(Color.BLUE));
 	DefaultDrawingAlgorithms.register(Chunk.class, DrawingTerrain.defaultAlgorithm());
-	DefaultDrawingAlgorithms.register(World.class, DrawingWorld.defaultAlgorithm());
+	DefaultDrawingAlgorithms.register(World.class, DrawingWorld.level(0));
 
 //	ResourcesRegistry.registerDrawer(new TestLocationDrawer());
 	ResourcesRegistry.registerDrawer(new BuildingsLocationDrawer());
@@ -36,7 +36,8 @@ public static void main(String[] args) {
 	Tendiwa.initWithDummyClient();
 	MainModule mainModule = new MainModule();
 	TestCanvas canvas = canvas(2);
-	canvas.draw(mainModule.createWorld());
+	Tendiwa.createWorld(mainModule);
+	canvas.draw(Tendiwa.getWorld());
 }
 
 @Override
@@ -44,8 +45,8 @@ public World createWorld() {
 	World world = World.create(new SuseikaWorld(), 400, 300);
 	Character playerCharacter = world.createPlayerCharacter(120, 130, CharacterTypes.human, "Suseika");
 	world.setPlayerCharacter(playerCharacter);
-//	world.createCharacter(125, 131, CharacterTypes.bear, "mishka");
-//	world.createCharacter(125, 132, CharacterTypes.bear, "mishka");
+	world.createCharacter(125, 131, CharacterTypes.bear, "mishka");
+	world.createCharacter(125, 132, CharacterTypes.bear, "mishka");
 //	playerCharacter.getItem(ItemsTypes.shortBow);
 //	playerCharacter.getItem(ItemsTypes.shortBow);
 //	playerCharacter.getItem(ItemsTypes.shortBow);

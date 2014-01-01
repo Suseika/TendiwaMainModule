@@ -11,10 +11,14 @@ import java.awt.*;
 public class DrawingWorld {
 
 public static DrawingAlgorithm<World> defaultAlgorithm() {
+	return DrawingWorld.level(0);
+}
+
+public static DrawingAlgorithm<World> level(final int level) {
 	return new DrawingAlgorithm<World>() {
 		@Override
 		public void draw(World world) {
-			HorizontalPlane defaultPlane = world.getDefaultPlane();
+			HorizontalPlane defaultPlane = world.getPlane(level);
 			int width = world.getWidth();
 			int height = world.getHeight();
 			if (width > canvas.width || height > canvas.height) {
@@ -29,16 +33,20 @@ public static DrawingAlgorithm<World> defaultAlgorithm() {
 						drawPoint(x, y, Color.YELLOW);
 					} else if (defaultPlane.hasAnyItems(x, y)) {
 						drawPoint(x, y, Color.ORANGE);
+					} else if (defaultPlane.hasObject(x, y)) {
+						drawPoint(x, y, Color.PINK);
 					} else if (wallType == null) {
 						// Draw floor
-						if (floorType.isLiquid()) {
+						if (floorType == null) {
+							drawPoint(x, y, Color.LIGHT_GRAY);
+						} else if (floorType.isLiquid()) {
 							drawPoint(x, y, new Color(50, 50, 180));
 						} else {
 							drawPoint(x, y, Color.GREEN);
 						}
 					} else {
 						// Draw wall
-//						drawPoint(x, y, Color.GRAY);
+						drawPoint(x, y, Color.GRAY);
 					}
 				}
 			}

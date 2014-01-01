@@ -1,6 +1,7 @@
 package tendiwa.modules;
 
 import org.tendiwa.entities.FloorTypes;
+import org.tendiwa.entities.ObjectTypes;
 import org.tendiwa.entities.WallTypes;
 import tendiwa.core.*;
 
@@ -18,7 +19,18 @@ public void draw(Location location, LocationPlace place) {
 	EnhancedRectangle rectangle = new EnhancedRectangle(2, 3, 10, 11);
 	location.square(rectangle, WallTypes.GREY_STONE, false);
 	location.square(rectangle, FloorTypes.STONE, true);
-	location.place(WallTypes.VOID, rectangle.getPointOnSide(CardinalDirection.S, 2));
+	EnhancedPoint pointOnSide = rectangle.getPointOnSide(CardinalDirection.S, 2);
+	location.place(WallTypes.VOID, pointOnSide);
+	location.place(
+		ObjectTypes.LADDER_UP,
+		rectangle
+			.getPointOnSide(CardinalDirection.S, 3)
+			.moveToSide(CardinalDirection.N)
+	);
+	location.changePlane(1);
+	EnhancedRectangle smallerRectangle = rectangle.shrink(1);
+	location.square(smallerRectangle, WallTypes.GREY_STONE, false);
+	location.square(smallerRectangle, FloorTypes.STONE, true);
 
 }
 

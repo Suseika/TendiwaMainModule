@@ -32,11 +32,6 @@ public enum ObjectTypes implements ObjectType, Usable {
 		}
 
 		@Override
-		public ObjectClass getObjectClass() {
-			return ObjectClass.DEFAULT;
-		}
-
-		@Override
 		public String getResourceName() {
 			return "ladder";
 		}

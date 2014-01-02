@@ -1,9 +1,6 @@
 package tendiwa.modules;
 
-import tendiwa.core.FloorType;
-import tendiwa.core.HorizontalPlane;
-import tendiwa.core.WallType;
-import tendiwa.core.World;
+import tendiwa.core.*;
 import tendiwa.drawing.DrawingAlgorithm;
 
 import java.awt.*;
@@ -28,14 +25,14 @@ public static DrawingAlgorithm<World> level(final int level) {
 			for (int y = 0; y < height; y++) {
 				for (int x = 0; x < width; x++) {
 					FloorType floorType = defaultPlane.getFloor(x, y);
-					WallType wallType = defaultPlane.getWall(x, y);
+					GameObject wallType = defaultPlane.getGameObject(x, y);
 					if (defaultPlane.getCharacter(x, y) != null) {
 						drawPoint(x, y, Color.YELLOW);
 					} else if (defaultPlane.hasAnyItems(x, y)) {
 						drawPoint(x, y, Color.ORANGE);
 					} else if (defaultPlane.hasObject(x, y)) {
 						drawPoint(x, y, Color.PINK);
-					} else if (wallType == null) {
+					} else if (wallType instanceof WallType) {
 						// Draw floor
 						if (floorType == null) {
 							drawPoint(x, y, Color.LIGHT_GRAY);

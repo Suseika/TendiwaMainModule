@@ -1,6 +1,8 @@
 package org.tendiwa.entities;
 
 import com.google.common.collect.ImmutableSet;
+import org.tendiwa.events.EventItemAppear;
+import org.tendiwa.events.EventProjectileFly;
 import tendiwa.core.*;
 import tendiwa.core.Character;
 
@@ -8,20 +10,46 @@ import java.util.Collection;
 
 public enum ObjectTypes implements ObjectType, Usable {
 	LADDER_UP {
-		private Collection<? extends ActionTargetType> actions = ImmutableSet.of(
-			new ActionWithoutTarget() {
+		private Collection<? extends CharacterAbility> actions = ImmutableSet.of(
+			new CharacterAbility<ActionWithoutTarget>() {
+
 				@Override
-				public void act(Character actor) {
-					actor.getTimeStream().makeSound(actor.getX(), actor.getY(), Sounds.shout, actor);
+				public ActionWithoutTarget getAction() {
+					return new ActionWithoutTarget() {
+						@Override
+						public void act(Character actor) {
+
+							actor.getTimeStream().makeSound(actor.getX(), actor.getY(), Sounds.shout, actor);
+						}
+					};
+				}
+
+				@Override
+				public String getResourceName() {
+					return "objects.actions.ladder.sound";
 				}
 			},
-			new ActionToCell() {
+			new CharacterAbility<ActionToCell>() {
+
 				@Override
-				public void act(Character actor, int x, int y) {
-					synchronized (Character.renderLockObject) {
-						EntityPlacer.place(actor.getPlane(), ItemsTypes.ironArmor, x, y);
-					}
-					Tendiwa.waitForAnimationToStartAndComplete();
+				public ActionToCell getAction() {
+					return new ActionToCell() {
+						@Override
+						public void act(Character actor, int x, int y) {
+							System.out.println("пизда");
+							UniqueItem uniqueItem = new UniqueItem(ItemsTypes.ironHelm);
+							synchronized (Character.renderLockObject) {
+								actor.getPlane().addItem(uniqueItem, x, y);
+								Tendiwa.getClientEventManager().event(new EventItemAppear(uniqueItem, x, y));
+							}
+							Tendiwa.waitForAnimationToStartAndComplete();
+						}
+					};
+				}
+
+				@Override
+				public String getResourceName() {
+					return "objects.actions.ladder.item";
 				}
 			}
 		);
@@ -37,7 +65,7 @@ public enum ObjectTypes implements ObjectType, Usable {
 		}
 
 		@Override
-		public Collection<? extends ActionTargetType> getActions() {
+		public Collection<? extends CharacterAbility> getUsages() {
 			return actions;
 		}
 	}

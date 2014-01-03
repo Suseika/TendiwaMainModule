@@ -5,9 +5,10 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/resources" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="module" module-name="tendiwa" />
     <orderEntry type="module-library">
       <library>
@@ -19,31 +20,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="guava-15.0" level="project" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx.jar!/" />
-          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-setup.jar!/" />
-          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-openal.jar!/" />
-          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-natives.jar!/" />
-          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-setup-ui.jar!/" />
-          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-backend-gwt.jar!/" />
-          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-backend-jglfw.jar!/" />
-          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-backend-lwjgl.jar!/" />
-          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-backend-robovm.jar!/" />
-          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-backend-android.jar!/" />
-          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-backend-jglfw-natives.jar!/" />
-          <root url="jar://$MODULE_DIR$/../libs/libgdx/gdx-backend-lwjgl-natives.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="file://$MODULE_DIR$/../libs/libgdx/docs/api" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/../libs/libgdx/sources/gdx-sources.jar!/" />
-          <root url="jar://$MODULE_DIR$/../libs/libgdx/sources/gdx-backend-lwjgl-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
     <orderEntry type="library" name="liblexeme" level="project" />
     <orderEntry type="module-library">
       <library>
@@ -54,7 +30,8 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="artemis" level="project" />
+    <orderEntry type="library" name="groovy-all" level="project" />
+    <orderEntry type="library" name="groovy-1.8.6" level="application" />
   </component>
 </module>
 

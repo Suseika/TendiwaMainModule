@@ -26,8 +26,8 @@ public MainModule() {
 	DefaultDrawingAlgorithms.register(Chunk.class, DrawingTerrain.defaultAlgorithm());
 	DefaultDrawingAlgorithms.register(World.class, DrawingWorld.level(0));
 
-//	ResourcesRegistry.registerDrawer(new TestLocationDrawer());
-	ResourcesRegistry.registerDrawer(new BuildingsLocationDrawer());
+	ResourcesRegistry.registerDrawer(new TestLocationDrawer());
+//	ResourcesRegistry.registerDrawer(new BuildingsLocationDrawer());
 //	ResourcesRegistry.registerDrawer(new Forest());
 	ResourcesRegistry.registerDrawer(new Ocean());
 }

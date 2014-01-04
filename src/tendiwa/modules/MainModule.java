@@ -1,16 +1,9 @@
 package tendiwa.modules;
 
-import groovy.lang.Binding;
-import groovy.lang.GroovyClassLoader;
-import groovy.lang.GroovyCodeSource;
-import groovy.lang.GroovyShell;
-import org.tendiwa.entities.Spells;
 import tendiwa.core.*;
 import tendiwa.drawing.*;
 
 import java.awt.*;
-import java.io.IOException;
-import java.net.URL;
 
 public class MainModule extends Module implements WorldProvider {
 
@@ -26,9 +19,10 @@ public MainModule() {
 	DefaultDrawingAlgorithms.register(World.class, DrawingWorld.level(0));
 
 //	ResourcesRegistry.registerDrawer(new TestLocationDrawer());
-	ResourcesRegistry.registerDrawer(new BuildingsLocationDrawer());
 //	ResourcesRegistry.registerDrawer(new Forest());
-	ResourcesRegistry.registerDrawer(new Ocean());
+
+//	ResourcesRegistry.registerDrawer(new BuildingsLocationDrawer());
+//	ResourcesRegistry.registerDrawer(new Ocean());
 }
 
 public static void main(String[] args) {
@@ -37,12 +31,11 @@ public static void main(String[] args) {
 //	TestCanvas canvas = canvas(2);
 	Tendiwa.createWorld(mainModule);
 //	canvas.draw(Tendiwa.getWorld());
-	mainModule.testScript();
 }
 
 @Override
 public World createWorld() {
-	World world = World.create(new SuseikaWorld(), 400, 300);
+//	World world = World.create(new SuseikaWorld(), 400, 300);
 //	Character playerCharacter = world.createPlayerCharacter(120, 130, CharacterTypes.human, "Suseika");
 //	world.setPlayerCharacter(playerCharacter);
 
@@ -67,21 +60,6 @@ public World createWorld() {
 //			return item.getType() == ItemsTypes.shortBow;
 //		}
 //	}));
-	return world;
-}
-
-private void testScript() {
-	ClassLoader parentCl = MainModule.class.getClassLoader();
-	GroovyClassLoader gcl = new GroovyClassLoader(parentCl);
-	Class aClass;
-	URL resource;
-	resource = MainModule.class.getResource("/Test.groovy");
-	try {
-		Binding binding = new Binding();
-		binding.setVariable("penis", Spells.BLINK);
-		new GroovyShell(binding).evaluate(new GroovyCodeSource(resource));
-	} catch (IOException e) {
-		e.printStackTrace();
-	}
+	return null;
 }
 }

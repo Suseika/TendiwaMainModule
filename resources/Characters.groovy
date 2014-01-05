@@ -6,7 +6,7 @@ import tendiwa.core.*
 import static org.tendiwa.groovy.DSL.*
 
 newSoundType {
-    name "to shout"
+    name "shout"
     bass 30
     mid 90
     treble 40
@@ -26,12 +26,24 @@ newCharacterAbility {
 newCharacterAbility {
     name "objects.actions.ladder.item";
     action([act: { Character actor, int x, int y ->
-        UniqueItem uniqueItem = new UniqueItem(ItemsTypes.ironHelm);
+        UniqueItem uniqueItem = new UniqueItem(itemTypes.iron_helm);
         synchronized (Character.renderLockObject) {
             actor.getPlane().addItem(uniqueItem, x, y);
             Tendiwa.getClientEventManager().event(new EventItemAppear(uniqueItem, x, y));
         }
         Tendiwa.waitForAnimationToStartAndComplete();
+    }] as ActionToCell)
+}
+newCharacterAbility {
+    name "objects.actions.ladder.go_up"
+    action ([act: { Character actor ->
+        actor.moveByPlane(1);
+    }] as ActionWithoutTarget)
+}
+newCharacterAbility {
+    name "objects.actions.ladder.go_down"
+    action ([act: { Character actor ->
+        actor.moveByPlane(-1);
     }] as ActionWithoutTarget)
 }
 newCharacterAbility {
@@ -43,14 +55,17 @@ newCharacterAbility {
 newCharacterType {
     weight 100
     height 170
-    name "penisman"
+    name "human"
     aspects(CharacterAspect.HUMANOID, CharacterAspect.ROBOT)
+    maxHp 200
+    actions(characterAbilities.shout, characterAbilities.jump)
 }
 newCharacterType {
     weight 201
     height 202
     name "bear"
     aspects(CharacterAspect.ANIMAL)
+    maxHp 300
 }
 newSpell {
     name "blink"
@@ -84,6 +99,8 @@ newObjectType {
     passability Passability.NO
     action characterAbilities["objects.actions.ladder.sound"]
     action characterAbilities["objects.actions.ladder.item"]
+    action characterAbilities["objects.actions.ladder.go_up"]
+    action characterAbilities["objects.actions.ladder.go_down"]
 }
 newFloorType {
     name "water"
@@ -122,7 +139,7 @@ newFloorType {
     liquid false
 }
 newWallType {
-    name "grey_stone_wall"
+    name "wall_grey_stone"
 }
 newWallType {
     name "wooden_wall"
@@ -209,4 +226,3 @@ newItemType {
     volume 0.01
     isStackable true
 }
-println itemTypes.wooden_arrow.material.name

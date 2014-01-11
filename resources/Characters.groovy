@@ -5,6 +5,17 @@ import tendiwa.core.*
 
 import static org.tendiwa.groovy.DSL.*
 
+newBorderObjectType {
+    name "wall_grey_stone"
+}
+newBorderObjectType {
+    name "door_in_wall_grey_stone"
+    isDoor true
+}
+newBorderObjectType   {
+    name "window_in_wall_grey_stone"
+    isWindow true
+}
 newSoundType {
     name "shout"
     bass 30
@@ -36,13 +47,13 @@ newCharacterAbility {
 }
 newCharacterAbility {
     name "objects.actions.ladder.go_up"
-    action ([act: { Character actor ->
+    action([act: { Character actor ->
         actor.moveByPlane(1);
     }] as ActionWithoutTarget)
 }
 newCharacterAbility {
     name "objects.actions.ladder.go_down"
-    action ([act: { Character actor ->
+    action([act: { Character actor ->
         actor.moveByPlane(-1);
     }] as ActionWithoutTarget)
 }
@@ -92,6 +103,7 @@ newSpell {
         synchronized (Character.renderLockObject) {
             Tendiwa.getClientEventManager().event(new EventExplosion(x, y));
         }
+        Tendiwa.waitForAnimationToStartAndComplete();
     }] as ActionToCell)
 }
 newObjectType {

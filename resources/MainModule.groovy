@@ -39,7 +39,7 @@ public class MainModule extends Module implements WorldProvider {
     @Override
     public World createWorld() {
         World world = World.create(new SuseikaWorld(), 400, 300);
-        Character playerCharacter = world.createPlayerCharacter(120, 130, characters.human, "Suseika");
+        Character playerCharacter = world.createPlayerCharacter(15, 17, characters.human, "Suseika");
         world.setPlayerCharacter(playerCharacter);
 
 //        world.createCharacter(125, 131, characters.bear, "mishka");

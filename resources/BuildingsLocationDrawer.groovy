@@ -12,10 +12,9 @@ public class BuildingsLocationDrawer implements LocationDrawer {
     public void draw(Location location, LocationPlace place) {
         location.square(0, 0, location.getWidth(), location.getHeight(), floorTypes.ground, true);
         EnhancedRectangle rectangle = new EnhancedRectangle(2, 3, 10, 11);
-        location.square(rectangle, wallTypes.wall_grey_stone, false);
+        location.squareOfThin(rectangle, borderObjectTypes.wall_grey_stone);
         location.square(rectangle, floorTypes.stone, true);
         EnhancedPoint pointOnSide = rectangle.getPointOnSide(CardinalDirection.S, 2);
-        location.place(wallTypes.void, pointOnSide);
         def ladderCell = rectangle
                 .getPointOnSide(CardinalDirection.S, 3)
                 .moveToSide(CardinalDirection.N, 2)

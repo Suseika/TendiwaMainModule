@@ -1,3 +1,8 @@
+import org.tendiwa.core.Location
+import org.tendiwa.core.LocationDrawer
+import org.tendiwa.core.LocationFeature
+import org.tendiwa.core.LocationPlace
+import org.tendiwa.core.PathSegment
 import tendiwa.core.*
 
 import static org.tendiwa.groovy.DSL.getWallTypes;

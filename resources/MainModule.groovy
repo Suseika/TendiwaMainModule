@@ -1,8 +1,25 @@
+import org.tendiwa.core.Chunk
+import org.tendiwa.core.EnhancedRectangle
+import org.tendiwa.core.Item
+import org.tendiwa.core.Module
+import org.tendiwa.core.RectangleSidePiece
+import org.tendiwa.core.RectangleSystem
+import org.tendiwa.core.ResourcesRegistry
+import org.tendiwa.core.Segment
+import org.tendiwa.core.Tendiwa
+import org.tendiwa.core.World
+import org.tendiwa.core.WorldProvider
+import org.tendiwa.drawing.DefaultDrawingAlgorithms
+import org.tendiwa.drawing.DrawingRectangle
+import org.tendiwa.drawing.DrawingRectangleSidePiece
+import org.tendiwa.drawing.DrawingRectangleSystem
+import org.tendiwa.drawing.DrawingSegment
+import org.tendiwa.drawing.DrawingTerrain
 import tendiwa.core.*;
-import tendiwa.core.Character
-import tendiwa.core.meta.Condition;
+import org.tendiwa.core.Character
+import org.tendiwa.core.meta.Condition;
 import tendiwa.drawing.*
-import tendiwa.modules.DrawingWorld;
+import org.tendiwa.modules.DrawingWorld;
 
 import java.awt.*;
 import static org.tendiwa.groovy.DSL.*;
@@ -39,7 +56,7 @@ public class MainModule extends Module implements WorldProvider {
     @Override
     public World createWorld() {
         World world = World.create(new SuseikaWorld(), 400, 300);
-        Character playerCharacter = world.createPlayerCharacter(15, 17, characters.human, "Suseika");
+        Character playerCharacter = world.createPlayerCharacter(386, 17, characters.human, "Suseika");
         world.setPlayerCharacter(playerCharacter);
 
 //        world.createCharacter(125, 131, characters.bear, "mishka");

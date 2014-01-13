@@ -1,8 +1,14 @@
+import org.tendiwa.core.EnhancedRectangle
+import org.tendiwa.core.FindCriteria
+import org.tendiwa.core.RectangleSystem
+import org.tendiwa.core.RectangleSystemBuilder
+import org.tendiwa.core.WorldDrawer
+import org.tendiwa.core.WorldRectangleBuilder
 import tendiwa.core.*
-import tendiwa.locationFeatures.FeatureForest
-import tendiwa.locationFeatures.FeatureOcean
+import org.tendiwa.locationFeatures.FeatureForest
+import org.tendiwa.locationFeatures.FeatureOcean
 
-import static tendiwa.core.DSL.*
+import static org.tendiwa.core.DSL.*
 
 public class SuseikaWorld implements WorldDrawer {
 

@@ -1,6 +1,16 @@
-import org.tendiwa.events.EventExplosion
-import org.tendiwa.events.EventItemAppear
-import org.tendiwa.events.EventProjectileFly
+import org.tendiwa.core.ActionToCell
+import org.tendiwa.core.ActionWithoutTarget
+import org.tendiwa.core.ApparelSlot
+import org.tendiwa.core.CharacterAspect
+import org.tendiwa.core.EventExplosion
+import org.tendiwa.core.EventItemAppear
+import org.tendiwa.core.EventProjectileFly
+import org.tendiwa.core.Handedness
+import org.tendiwa.core.MovingStyle
+import org.tendiwa.core.Passability
+import org.tendiwa.core.SpellProjectile
+import org.tendiwa.core.Tendiwa
+import org.tendiwa.core.UniqueItem
 import tendiwa.core.*
 
 import static org.tendiwa.groovy.DSL.*
@@ -24,21 +34,21 @@ newSoundType {
 }
 newCharacterAbility {
     name "shout"
-    action([act: { Character actor ->
+    action([act: { org.tendiwa.core.Character actor ->
         actor.getTimeStream().makeSound(actor.getX(), actor.getY(), soundTypes.shout, actor)
     }] as ActionWithoutTarget)
 }
 newCharacterAbility {
     name "objects.actions.ladder.sound";
-    action([act: { Character actor ->
+    action([act: { org.tendiwa.core.Character actor ->
         actor.getTimeStream().makeSound(actor.getX(), actor.getY(), soundTypes.shout, actor);
     }] as ActionWithoutTarget)
 }
 newCharacterAbility {
     name "objects.actions.ladder.item";
-    action([act: { Character actor, int x, int y ->
+    action([act: { org.tendiwa.core.Character actor, int x, int y ->
         UniqueItem uniqueItem = new UniqueItem(itemTypes.iron_helm);
-        synchronized (Character.renderLockObject) {
+        synchronized (org.tendiwa.core.Character.renderLockObject) {
             actor.getPlane().addItem(uniqueItem, x, y);
             Tendiwa.getClientEventManager().event(new EventItemAppear(uniqueItem, x, y));
         }
@@ -47,19 +57,19 @@ newCharacterAbility {
 }
 newCharacterAbility {
     name "objects.actions.ladder.go_up"
-    action([act: { Character actor ->
+    action([act: { org.tendiwa.core.Character actor ->
         actor.moveByPlane(1);
     }] as ActionWithoutTarget)
 }
 newCharacterAbility {
     name "objects.actions.ladder.go_down"
-    action([act: { Character actor ->
+    action([act: { org.tendiwa.core.Character actor ->
         actor.moveByPlane(-1);
     }] as ActionWithoutTarget)
 }
 newCharacterAbility {
     name "jump"
-    action([act: { Character actor, int x, int y ->
+    action([act: { org.tendiwa.core.Character actor, int x, int y ->
         actor.move(x, y, MovingStyle.LEAP);
     }] as ActionToCell)
 }
@@ -81,15 +91,15 @@ newCharacterType {
 newSpell {
     name "blink"
     mana 2
-    action([act: { Character caster, int x, int y ->
+    action([act: { org.tendiwa.core.Character caster, int x, int y ->
         caster.move(x, y, MovingStyle.BLINK);
     }] as ActionToCell)
 }
 newSpell {
     name "fireball"
     mana 5
-    action([act: { Character caster, int x, int y ->
-        synchronized (Character.renderLockObject) {
+    action([act: { org.tendiwa.core.Character caster, int x, int y ->
+        synchronized (org.tendiwa.core.Character.renderLockObject) {
             Tendiwa.getClientEventManager().event(new EventProjectileFly(
                     new SpellProjectile(getResourceName()),
                     caster.getX(),
@@ -100,7 +110,7 @@ newSpell {
             ));
         }
         Tendiwa.waitForAnimationToStartAndComplete();
-        synchronized (Character.renderLockObject) {
+        synchronized (org.tendiwa.core.Character.renderLockObject) {
             Tendiwa.getClientEventManager().event(new EventExplosion(x, y));
         }
         Tendiwa.waitForAnimationToStartAndComplete();

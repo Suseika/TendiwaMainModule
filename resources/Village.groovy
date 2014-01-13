@@ -1,7 +1,7 @@
 
-import tendiwa.core.HorizontalPlane;
-import tendiwa.core.Settlement;
-import tendiwa.core.terrain.settlements.BuildingPlace;
+import org.tendiwa.core.HorizontalPlane;
+import org.tendiwa.core.Settlement;
+import org.tendiwa.core.terrain.settlements.BuildingPlace;
 import static org.tendiwa.groovy.DSL.*;
 
 public class Village extends Settlement {

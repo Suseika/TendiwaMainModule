@@ -1,7 +1,7 @@
-import tendiwa.core.HorizontalPlane
-import tendiwa.core.Settlement
-import tendiwa.core.meta.Coordinate
-import tendiwa.core.terrain.settlements.BuildingPlace
+import org.tendiwa.core.HorizontalPlane
+import org.tendiwa.core.Settlement
+import org.tendiwa.core.meta.Coordinate
+import org.tendiwa.core.terrain.settlements.BuildingPlace
 
 public class BuildingTest extends Settlement {
     public BuildingTest(HorizontalPlane plane, int x, int y, int width, int height) {

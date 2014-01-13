@@ -1,14 +1,14 @@
-package tendiwa.modules;
+package org.tendiwa.modules;
 
-import tendiwa.drawing.DrawingRectangleSystem;
-import tendiwa.drawing.TestCanvas;
-import tendiwa.core.EnhancedRectangle;
-import tendiwa.core.RectangleBuilderTemplate;
-import tendiwa.core.RectangleSystem;
+import org.tendiwa.drawing.DrawingRectangleSystem;
+import org.tendiwa.drawing.TestCanvas;
+import org.tendiwa.core.EnhancedRectangle;
+import org.tendiwa.core.RectangleBuilderTemplate;
+import org.tendiwa.core.RectangleSystem;
 
 import java.awt.*;
 
-import static tendiwa.core.DSL.*;
+import static org.tendiwa.core.DSL.*;
 
 public class KeyboardDemo extends RectangleBuilderTemplate {
     public static void main(String[] args) {

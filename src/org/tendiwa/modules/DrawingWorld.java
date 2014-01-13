@@ -1,7 +1,7 @@
-package tendiwa.modules;
+package org.tendiwa.modules;
 
-import tendiwa.core.*;
-import tendiwa.drawing.DrawingAlgorithm;
+import org.tendiwa.core.*;
+import org.tendiwa.drawing.DrawingAlgorithm;
 
 import java.awt.*;
 

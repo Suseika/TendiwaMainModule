@@ -2,9 +2,9 @@ import org.tendiwa.core.ActionToCell
 import org.tendiwa.core.ActionWithoutTarget
 import org.tendiwa.core.ApparelSlot
 import org.tendiwa.core.CharacterAspect
-import org.tendiwa.core.EventExplosion
-import org.tendiwa.core.EventItemAppear
-import org.tendiwa.core.EventProjectileFly
+import org.tendiwa.core.events.EventExplosion
+import org.tendiwa.core.events.EventItemAppear
+import org.tendiwa.core.events.EventProjectileFly
 import org.tendiwa.core.Handedness
 import org.tendiwa.core.MovingStyle
 import org.tendiwa.core.Passability
@@ -50,7 +50,7 @@ newCharacterAbility {
         UniqueItem uniqueItem = new UniqueItem(itemTypes.iron_helm);
         synchronized (org.tendiwa.core.Character.renderLockObject) {
             actor.getPlane().addItem(uniqueItem, x, y);
-            Tendiwa.getClientEventManager().event(new EventItemAppear(uniqueItem, x, y));
+            Tendiwa.getInstance().emitEvent.event(new EventItemAppear(uniqueItem, x, y));
         }
         Tendiwa.waitForAnimationToStartAndComplete();
     }] as ActionToCell)
@@ -100,7 +100,7 @@ newSpell {
     mana 5
     action([act: { org.tendiwa.core.Character caster, int x, int y ->
         synchronized (org.tendiwa.core.Character.renderLockObject) {
-            Tendiwa.getClientEventManager().event(new EventProjectileFly(
+            Tendiwa.getInstance().emitEvent(new EventProjectileFly(
                     new SpellProjectile(getResourceName()),
                     caster.getX(),
                     caster.getY(),
@@ -111,7 +111,7 @@ newSpell {
         }
         Tendiwa.waitForAnimationToStartAndComplete();
         synchronized (org.tendiwa.core.Character.renderLockObject) {
-            Tendiwa.getClientEventManager().event(new EventExplosion(x, y));
+            Tendiwa.getInstance().emitEvent(new EventExplosion(x, y));
         }
         Tendiwa.waitForAnimationToStartAndComplete();
     }] as ActionToCell)

@@ -1,4 +1,6 @@
 import org.tendiwa.core.*
+import org.tendiwa.core.factories.CharacterFactory
+import org.tendiwa.core.factories.WorldFactory
 import org.tendiwa.core.meta.Condition
 import org.tendiwa.drawing.*
 import org.tendiwa.modules.DrawingWorld
@@ -8,9 +10,14 @@ import java.awt.*
 import static org.tendiwa.core.DSL.canvas
 import static org.tendiwa.groovy.DSL.*
 
-public class MainModule extends Module implements WorldProvider {
+public class MainModule extends Module implements WorldProvidingModule {
 
-    public MainModule() {
+    private final CharacterFactory characterFactory
+    private final WorldFactory worldFactory
+
+    public MainModule(CharacterFactory characterFactory, WorldFactory worldFactory) {
+        this.worldFactory = worldFactory
+        this.characterFactory = characterFactory
         DefaultDrawingAlgorithms.register(EnhancedRectangle.class, DrawingRectangle.withColorLoop(Color.GRAY, Color.BLACK, Color.BLUE));
         DefaultDrawingAlgorithms.register(RectangleSystem.class, DrawingRectangleSystem
                 .withColors(Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW));
@@ -40,8 +47,8 @@ public class MainModule extends Module implements WorldProvider {
 
     @Override
     public World createWorld() {
-        World world = World.create(new SuseikaWorld(), 400, 300);
-        Character playerCharacter = world.createPlayerCharacter(17, 11, characters.human, "Suseika");
+        World world = worldFactory.create(new SuseikaWorld(), 400, 300);
+        Character playerCharacter = characterFactory.create(17, 11, characters.human, "Suseika");
         world.setPlayerCharacter(playerCharacter);
 
 //        world.createCharacter(125, 131, characters.bear, "mishka");

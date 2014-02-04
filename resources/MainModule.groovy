@@ -1,3 +1,4 @@
+import com.google.inject.Inject
 import org.tendiwa.core.*
 import org.tendiwa.core.factories.CharacterFactory
 import org.tendiwa.core.factories.WorldFactory
@@ -15,6 +16,7 @@ public class MainModule extends Module implements WorldProvidingModule {
     private final CharacterFactory characterFactory
     private final WorldFactory worldFactory
 
+    @Inject
     public MainModule(CharacterFactory characterFactory, WorldFactory worldFactory) {
         this.worldFactory = worldFactory
         this.characterFactory = characterFactory
@@ -36,12 +38,11 @@ public class MainModule extends Module implements WorldProvidingModule {
     }
 
     public static void main(String[] args) {
-        Tendiwa.initWithDummyClient();
         Tendiwa.loadModules();
         Module mainModule = Tendiwa.getMainModule();
         TestCanvas canvas = canvas(2);
         Tendiwa.createWorld(mainModule);
-        canvas.draw(Tendiwa.getWorld());
+//        canvas.draw(.getWorld());
 
     }
 

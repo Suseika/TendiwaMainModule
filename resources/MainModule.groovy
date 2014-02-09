@@ -3,6 +3,7 @@ import org.tendiwa.core.*
 import org.tendiwa.core.factories.CharacterFactory
 import org.tendiwa.core.factories.WorldFactory
 import org.tendiwa.core.meta.Condition
+import org.tendiwa.core.player.SinglePlayerMode
 import org.tendiwa.drawing.*
 import org.tendiwa.modules.DrawingWorld
 
@@ -15,9 +16,15 @@ public class MainModule extends Module implements WorldProvidingModule {
 
     private final CharacterFactory characterFactory
     private final WorldFactory worldFactory
+    private final SinglePlayerMode singlePlayer
 
     @Inject
-    public MainModule(CharacterFactory characterFactory, WorldFactory worldFactory) {
+    public MainModule(
+            CharacterFactory characterFactory,
+            WorldFactory worldFactory,
+            SinglePlayerMode singlePlayer
+    ) {
+        this.singlePlayer = singlePlayer
         this.worldFactory = worldFactory
         this.characterFactory = characterFactory
         DefaultDrawingAlgorithms.register(EnhancedRectangle.class, DrawingRectangle.withColorLoop(Color.GRAY, Color.BLACK, Color.BLUE));
@@ -50,7 +57,8 @@ public class MainModule extends Module implements WorldProvidingModule {
     public World createWorld() {
         World world = worldFactory.create(new SuseikaWorld(), 400, 300);
         Character playerCharacter = characterFactory.create(17, 11, characters.human, "Suseika");
-        world.setPlayerCharacter(playerCharacter);
+        world.getDefaultPlane().addCharacter(playerCharacter);
+        singlePlayer.setPlayerCharacter(playerCharacter, world)
 
 //        world.createCharacter(125, 131, characters.bear, "mishka");
 //        world.createCharacter(125, 132, characters.bear, "mishka");

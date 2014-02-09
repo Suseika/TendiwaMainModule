@@ -29,8 +29,6 @@ public class BuildingsLocationDrawer implements LocationDrawer {
         location.square(smallerRectangle, wallTypes.wall_grey_stone, false);
         location.square(smallerRectangle, floorTypes.stone, true);
         location.place(objectTypes.ladder, ladderCell);
-
-
     }
 
     @Override

@@ -1,17 +1,7 @@
-import org.tendiwa.core.ActionToCell
-import org.tendiwa.core.ActionWithoutTarget
-import org.tendiwa.core.ApparelSlot
-import org.tendiwa.core.CharacterAspect
+import org.tendiwa.core.*
 import org.tendiwa.core.events.EventExplosion
 import org.tendiwa.core.events.EventItemAppear
 import org.tendiwa.core.events.EventProjectileFly
-import org.tendiwa.core.Handedness
-import org.tendiwa.core.MovingStyle
-import org.tendiwa.core.Passability
-import org.tendiwa.core.SpellProjectile
-import org.tendiwa.core.Tendiwa
-import org.tendiwa.core.UniqueItem
-import tendiwa.core.*
 
 import static org.tendiwa.groovy.DSL.*
 
@@ -22,7 +12,7 @@ newBorderObjectType {
     name "door_in_wall_grey_stone"
     isDoor true
 }
-newBorderObjectType   {
+newBorderObjectType {
     name "window_in_wall_grey_stone"
     isWindow true
 }
@@ -34,21 +24,21 @@ newSoundType {
 }
 newCharacterAbility {
     name "shout"
-    action([act: { org.tendiwa.core.Character actor ->
+    action([act: { Character actor ->
         actor.getTimeStream().makeSound(actor.getX(), actor.getY(), soundTypes.shout, actor)
     }] as ActionWithoutTarget)
 }
 newCharacterAbility {
     name "objects.actions.ladder.sound";
-    action([act: { org.tendiwa.core.Character actor ->
+    action([act: { Character actor ->
         actor.getTimeStream().makeSound(actor.getX(), actor.getY(), soundTypes.shout, actor);
     }] as ActionWithoutTarget)
 }
 newCharacterAbility {
     name "objects.actions.ladder.item";
-    action([act: { org.tendiwa.core.Character actor, int x, int y ->
+    action([act: { Character actor, int x, int y ->
         UniqueItem uniqueItem = new UniqueItem(itemTypes.iron_helm);
-        synchronized (org.tendiwa.core.Character.renderLockObject) {
+        synchronized (Character.renderLockObject) {
             actor.getPlane().addItem(uniqueItem, x, y);
             Tendiwa.getInstance().emitEvent.event(new EventItemAppear(uniqueItem, x, y));
         }
@@ -57,19 +47,19 @@ newCharacterAbility {
 }
 newCharacterAbility {
     name "objects.actions.ladder.go_up"
-    action([act: { org.tendiwa.core.Character actor ->
+    action([act: { Character actor ->
         actor.moveByPlane(1);
     }] as ActionWithoutTarget)
 }
 newCharacterAbility {
     name "objects.actions.ladder.go_down"
-    action([act: { org.tendiwa.core.Character actor ->
+    action([act: { Character actor ->
         actor.moveByPlane(-1);
     }] as ActionWithoutTarget)
 }
 newCharacterAbility {
     name "jump"
-    action([act: { org.tendiwa.core.Character actor, int x, int y ->
+    action([act: { Character actor, int x, int y ->
         actor.move(x, y, MovingStyle.LEAP);
     }] as ActionToCell)
 }
@@ -91,29 +81,34 @@ newCharacterType {
 newSpell {
     name "blink"
     mana 2
-    action([act: { org.tendiwa.core.Character caster, int x, int y ->
+    action([act: { Character caster, int x, int y ->
         caster.move(x, y, MovingStyle.BLINK);
     }] as ActionToCell)
 }
 newSpell {
     name "fireball"
     mana 5
-    action([act: { org.tendiwa.core.Character caster, int x, int y ->
-        synchronized (org.tendiwa.core.Character.renderLockObject) {
-            Tendiwa.getInstance().emitEvent(new EventProjectileFly(
-                    new SpellProjectile(getResourceName()),
-                    caster.getX(),
-                    caster.getY(),
-                    x,
-                    y,
-                    EventProjectileFly.FlightStyle.PROPELLED
-            ));
-        }
-        Tendiwa.waitForAnimationToStartAndComplete();
-        synchronized (org.tendiwa.core.Character.renderLockObject) {
-            Tendiwa.getInstance().emitEvent(new EventExplosion(x, y));
-        }
-        Tendiwa.waitForAnimationToStartAndComplete();
+    action([act: { Character caster, int x, int y ->
+        def action = owner
+        caster.actAndWait(new Runnable() {
+            @Override
+            void run() {
+                caster.emitEvent(new EventProjectileFly(
+                        new SpellProjectile(action.getResourceName()),
+                        caster.getX(),
+                        caster.getY(),
+                        x,
+                        y,
+                        EventProjectileFly.FlightStyle.PROPELLED
+                ));
+            }
+        })
+        caster.actAndWait(new Runnable() {
+            @Override
+            void run() {
+                caster.emitEvent(new EventExplosion(x, y));
+            }
+        })
     }] as ActionToCell)
 }
 newObjectType {

@@ -40,8 +40,8 @@ public class MainModule extends Module implements WorldProvidingModule {
 //	ResourcesRegistry.registerDrawer(new TestLocationDrawer());
 //	ResourcesRegistry.registerDrawer(new Forest());
 
-        ResourcesRegistry.registerDrawer(new BuildingsLocationDrawer());
         ResourcesRegistry.registerDrawer(new Ocean());
+        ResourcesRegistry.registerDrawer(new BuildingsLocationDrawer());
     }
 
     public static void main(String[] args) {
@@ -56,7 +56,7 @@ public class MainModule extends Module implements WorldProvidingModule {
     @Override
     public World createWorld() {
         World world = worldFactory.create(new SuseikaWorld(), 400, 300);
-        Character playerCharacter = characterFactory.create(17, 11, characters.human, "Suseika");
+        Character playerCharacter = characterFactory.create(159, 111, characters.human, "Suseika");
         world.getDefaultPlane().addCharacter(playerCharacter);
         singlePlayer.setPlayerCharacter(playerCharacter, world)
 

@@ -1,6 +1,7 @@
 import com.google.inject.Inject
 import org.tendiwa.core.*
 import org.tendiwa.core.factories.CharacterFactory
+import org.tendiwa.core.factories.NpcFactory
 import org.tendiwa.core.factories.WorldFactory
 import org.tendiwa.core.meta.Condition
 import org.tendiwa.core.player.SinglePlayerMode
@@ -17,13 +18,16 @@ public class MainModule extends Module implements WorldProvidingModule {
     private final CharacterFactory characterFactory
     private final WorldFactory worldFactory
     private final SinglePlayerMode singlePlayer
+    private final NpcFactory npcFactory
 
     @Inject
     public MainModule(
             CharacterFactory characterFactory,
+            NpcFactory npcFactory,
             WorldFactory worldFactory,
             SinglePlayerMode singlePlayer
     ) {
+        this.npcFactory = npcFactory
         this.singlePlayer = singlePlayer
         this.worldFactory = worldFactory
         this.characterFactory = characterFactory
@@ -59,9 +63,10 @@ public class MainModule extends Module implements WorldProvidingModule {
         Character playerCharacter = characterFactory.create(159, 111, characters.human, "Suseika");
         world.getDefaultPlane().addCharacter(playerCharacter);
         singlePlayer.setPlayerCharacter(playerCharacter, world)
-
-//        world.createCharacter(125, 131, characters.bear, "mishka");
-//        world.createCharacter(125, 132, characters.bear, "mishka");
+        def bear1 = npcFactory.create(159, 117, characters.bear, "mishka")
+        def bear2 = npcFactory.create(158, 114, characters.bear, "mishka")
+        world.getDefaultPlane().addCharacter(bear1)
+        world.getDefaultPlane().addCharacter(bear2)
 //        playerCharacter.getItem(itemTypes.short_bow);
 //        playerCharacter.getItem(itemTypes.short_bow);
 //        playerCharacter.getItem(itemTypes.short_bow);

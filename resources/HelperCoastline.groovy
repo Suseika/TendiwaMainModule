@@ -1,4 +1,4 @@
-import org.tendiwa.core.EnhancedRectangle
+import org.tendiwa.geometry.EnhancedRectangle
 import org.tendiwa.core.Location
 import org.tendiwa.core.LocationFeature
 import org.tendiwa.core.LocationHelper

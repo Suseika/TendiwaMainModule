@@ -2,6 +2,7 @@ package org.tendiwa.modules;
 
 import org.tendiwa.core.*;
 import org.tendiwa.drawing.DrawingAlgorithm;
+import org.tendiwa.geometry.EnhancedRectangle;
 
 import java.awt.*;
 

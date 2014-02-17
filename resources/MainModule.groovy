@@ -6,11 +6,8 @@ import org.tendiwa.core.factories.WorldFactory
 import org.tendiwa.core.meta.Condition
 import org.tendiwa.core.player.SinglePlayerMode
 import org.tendiwa.drawing.*
-import org.tendiwa.modules.DrawingWorld
 
-import java.awt.*
-
-import static org.tendiwa.core.DSL.canvas
+import static org.tendiwa.geometry.DSL.canvas
 import static org.tendiwa.groovy.DSL.*
 
 public class MainModule extends Module implements WorldProvidingModule {
@@ -31,15 +28,6 @@ public class MainModule extends Module implements WorldProvidingModule {
         this.singlePlayer = singlePlayer
         this.worldFactory = worldFactory
         this.characterFactory = characterFactory
-        DefaultDrawingAlgorithms.register(EnhancedRectangle.class, DrawingRectangle.withColorLoop(Color.GRAY, Color.BLACK, Color.BLUE));
-        DefaultDrawingAlgorithms.register(RectangleSystem.class, DrawingRectangleSystem
-                .withColors(Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW));
-        DefaultDrawingAlgorithms.register(
-                RectangleSidePiece.class,
-                DrawingRectangleSidePiece.withColor(Color.MAGENTA));
-        DefaultDrawingAlgorithms.register(Segment.class, DrawingSegment.withColor(Color.BLUE));
-        DefaultDrawingAlgorithms.register(Chunk.class, DrawingTerrain.defaultAlgorithm());
-        DefaultDrawingAlgorithms.register(World.class, DrawingWorld.level(0));
 
 //	ResourcesRegistry.registerDrawer(new TestLocationDrawer());
 //	ResourcesRegistry.registerDrawer(new Forest());

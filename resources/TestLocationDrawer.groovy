@@ -1,16 +1,16 @@
 import org.tendiwa.core.Directions
-import org.tendiwa.core.EnhancedRectangle
+import org.tendiwa.geometry.EnhancedRectangle
 import org.tendiwa.core.Location
 import org.tendiwa.core.LocationDrawer
 import org.tendiwa.core.LocationFeature
 import org.tendiwa.core.LocationPlace
 import org.tendiwa.core.PathSegment
-import org.tendiwa.core.RectangleSystem
+import org.tendiwa.geometry.RectangleSystem
 import tendiwa.core.*
 import org.tendiwa.locationFeatures.FeatureForest
 
 import static org.tendiwa.groovy.DSL.*
-import static org.tendiwa.core.DSL.*
+import static org.tendiwa.geometry.DSL.*
 
 public class TestLocationDrawer implements LocationDrawer {
     @Override

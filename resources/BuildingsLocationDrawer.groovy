@@ -1,11 +1,11 @@
 import org.tendiwa.core.*
 import org.tendiwa.geometry.Cell
-import org.tendiwa.geometry.EnhancedRectangle
+import org.tendiwa.geometry.Rectangle
 
 import static org.tendiwa.groovy.DSL.*
 
 public class BuildingsLocationDrawer implements LocationDrawer {
-    private EnhancedRectangle rectangle
+    private Rectangle rectangle
 
     @Override
     public boolean meetsRequirements(Set<LocationFeature> features) {
@@ -15,7 +15,7 @@ public class BuildingsLocationDrawer implements LocationDrawer {
     @Override
     public void draw(Location location, LocationPlace place) {
         location.square(0, 0, location.getWidth(), location.getHeight(), floorTypes.ground, true);
-        rectangle = new EnhancedRectangle(4, 7, 13, 8)
+        rectangle = new Rectangle(4, 7, 13, 8)
         location.squareOfThin(rectangle, borderObjectTypes.wall_grey_stone);
         location.lineOfThin(rectangle.getSideAsSidePiece(Directions.S), borderObjectTypes.void);
         location.square(rectangle, floorTypes.stone, true);
@@ -26,7 +26,7 @@ public class BuildingsLocationDrawer implements LocationDrawer {
         location.place(objectTypes.ladder, ladderCell);
         location.changePlane(1);
         location.square(0, 0, location.getWidth(), location.getHeight(), floorTypes.ground, true);
-        EnhancedRectangle smallerRectangle = rectangle.shrink(1);
+        Rectangle smallerRectangle = rectangle.shrink(1);
         location.square(rectangle, floorTypes.grass, true);
         location.square(smallerRectangle, wallTypes.wall_grey_stone, false);
         location.square(smallerRectangle, floorTypes.stone, true);

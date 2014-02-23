@@ -1,4 +1,4 @@
-import org.tendiwa.geometry.EnhancedRectangle
+import org.tendiwa.geometry.Rectangle
 import org.tendiwa.core.Location
 import org.tendiwa.core.LocationFeature
 import org.tendiwa.core.LocationHelper
@@ -31,7 +31,7 @@ public enum HelperCoastline implements LocationHelper {
             if (neighborship.getLength() <= diffusionRadius * 2) {
                 continue;
             }
-            EnhancedRectangle borderRectangle = place
+            Rectangle borderRectangle = place
                     .getRectangleInFrontOfNeighbor(neighborship, diffusionRadius);
             location.transitionBuilder()
                     .setRectangle(borderRectangle)

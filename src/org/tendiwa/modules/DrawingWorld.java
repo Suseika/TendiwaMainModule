@@ -2,7 +2,6 @@ package org.tendiwa.modules;
 
 import org.tendiwa.core.*;
 import org.tendiwa.drawing.DrawingAlgorithm;
-import org.tendiwa.geometry.EnhancedRectangle;
 
 import java.awt.*;
 
@@ -22,7 +21,7 @@ public static DrawingAlgorithm<World> level(final int level) {
 			if (width > canvas.width || height > canvas.height) {
 				throw new RuntimeException("Size of world (" + width + "x" + height + ") is greater than size of canvas (" + width + "x" + height + ")");
 			}
-			drawRectangle(new EnhancedRectangle(0, 0, width, height), Color.BLACK);
+			drawRectangle(new org.tendiwa.geometry.Rectangle(0, 0, width, height), Color.BLACK);
 			for (int y = 0; y < height; y++) {
 				for (int x = 0; x < width; x++) {
 					FloorType floorType = defaultPlane.getFloor(x, y);

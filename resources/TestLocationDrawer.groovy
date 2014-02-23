@@ -1,10 +1,10 @@
 import org.tendiwa.core.Directions
-import org.tendiwa.geometry.EnhancedRectangle
 import org.tendiwa.core.Location
 import org.tendiwa.core.LocationDrawer
 import org.tendiwa.core.LocationFeature
 import org.tendiwa.core.LocationPlace
 import org.tendiwa.core.PathSegment
+import org.tendiwa.geometry.Rectangle
 import org.tendiwa.geometry.RectangleSystem
 import tendiwa.core.*
 import org.tendiwa.locationFeatures.FeatureForest
@@ -39,10 +39,10 @@ public class TestLocationDrawer implements LocationDrawer {
                 .place(rectangle(6, 7), near(LAST_RECTANGLE).fromSide(S).inMiddle())
                 .place(recursivelySplitRec(20, 20).minWidth(2).borderWidth(1), unitedWith(LAST_RECTANGLE).fromSide(W).align(N))
                 .done();
-        for (EnhancedRectangle r : rs) {
+        for (Rectangle r : rs) {
             location.fillRectangle(r, wallTypes.grey_stone_wall);
         }
-        EnhancedRectangle rectangle = new EnhancedRectangle(20, 20, 20, 30);
+        Rectangle rectangle = new Rectangle(20, 20, 20, 30);
         location
                 .transitionBuilder()
                 .setDepth(8)

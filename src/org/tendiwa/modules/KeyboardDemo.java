@@ -6,9 +6,8 @@ import org.jukito.JukitoRunner;
 import org.jukito.UseModules;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.tendiwa.geometry.EnhancedRectangle;
-import org.tendiwa.geometry.RectangleBuilderTemplate;
-import org.tendiwa.geometry.RectangleSystem;
+import org.tendiwa.geometry.*;
+import org.tendiwa.geometry.Rectangle;
 import org.tendiwa.drawing.DrawingModule;
 import org.tendiwa.drawing.DrawingRectangleSystem;
 import org.tendiwa.drawing.TestCanvas;
@@ -45,8 +44,8 @@ public void draw() {
 public RectangleSystem build() {
 	int buttonWidth = 5;
 	int upperButtonHeight = 3;
-	EnhancedRectangle button = rectangle(buttonWidth, buttonWidth);
-	EnhancedRectangle topRowButton = rectangle(buttonWidth, upperButtonHeight);
+	org.tendiwa.geometry.Rectangle button = rectangle(buttonWidth, buttonWidth);
+	Rectangle topRowButton = rectangle(buttonWidth, upperButtonHeight);
 	return builder(1)
 		// Esc
 		.place(topRowButton, somewhere())

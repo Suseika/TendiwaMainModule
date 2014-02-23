@@ -18,7 +18,7 @@ public class BuildingsLocationDrawer implements LocationDrawer {
         location.squareOfThin(rectangle, borderObjectTypes.wall_grey_stone);
         location.lineOfThin(rectangle.getSideAsSidePiece(Directions.S), borderObjectTypes.void);
         location.square(rectangle, floorTypes.stone, true);
-        EnhancedPoint pointOnSide = rectangle.getPointOnSide(CardinalDirection.S, 2);
+        Cell pointOnSide = rectangle.getPointOnSide(CardinalDirection.S, 2);
         def ladderCell = rectangle
                 .getPointOnSide(CardinalDirection.S, 3)
                 .moveToSide(CardinalDirection.N, 2)

@@ -20,7 +20,6 @@ import static org.tendiwa.geometry.DSL.*;
 @UseModules(DrawingModule.class)
 public class KeyboardDemo extends RectangleBuilderTemplate {
 @Inject
-@Named("default")
 TestCanvas canvas;
 
 @Test

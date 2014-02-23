@@ -1,4 +1,5 @@
 import org.tendiwa.core.*
+import org.tendiwa.geometry.Cell
 import org.tendiwa.geometry.EnhancedRectangle
 
 import static org.tendiwa.groovy.DSL.*

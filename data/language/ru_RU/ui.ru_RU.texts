@@ -1,9 +1,0 @@
-ui.quiver() {
-    Снаряды
-}
-ui.quiver_is_empty() {
-    Снаряды не выбраны
-}
-inventory.item_pile_name(amount, type_name) {
-    [amount] [type_name][;amount]
-}

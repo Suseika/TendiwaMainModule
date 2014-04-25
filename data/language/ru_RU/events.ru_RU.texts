@@ -1,9 +1,0 @@
-events.sound_from_source(sounder, sound) {
-    [Sounder] [sound][III]!
-}
-events.sound_from_player(sound) {
-    Вы [sound][II Наст].
-}
-events.sound_from_cell(sound) {
-    Поблизости раздаётся [sound][Сущ]
-}

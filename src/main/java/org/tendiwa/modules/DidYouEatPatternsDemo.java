@@ -10,8 +10,8 @@ import org.tendiwa.geometry.extensions.CyrillicTemplates;
 import org.tendiwa.geometry.Placement;
 import org.tendiwa.geometry.RectangleBuilderTemplate;
 import org.tendiwa.geometry.RectangleSystem;
-import org.tendiwa.drawing.DrawingModule;
-import org.tendiwa.drawing.DrawingRectangleSystem;
+import org.tendiwa.drawing.extensions.DrawingModule;
+import org.tendiwa.drawing.extensions.DrawingRectangleSystem;
 import org.tendiwa.drawing.TestCanvas;
 
 import java.awt.*;

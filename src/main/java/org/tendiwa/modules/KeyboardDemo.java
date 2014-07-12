@@ -5,10 +5,10 @@ import org.jukito.JukitoRunner;
 import org.jukito.UseModules;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.tendiwa.drawing.DrawingModule;
+import org.tendiwa.drawing.DrawingRectangleSystem;
 import org.tendiwa.geometry.*;
 import org.tendiwa.geometry.Rectangle;
-import org.tendiwa.drawing.extensions.DrawingModule;
-import org.tendiwa.drawing.extensions.DrawingRectangleSystem;
 import org.tendiwa.drawing.TestCanvas;
 
 import java.awt.*;

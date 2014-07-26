@@ -15,7 +15,6 @@ import org.tendiwa.pathfinding.dijkstra.PathTable
 import org.tendiwa.settlements.*
 
 import java.awt.Color
-import java.util.List
 
 import static org.tendiwa.groovy.DSL.wallTypes
 
@@ -104,7 +103,7 @@ for (Cell cell : cityCenters) {
     );
     chart.saveTime("3");
 //            canvas.draw(cityBounds, DrawingGraph.withColorAndVertexSize(RED, 2));
-    City city = new CityBuilder(cityBounds)
+    CityGeometry city = new CityBuilder(cityBounds)
             .withDefaults()
             .withRoadsFromPoint(4)
             .withDeviationAngle(Math.PI / 30)

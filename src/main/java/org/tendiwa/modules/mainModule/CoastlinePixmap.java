@@ -1,8 +1,6 @@
 package org.tendiwa.modules.mainModule;
 
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import com.google.inject.Inject;
 import org.tendiwa.core.Location;
 import org.tendiwa.core.Tendiwa;
 import org.tendiwa.core.World;
@@ -12,7 +10,7 @@ import org.tendiwa.drawing.extensions.DrawingWorld;
 import org.tendiwa.geometry.*;
 import org.tendiwa.geometry.extensions.CachedCellSet;
 import org.tendiwa.groovy.Registry;
-import org.tendiwa.settlements.City;
+import org.tendiwa.settlements.CityGeometry;
 import org.tendiwa.settlements.RectangleWithNeighbors;
 
 import java.util.List;
@@ -76,13 +74,13 @@ public class CoastlinePixmap implements Runnable {
 				}
 			});
 		for (
-			City city
+			CityGeometry cityGeometry
 			: geometry.buildingPlaces.keySet())
 
 		{
-			city.getLowLevelRoadGraph().edgeSet().forEach(drawRoad);
+			cityGeometry.getLowLevelRoadGraph().edgeSet().forEach(drawRoad);
 //			city.getHighLevelRoadGraph().edgeSet().forEach(drawRoad);
-			city.getCells().stream().forEach(
+			cityGeometry.getCells().stream().forEach(
 				cell -> cell.network().edgeSet().stream().forEach(drawRoad)
 			);
 		}

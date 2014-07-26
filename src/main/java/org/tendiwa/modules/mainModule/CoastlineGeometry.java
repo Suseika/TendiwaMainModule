@@ -24,7 +24,7 @@ public class CoastlineGeometry implements Runnable {
 	CellSet water;
 	Collection<FiniteCellSet> shapeExitsSets;
 	List<List<Cell>> pathsBetweenCities;
-	Map<City, Set<RectangleWithNeighbors>> buildingPlaces = new HashMap<>();
+	Map<CityGeometry, Set<RectangleWithNeighbors>> buildingPlaces = new HashMap<>();
 
 
 	public static void main(String[] args) {
@@ -116,7 +116,7 @@ public class CoastlineGeometry implements Runnable {
 			);
 			chart.saveTime("3");
 //            canvas.draw(cityBounds, DrawingGraph.withColorAndVertexSize(RED, 2));
-			City city = new CityBuilder(cityBounds)
+			CityGeometry cityGeometry = new CityBuilder(cityBounds)
 				.withDefaults()
 				.withRoadsFromPoint(4)
 				.withDeviationAngle(Math.PI / 30)
@@ -126,12 +126,12 @@ public class CoastlineGeometry implements Runnable {
 				.withMaxStartPointsPerCycle(3)
 				.build();
 			chart.saveTime("4");
-			citiesCells.addAll(ShapeFromOutline.from(city.getLowLevelRoadGraph()));
+			citiesCells.addAll(ShapeFromOutline.from(cityGeometry.getLowLevelRoadGraph()));
 			chart.saveTime("5");
-			canvas.draw(city, new CityDrawer());
+			canvas.draw(cityGeometry, new CityDrawer());
 			FiniteCellSet exitCells = null;
 			try {
-				exitCells = city
+				exitCells = cityGeometry
 					.getCells()
 					.stream()
 					.flatMap(c -> c
@@ -149,7 +149,7 @@ public class CoastlineGeometry implements Runnable {
 			} catch (Exception exc) {
 				TestCanvas cvs = new TestCanvas(2, worldSize.x + worldSize.getMaxX(),
 					worldSize.y + worldSize.getMaxY());
-				for (NetworkWithinCycle net : city.getCells()) {
+				for (NetworkWithinCycle net : cityGeometry.getCells()) {
 					cvs.draw(net.cycle().asGraph(), DrawingGraph.withColorAndAntialiasing(Color.BLACK));
 				}
 				throw new RuntimeException();
@@ -157,8 +157,8 @@ public class CoastlineGeometry implements Runnable {
 			chart.saveTime("6");
 			shapeExitsSets.add(exitCells);
 			chart.saveTime("7");
-			Set<RectangleWithNeighbors> buildingPlaces = RecgangularBuildingLots.findIn(city);
-			this.buildingPlaces.put(city, buildingPlaces);
+			Set<RectangleWithNeighbors> buildingPlaces = RecgangularBuildingLots.findIn(cityGeometry);
+			this.buildingPlaces.put(cityGeometry, buildingPlaces);
 			for (RectangleWithNeighbors rectangleWithNeighbors : buildingPlaces) {
 				canvas.draw(
 					rectangleWithNeighbors.rectangle,

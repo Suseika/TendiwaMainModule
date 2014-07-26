@@ -4,7 +4,6 @@ import org.tendiwa.core.LocationFeature
 import org.tendiwa.core.LocationHelper
 import org.tendiwa.core.LocationNeighborship
 import org.tendiwa.core.LocationPlace
-import tendiwa.core.*
 import org.tendiwa.locationFeatures.FeatureOcean
 
 import static org.tendiwa.groovy.DSL.getFloorTypes;

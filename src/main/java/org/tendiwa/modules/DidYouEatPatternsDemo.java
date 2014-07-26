@@ -6,19 +6,19 @@ import org.jukito.JukitoRunner;
 import org.jukito.UseModules;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.tendiwa.drawing.DrawingModule;
-import org.tendiwa.drawing.DrawingRectangleSystem;
-import org.tendiwa.geometry.extensions.CyrillicTemplates;
+import org.tendiwa.drawing.TestCanvas;
+import org.tendiwa.drawing.extensions.DrawingModule;
+import org.tendiwa.drawing.extensions.DrawingRectangleSystem;
 import org.tendiwa.geometry.Placement;
 import org.tendiwa.geometry.RectangleBuilderTemplate;
 import org.tendiwa.geometry.RectangleSystem;
-import org.tendiwa.drawing.TestCanvas;
+import org.tendiwa.geometry.extensions.CyrillicTemplates;
 
-import java.awt.*;
+import java.awt.Color;
 
-import static org.tendiwa.geometry.DSL.*;
 import static org.tendiwa.core.Directions.E;
 import static org.tendiwa.core.Directions.N;
+import static org.tendiwa.geometry.DSL.*;
 
 @RunWith(JukitoRunner.class)
 @UseModules(DrawingModule.class)

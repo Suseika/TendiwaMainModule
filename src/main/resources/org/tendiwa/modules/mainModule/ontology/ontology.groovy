@@ -1,3 +1,5 @@
+package org.tendiwa.modules.mainModule.ontology
+
 import org.tendiwa.core.*
 import org.tendiwa.core.events.EventExplosion
 import org.tendiwa.core.events.EventItemAppear

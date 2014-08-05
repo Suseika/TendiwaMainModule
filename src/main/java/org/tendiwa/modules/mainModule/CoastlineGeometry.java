@@ -116,7 +116,7 @@ public class CoastlineGeometry implements Runnable {
 			);
 			chart.saveTime("3");
 //            canvas.draw(cityBounds, DrawingGraph.withColorAndVertexSize(RED, 2));
-			CityGeometry cityGeometry = new CityBuilder(cityBounds)
+			CityGeometry cityGeometry = new CityGeometryBuilder(cityBounds)
 				.withDefaults()
 				.withRoadsFromPoint(4)
 				.withDeviationAngle(Math.PI / 30)
@@ -157,7 +157,7 @@ public class CoastlineGeometry implements Runnable {
 			chart.saveTime("6");
 			shapeExitsSets.add(exitCells);
 			chart.saveTime("7");
-			Set<RectangleWithNeighbors> buildingPlaces = RecgangularBuildingLots.findIn(cityGeometry);
+			Set<RectangleWithNeighbors> buildingPlaces = RectangularBuildingLots.findIn(cityGeometry);
 			this.buildingPlaces.put(cityGeometry, buildingPlaces);
 			for (RectangleWithNeighbors rectangleWithNeighbors : buildingPlaces) {
 				canvas.draw(

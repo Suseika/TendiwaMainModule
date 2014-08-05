@@ -103,7 +103,7 @@ for (Cell cell : cityCenters) {
     );
     chart.saveTime("3");
 //            canvas.draw(cityBounds, DrawingGraph.withColorAndVertexSize(RED, 2));
-    CityGeometry city = new CityBuilder(cityBounds)
+    CityGeometry city = new CityGeometryBuilder(cityBounds)
             .withDefaults()
             .withRoadsFromPoint(4)
             .withDeviationAngle(Math.PI / 30)
@@ -146,7 +146,7 @@ for (Cell cell : cityCenters) {
     chart.saveTime("6");
     shapeExitsSets.add(exitCells);
     chart.saveTime("7");
-    for (RectangleWithNeighbors rectangleWithNeighbors : RecgangularBuildingLots.findIn(city)) {
+    for (RectangleWithNeighbors rectangleWithNeighbors : RectangularBuildingLots.findIn(city)) {
         canvas.draw(
                 rectangleWithNeighbors.rectangle,
                 DrawingRectangle.withColorAndBorder(Color.blue, Color.gray)

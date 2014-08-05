@@ -13,6 +13,7 @@ import org.tendiwa.groovy.Registry;
 import org.tendiwa.settlements.CityGeometry;
 import org.tendiwa.settlements.RectangleWithNeighbors;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -36,8 +37,6 @@ public class CoastlinePixmap implements Runnable {
 		TestCanvas canvas = new TestCanvas(1, 300, 300);
 		World world = new World(300, 300);
 		Location location = new Location(world.getDefaultPlane(), 0, 0, 300, 300);
-//		location.fillRectangle(new Rectangle(100, 100, 100, 100), Registry.wallTypes.get("wall_grey_stone"));
-		System.out.println(geometry.water);
 		CachedCellSet waterCells = new CachedCellSet(
 			geometry.water,
 			world.asRectangle()
@@ -48,38 +47,25 @@ public class CoastlinePixmap implements Runnable {
 			waterCells.getBounds(),
 			Registry.floorTypes.get("grass")
 		);
-		for (List<Cell> pathsBetweenCity : geometry.pathsBetweenCities) {
-			for (Cell cell : pathsBetweenCity) {
+		geometry.pathsBetweenCities
+			.stream()
+			.flatMap(path -> path.stream())
+			.forEach((cell) -> {
 				if (world.asRectangle().contains(cell)) {
 					location.place(Registry.floorTypes.get("ground"), cell);
 				}
-			}
-		}
-		Consumer<Segment2D> drawRoad = segment ->
-			Lists.newArrayList(new CellSegment(
-				new Cell(
-					(int) segment.start.x,
-					(int) segment.start.y
-				),
-				new Cell(
-					(int) segment.end.x,
-					(int) segment.end.y
-				)
-			)).forEach(c -> {
-				if (world.asRectangle().contains(c)) {
-					location.place(
-						Registry.floorTypes.get("ground"),
-						c
-					);
-				}
 			});
+		Consumer<Segment2D> drawRoad = segment ->
+			new CellSegment(segment)
+				.asList()
+				.stream()
+				.filter(c -> world.asRectangle().contains(c))
+				.forEach(c -> location.place(Registry.floorTypes.get("ground"), c));
 		for (
 			CityGeometry cityGeometry
-			: geometry.buildingPlaces.keySet())
-
-		{
+			: geometry.buildingPlaces.keySet()
+			) {
 			cityGeometry.getLowLevelRoadGraph().edgeSet().forEach(drawRoad);
-//			city.getHighLevelRoadGraph().edgeSet().forEach(drawRoad);
 			cityGeometry.getCells().stream().forEach(
 				cell -> cell.network().edgeSet().stream().forEach(drawRoad)
 			);
@@ -87,9 +73,8 @@ public class CoastlinePixmap implements Runnable {
 
 		for (
 			Set<RectangleWithNeighbors> rectangleWithNeighborses
-			: geometry.buildingPlaces.values())
-
-		{
+			: geometry.buildingPlaces.values()
+			) {
 			for (RectangleWithNeighbors rectangleWithNeighbors : rectangleWithNeighborses) {
 				location.fillRectangle(
 					rectangleWithNeighbors.rectangle.intersectionWith(world.asRectangle()).get(),

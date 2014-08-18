@@ -1,20 +1,22 @@
 package org.tendiwa.modules.mainModule;
 
-import com.google.common.collect.Lists;
+import org.jgrapht.UndirectedGraph;
 import org.tendiwa.core.Location;
 import org.tendiwa.core.Tendiwa;
 import org.tendiwa.core.World;
 import org.tendiwa.demos.Demos;
 import org.tendiwa.drawing.TestCanvas;
 import org.tendiwa.drawing.extensions.DrawingWorld;
-import org.tendiwa.geometry.*;
+import org.tendiwa.geometry.CellSegment;
+import org.tendiwa.geometry.Point2D;
+import org.tendiwa.geometry.Rectangle;
+import org.tendiwa.geometry.Segment2D;
 import org.tendiwa.geometry.extensions.CachedCellSet;
 import org.tendiwa.groovy.Registry;
-import org.tendiwa.settlements.CityGeometry;
+import org.tendiwa.settlements.PathGeometry;
 import org.tendiwa.settlements.RectangleWithNeighbors;
+import org.tendiwa.settlements.RoadRejector;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -62,11 +64,17 @@ public class CoastlinePixmap implements Runnable {
 				.filter(c -> world.asRectangle().contains(c))
 				.forEach(c -> location.place(Registry.floorTypes.get("ground"), c));
 		for (
-			CityGeometry cityGeometry
+			PathGeometry pathGeometry
 			: geometry.buildingPlaces.keySet()
 			) {
-			cityGeometry.getLowLevelRoadGraph().edgeSet().forEach(drawRoad);
-			cityGeometry.getCells().stream().forEach(
+			UndirectedGraph<Point2D, Segment2D> graphToDraw = RoadRejector.rejectPartOfNetworksBorders(
+				pathGeometry.getFullRoadGraph(),
+				pathGeometry,
+				0.5,
+				123445634
+			);
+			graphToDraw.edgeSet().forEach(drawRoad);
+			pathGeometry.getNetworks().stream().forEach(
 				cell -> cell.network().edgeSet().stream().forEach(drawRoad)
 			);
 		}

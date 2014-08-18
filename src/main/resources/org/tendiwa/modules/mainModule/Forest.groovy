@@ -1,8 +1,11 @@
+package org.tendiwa.modules.mainModule
+
 import org.tendiwa.core.Location
 import org.tendiwa.core.LocationDrawer
 import org.tendiwa.core.LocationFeature
 import org.tendiwa.core.LocationPlace
 import org.tendiwa.core.PathSegment
+import org.tendiwa.groovy.DSL
 import tendiwa.core.*
 
 import static org.tendiwa.groovy.DSL.getWallTypes;
@@ -13,8 +16,8 @@ public class Forest implements LocationDrawer {
     public void draw(Location location, LocationPlace place) {
         int width = place.width;
         int height = place.height;
-        location.line(1, 1, width - 3, height - 3, wallTypes.greyStone);
-        location.line(width - 3, 1, 1, height - 3, wallTypes.greyStone);
+        location.line(1, 1, width - 3, height - 3, DSL.wallTypes.greyStone);
+        location.line(width - 3, 1, 1, height - 3, DSL.wallTypes.greyStone);
     }
 
     @Override

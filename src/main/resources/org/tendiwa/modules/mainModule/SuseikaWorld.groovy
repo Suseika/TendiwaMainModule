@@ -1,3 +1,5 @@
+package org.tendiwa.modules.mainModule
+
 import org.tendiwa.core.*
 import org.tendiwa.locationFeatures.FeatureForest
 import org.tendiwa.locationFeatures.FeatureOcean

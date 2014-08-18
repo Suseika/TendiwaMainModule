@@ -1,3 +1,5 @@
+package org.tendiwa.modules.mainModule
+
 import org.tendiwa.core.HorizontalPlane
 import org.tendiwa.core.settlements.Settlement
 import org.tendiwa.core.meta.Coordinate

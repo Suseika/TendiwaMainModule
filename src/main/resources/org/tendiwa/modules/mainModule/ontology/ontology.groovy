@@ -1,4 +1,4 @@
-package ontology
+package org.tendiwa.modules.mainModule.ontology
 
 import org.tendiwa.core.*
 import org.tendiwa.core.events.EventExplosion

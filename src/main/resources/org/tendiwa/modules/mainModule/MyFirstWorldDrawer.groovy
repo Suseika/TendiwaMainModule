@@ -1,3 +1,5 @@
+package org.tendiwa.modules.mainModule
+
 import org.jgrapht.UndirectedGraph
 import org.tendiwa.core.Location
 import org.tendiwa.core.ScriptShell
@@ -16,12 +18,10 @@ import org.tendiwa.settlements.*
 
 import java.awt.Color
 
-import static org.tendiwa.groovy.DSL.wallTypes
-
 ScriptShell.loadGameTypesDeclarations(this);
 def world = new World(400, 300);
 def location = new Location(world.getDefaultPlane(), 0, 0, world.width, world.height);
-location.fillRectangle(new Rectangle(100, 100, 100, 100), wallTypes.wall_grey_stone);
+location.fillRectangle(new Rectangle(100, 100, 100, 100), org.tendiwa.groovy.DSL.wallTypes.wall_grey_stone);
 PieChartTimeProfiler chart = new PieChartTimeProfiler();
 int maxCityRadius = 35;
 int minDistanceFromCoastToCityBorder = 3;
@@ -103,7 +103,7 @@ for (Cell cell : cityCenters) {
     );
     chart.saveTime("3");
 //            canvas.draw(cityBounds, DrawingGraph.withColorAndVertexSize(RED, 2));
-    CityGeometry city = new CityGeometryBuilder(cityBounds)
+    PathGeometry city = new CityGeometryBuilder(cityBounds)
             .withDefaults()
             .withRoadsFromPoint(4)
             .withDeviationAngle(Math.PI / 30)
@@ -119,7 +119,7 @@ for (Cell cell : cityCenters) {
     FiniteCellSet exitCells = null;
     try {
         exitCells = city
-                .getCells()
+                .getNetworks()
                 .stream()
                 .flatMap({ c ->
             c
@@ -138,7 +138,7 @@ for (Cell cell : cityCenters) {
     } catch (Exception exc) {
         TestCanvas cvs = new TestCanvas(2, worldSize.x + worldSize.getMaxX(),
                 worldSize.y + worldSize.getMaxY());
-        for (NetworkWithinCycle net : city.getCells()) {
+        for (NetworkWithinCycle net : city.getNetworks()) {
             cvs.draw(net.cycle().asGraph(), DrawingGraph.withColorAndAntialiasing(Color.BLACK));
         }
         throw new RuntimeException();
@@ -146,7 +146,7 @@ for (Cell cell : cityCenters) {
     chart.saveTime("6");
     shapeExitsSets.add(exitCells);
     chart.saveTime("7");
-    for (RectangleWithNeighbors rectangleWithNeighbors : RectangularBuildingLots.findIn(city)) {
+    for (RectangleWithNeighbors rectangleWithNeighbors : RectangularBuildingLots.placeInside(city)) {
         canvas.draw(
                 rectangleWithNeighbors.rectangle,
                 DrawingRectangle.withColorAndBorder(Color.blue, Color.gray)

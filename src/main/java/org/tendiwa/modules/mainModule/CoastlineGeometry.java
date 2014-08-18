@@ -24,7 +24,7 @@ public class CoastlineGeometry implements Runnable {
 	CellSet water;
 	Collection<FiniteCellSet> shapeExitsSets;
 	List<List<Cell>> pathsBetweenCities;
-	Map<CityGeometry, Set<RectangleWithNeighbors>> buildingPlaces = new HashMap<>();
+	Map<PathGeometry, Set<RectangleWithNeighbors>> buildingPlaces = new HashMap<>();
 
 
 	public static void main(String[] args) {
@@ -116,7 +116,7 @@ public class CoastlineGeometry implements Runnable {
 			);
 			chart.saveTime("3");
 //            canvas.draw(cityBounds, DrawingGraph.withColorAndVertexSize(RED, 2));
-			CityGeometry cityGeometry = new CityGeometryBuilder(cityBounds)
+			PathGeometry pathGeometry = new CityGeometryBuilder(cityBounds)
 				.withDefaults()
 				.withRoadsFromPoint(4)
 				.withDeviationAngle(Math.PI / 30)
@@ -126,13 +126,13 @@ public class CoastlineGeometry implements Runnable {
 				.withMaxStartPointsPerCycle(3)
 				.build();
 			chart.saveTime("4");
-			citiesCells.addAll(ShapeFromOutline.from(cityGeometry.getLowLevelRoadGraph()));
+			citiesCells.addAll(ShapeFromOutline.from(pathGeometry.getLowLevelRoadGraph()));
 			chart.saveTime("5");
-			canvas.draw(cityGeometry, new CityDrawer());
+			canvas.draw(pathGeometry, new CityDrawer());
 			FiniteCellSet exitCells = null;
 			try {
-				exitCells = cityGeometry
-					.getCells()
+				exitCells = pathGeometry
+					.getNetworks()
 					.stream()
 					.flatMap(c -> c
 							.exitsOnCycles()
@@ -149,16 +149,16 @@ public class CoastlineGeometry implements Runnable {
 			} catch (Exception exc) {
 				TestCanvas cvs = new TestCanvas(2, worldSize.x + worldSize.getMaxX(),
 					worldSize.y + worldSize.getMaxY());
-				for (NetworkWithinCycle net : cityGeometry.getCells()) {
-					cvs.draw(net.cycle().asGraph(), DrawingGraph.withColorAndAntialiasing(Color.BLACK));
+				for (NetworkWithinCycle net : pathGeometry.getNetworks()) {
+					cvs.draw(net.cycle(), DrawingGraph.withColorAndAntialiasing(Color.BLACK));
 				}
 				throw new RuntimeException();
 			}
 			chart.saveTime("6");
 			shapeExitsSets.add(exitCells);
 			chart.saveTime("7");
-			Set<RectangleWithNeighbors> buildingPlaces = RectangularBuildingLots.findIn(cityGeometry);
-			this.buildingPlaces.put(cityGeometry, buildingPlaces);
+			Set<RectangleWithNeighbors> buildingPlaces = RectangularBuildingLots.placeInside(pathGeometry);
+			this.buildingPlaces.put(pathGeometry, buildingPlaces);
 			for (RectangleWithNeighbors rectangleWithNeighbors : buildingPlaces) {
 				canvas.draw(
 					rectangleWithNeighbors.rectangle,

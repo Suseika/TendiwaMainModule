@@ -1,3 +1,5 @@
+package org.tendiwa.modules.mainModule
+
 import com.google.inject.Inject
 import org.tendiwa.core.*;
 import org.tendiwa.core.WorldProvidingModule;

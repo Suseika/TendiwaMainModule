@@ -1,9 +1,12 @@
+package org.tendiwa.modules.mainModule
+
 import org.tendiwa.geometry.Rectangle
 import org.tendiwa.core.Location
 import org.tendiwa.core.LocationFeature
 import org.tendiwa.core.LocationHelper
 import org.tendiwa.core.LocationNeighborship
 import org.tendiwa.core.LocationPlace
+import org.tendiwa.groovy.DSL
 import org.tendiwa.locationFeatures.FeatureOcean
 
 import static org.tendiwa.groovy.DSL.getFloorTypes;
@@ -13,7 +16,7 @@ public enum HelperCoastline implements LocationHelper {
 
     @Override
     public void draw(Location location, LocationPlace place) {
-        location.square(5, 5, 5, 5, floorTypes.water);
+        location.square(5, 5, 5, 5, DSL.floorTypes.water);
         // Transition to oceans
         int diffusionRadius = 10;
         for (LocationNeighborship neighborship : place.getNeighborships()) {
@@ -36,7 +39,7 @@ public enum HelperCoastline implements LocationHelper {
                     .setRectangle(borderRectangle)
                     .setDepth(diffusionRadius)
                     .addFromDirection(neighborship.getSide())
-                    .setFrom(floorTypes.water)
+                    .setFrom(DSL.floorTypes.water)
                     .build();
 
         }

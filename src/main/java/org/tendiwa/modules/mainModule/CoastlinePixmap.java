@@ -13,9 +13,9 @@ import org.tendiwa.geometry.Rectangle;
 import org.tendiwa.geometry.Segment2D;
 import org.tendiwa.geometry.extensions.CachedCellSet;
 import org.tendiwa.groovy.Registry;
-import org.tendiwa.settlements.PathGeometry;
+import org.tendiwa.settlements.RoadsPlanarGraphModel;
 import org.tendiwa.settlements.RectangleWithNeighbors;
-import org.tendiwa.settlements.RoadRejector;
+import org.tendiwa.settlements.utils.RoadRejector;
 
 import java.util.Optional;
 import java.util.Set;
@@ -64,17 +64,17 @@ public class CoastlinePixmap implements Runnable {
 				.filter(c -> world.asRectangle().contains(c))
 				.forEach(c -> location.place(Registry.floorTypes.get("ground"), c));
 		for (
-			PathGeometry pathGeometry
+			RoadsPlanarGraphModel roadsPlanarGraphModel
 			: geometry.buildingPlaces.keySet()
 			) {
 			UndirectedGraph<Point2D, Segment2D> graphToDraw = RoadRejector.rejectPartOfNetworksBorders(
-				pathGeometry.getFullRoadGraph(),
-				pathGeometry,
+				roadsPlanarGraphModel.getFullRoadGraph(),
+				roadsPlanarGraphModel,
 				0.5,
 				123445634
 			);
 			graphToDraw.edgeSet().forEach(drawRoad);
-			pathGeometry.getNetworks().stream().forEach(
+			roadsPlanarGraphModel.getNetworks().stream().forEach(
 				cell -> cell.network().edgeSet().stream().forEach(drawRoad)
 			);
 		}

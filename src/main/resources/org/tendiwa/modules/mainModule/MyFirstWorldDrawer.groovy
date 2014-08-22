@@ -15,6 +15,7 @@ import org.tendiwa.noise.SimpleNoiseSource
 import org.tendiwa.pathfinding.astar.AStar
 import org.tendiwa.pathfinding.dijkstra.PathTable
 import org.tendiwa.settlements.*
+import org.tendiwa.settlements.utils.RectangularBuildingLots
 
 import java.awt.Color
 
@@ -103,7 +104,7 @@ for (Cell cell : cityCenters) {
     );
     chart.saveTime("3");
 //            canvas.draw(cityBounds, DrawingGraph.withColorAndVertexSize(RED, 2));
-    PathGeometry city = new CityGeometryBuilder(cityBounds)
+    RoadsPlanarGraphModel city = new CityGeometryBuilder(cityBounds)
             .withDefaults()
             .withRoadsFromPoint(4)
             .withDeviationAngle(Math.PI / 30)

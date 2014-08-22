@@ -12,6 +12,7 @@ import org.tendiwa.noise.SimpleNoiseSource;
 import org.tendiwa.pathfinding.astar.AStar;
 import org.tendiwa.pathfinding.dijkstra.PathTable;
 import org.tendiwa.settlements.*;
+import org.tendiwa.settlements.utils.RectangularBuildingLots;
 
 import java.awt.Color;
 import java.util.*;
@@ -24,7 +25,7 @@ public class CoastlineGeometry implements Runnable {
 	CellSet water;
 	Collection<FiniteCellSet> shapeExitsSets;
 	List<List<Cell>> pathsBetweenCities;
-	Map<PathGeometry, Set<RectangleWithNeighbors>> buildingPlaces = new HashMap<>();
+	Map<RoadsPlanarGraphModel, Set<RectangleWithNeighbors>> buildingPlaces = new HashMap<>();
 
 
 	public static void main(String[] args) {
@@ -116,7 +117,7 @@ public class CoastlineGeometry implements Runnable {
 			);
 			chart.saveTime("3");
 //            canvas.draw(cityBounds, DrawingGraph.withColorAndVertexSize(RED, 2));
-			PathGeometry pathGeometry = new CityGeometryBuilder(cityBounds)
+			RoadsPlanarGraphModel roadsPlanarGraphModel = new CityGeometryBuilder(cityBounds)
 				.withDefaults()
 				.withRoadsFromPoint(4)
 				.withDeviationAngle(Math.PI / 30)
@@ -126,12 +127,12 @@ public class CoastlineGeometry implements Runnable {
 				.withMaxStartPointsPerCycle(3)
 				.build();
 			chart.saveTime("4");
-			citiesCells.addAll(ShapeFromOutline.from(pathGeometry.getLowLevelRoadGraph()));
+			citiesCells.addAll(ShapeFromOutline.from(roadsPlanarGraphModel.getLowLevelRoadGraph()));
 			chart.saveTime("5");
-			canvas.draw(pathGeometry, new CityDrawer());
+			canvas.draw(roadsPlanarGraphModel, new CityDrawer());
 			FiniteCellSet exitCells = null;
 			try {
-				exitCells = pathGeometry
+				exitCells = roadsPlanarGraphModel
 					.getNetworks()
 					.stream()
 					.flatMap(c -> c
@@ -149,7 +150,7 @@ public class CoastlineGeometry implements Runnable {
 			} catch (Exception exc) {
 				TestCanvas cvs = new TestCanvas(2, worldSize.x + worldSize.getMaxX(),
 					worldSize.y + worldSize.getMaxY());
-				for (NetworkWithinCycle net : pathGeometry.getNetworks()) {
+				for (NetworkWithinCycle net : roadsPlanarGraphModel.getNetworks()) {
 					cvs.draw(net.cycle(), DrawingGraph.withColorAndAntialiasing(Color.BLACK));
 				}
 				throw new RuntimeException();
@@ -157,8 +158,8 @@ public class CoastlineGeometry implements Runnable {
 			chart.saveTime("6");
 			shapeExitsSets.add(exitCells);
 			chart.saveTime("7");
-			Set<RectangleWithNeighbors> buildingPlaces = RectangularBuildingLots.placeInside(pathGeometry);
-			this.buildingPlaces.put(pathGeometry, buildingPlaces);
+			Set<RectangleWithNeighbors> buildingPlaces = RectangularBuildingLots.placeInside(roadsPlanarGraphModel);
+			this.buildingPlaces.put(roadsPlanarGraphModel, buildingPlaces);
 			for (RectangleWithNeighbors rectangleWithNeighbors : buildingPlaces) {
 				canvas.draw(
 					rectangleWithNeighbors.rectangle,

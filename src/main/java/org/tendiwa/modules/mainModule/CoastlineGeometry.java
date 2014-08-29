@@ -1,5 +1,6 @@
 package org.tendiwa.modules.mainModule;
 
+import com.google.common.collect.ImmutableList;
 import org.jgrapht.UndirectedGraph;
 import org.tendiwa.demos.Demos;
 import org.tendiwa.demos.settlements.CityDrawer;
@@ -13,6 +14,7 @@ import org.tendiwa.pathfinding.astar.AStar;
 import org.tendiwa.pathfinding.dijkstra.PathTable;
 import org.tendiwa.settlements.*;
 import org.tendiwa.settlements.utils.RectangularBuildingLots;
+import org.tendiwa.settlements.utils.StreetsDetector;
 
 import java.awt.Color;
 import java.util.*;
@@ -25,7 +27,7 @@ public class CoastlineGeometry implements Runnable {
 	CellSet water;
 	Collection<FiniteCellSet> shapeExitsSets;
 	List<List<Cell>> pathsBetweenCities;
-	Map<RoadsPlanarGraphModel, Set<RectangleWithNeighbors>> buildingPlaces = new HashMap<>();
+	Collection<CoastlineCityGeometry> cities = new HashSet<>();
 
 
 	public static void main(String[] args) {
@@ -38,6 +40,7 @@ public class CoastlineGeometry implements Runnable {
 
 	@Override
 	public void run() {
+		// Constants and most general shapes
 		PieChartTimeProfiler chart = new PieChartTimeProfiler();
 		int maxCityRadius = 35;
 		int minDistanceFromCoastToCityBorder = 3;
@@ -51,6 +54,8 @@ public class CoastlineGeometry implements Runnable {
 		Rectangle worldSize = new Rectangle(0, 0, 300, 300);
 		water = (x, y) -> noise.noise(x, y) <= 110;
 		chart.saveTime("Constants");
+
+		// Find city centers
 		CellSet reducingMask = (x, y) -> (x + y) % 20 == 0;
 		ChebyshevDistanceBufferBorder cityCenterBorder = new ChebyshevDistanceBufferBorder(
 			minDistanceFromCoastToCityCenter,
@@ -61,6 +66,13 @@ public class CoastlineGeometry implements Runnable {
 			worldSize
 		);
 		chart.saveTime("City centers");
+		DistantCellsFinder cityCenters = new DistantCellsFinder(
+			borderWithCityCenters,
+			minDistanceBetweenCityCenters
+		);
+		chart.saveTime("Distant cells");
+
+		// Finding cells that are close to water
 		CachedCellSet cellsCloseToCoast = new CachedCellSet(
 			new ChebyshevDistanceBuffer(
 				minDistanceFromCoastToCityBorder,
@@ -69,19 +81,14 @@ public class CoastlineGeometry implements Runnable {
 			worldSize
 		);
 		chart.saveTime("Cells close to coast");
-		DistantCellsFinder cityCenters = new DistantCellsFinder(
-			borderWithCityCenters,
-			minDistanceBetweenCityCenters
-		);
-		chart.saveTime("Distant cells");
-		//    @Inject
-//    @Named("scale2")
+
+
 		DrawingAlgorithm<Cell> grassColor = DrawingCell.withColor(Color.GREEN);
 		DrawingAlgorithm<Cell> waterColor = DrawingCell.withColor(BLUE);
 
 		CityBoundsFactory boundsFactory = new CityBoundsFactory(water);
 		Rectangle worldSizeStretchedBy1 = worldSize.stretch(1);
-		canvas = new TestCanvas(1, worldSize.x + worldSize.getMaxX(), worldSize.y + worldSize.getMaxY());
+		canvas = new TestCanvas(3, worldSize.x + worldSize.getMaxX(), worldSize.y + worldSize.getMaxY());
 		TestCanvas.canvas = canvas;
 		canvas.draw(borderWithCityCenters, DrawingCellSet.withColor(Color.PINK));
 		drawTerrain(worldSize, water, waterColor, grassColor);
@@ -90,6 +97,8 @@ public class CoastlineGeometry implements Runnable {
 		shapeExitsSets = new HashSet<>();
 		MutableCellSet citiesCells = new ScatteredMutableCellSet();
 		for (Cell cell : cityCenters) {
+			CoastlineCityGeometry cityGeometry = new CoastlineCityGeometry();
+			cities.add(cityGeometry);
 			chart.saveTime("0");
 			int maxCityRadiusModified = maxCityRadius + cell.x % 30 - 15;
 			Rectangle cityBoundRec = Recs
@@ -159,26 +168,21 @@ public class CoastlineGeometry implements Runnable {
 			shapeExitsSets.add(exitCells);
 			chart.saveTime("7");
 			Set<RectangleWithNeighbors> buildingPlaces = RectangularBuildingLots.placeInside(roadsPlanarGraphModel);
-			this.buildingPlaces.put(roadsPlanarGraphModel, buildingPlaces);
-			for (RectangleWithNeighbors rectangleWithNeighbors : buildingPlaces) {
-				canvas.draw(
-					rectangleWithNeighbors.rectangle,
-					DrawingRectangle.withColorAndBorder(Color.blue, Color.gray)
-				);
-				for (Rectangle neighbor : rectangleWithNeighbors.neighbors) {
-					canvas.draw(
-						neighbor,
-						DrawingRectangle.withColorAndBorder(Color.magenta, Color.magenta.darker())
-					);
-				}
-			}
+			cityGeometry.roadsPlanarGraphModel = roadsPlanarGraphModel;
+			cityGeometry.buildingPlaces = buildingPlaces;
+			canvas.drawAll(
+				buildingPlaces,
+				DrawingRectangleWithNeighbors.withColorAndDefaultBorder(Color.blue, Color.magenta)
+			);
+			cityGeometry.streets = StreetsDetector.detectStreets(roadsPlanarGraphModel.getFullRoadGraph());
+
+			// End of city geometry
 		}
 		CellSet shapeExitsCombined = shapeExitsSets
 			.stream()
 			.map(a -> (CellSet) a)
 			.reduce(CellSet.empty(), (a, b) -> a.or(b));
 		chart.saveTime("Combined sets");
-
 
 		CellSet spaceBetweenCities = new CachedCellSet(
 			(x, y) ->
@@ -189,34 +193,23 @@ public class CoastlineGeometry implements Runnable {
 			worldSize
 		);
 		chart.saveTime("Space between cities");
+
 		IntershapeNetwork network = IntershapeNetwork
 			.withShapeExits(shapeExitsSets)
 			.withWalkableCells(spaceBetweenCities);
 		chart.saveTime("Network");
-//        for (Cell cell : wave) {
-//            canvas.draw(cell, DrawingCell.withColor(Color.DARK_GRAY));
-//        }
-//		canvas.draw(citiesCells, DrawingCellSet.withColor(Color.DARK_GRAY));
-//		for (FiniteCellSet exits : shapeExitsSets) {
-//			canvas.draw(exits, DrawingCellSet.withColor(Color.RED));
-//		}
 
 		pathsBetweenCities = network.getGraph().edgeSet()
 			.stream()
-			.map(segment -> new AStar(
+			.map(
+				segment -> new AStar(
 					(cell, neighbor) ->
 						((spaceBetweenCities.contains(neighbor) ? 1 : 100000000) * cell.diagonalComponent(neighbor))
 				).path(segment.start, segment.end)
 			)
 			.collect(Collectors.toList());
-		for (CellSegment segment : network.getGraph().edgeSet()) {
-//            canvas.draw(segment, DrawingCellSegment.withColor(Color.RED));
-//			List<Cell> path = ;
-//			paths.add(path);
-//			path.stream().forEach(c -> canvas.draw(c, DrawingCell.withColor(Color.RED)));
-		}
 		chart.saveTime("Final drawing");
-//        canvas.draw(cellsCloseToCoast, DrawingCellSet.withColor(Color.PINK));
+		canvas.draw(cellsCloseToCoast, DrawingCellSet.withColor(Color.PINK));
 //		chart.draw();
 
 	}

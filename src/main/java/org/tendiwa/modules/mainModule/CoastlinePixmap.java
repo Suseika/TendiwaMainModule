@@ -18,6 +18,7 @@ import org.tendiwa.settlements.RectangleWithNeighbors;
 import org.tendiwa.settlements.utils.RoadRejector;
 
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -25,7 +26,9 @@ public class CoastlinePixmap implements Runnable {
 	private final CoastlineGeometry geometry;
 
 	public static void main(String[] args) {
-		Demos.run(CoastlinePixmap.class);
+//		Demos.run(CoastlinePixmap.class);
+
+		new CoastlinePixmap().run();
 	}
 
 	public CoastlinePixmap() {
@@ -64,31 +67,25 @@ public class CoastlinePixmap implements Runnable {
 				.filter(c -> world.asRectangle().contains(c))
 				.forEach(c -> location.place(Registry.floorTypes.get("ground"), c));
 		for (
-			RoadsPlanarGraphModel roadsPlanarGraphModel
-			: geometry.buildingPlaces.keySet()
+			CoastlineCityGeometry city
+			: geometry.cities
 			) {
 			UndirectedGraph<Point2D, Segment2D> graphToDraw = RoadRejector.rejectPartOfNetworksBorders(
-				roadsPlanarGraphModel.getFullRoadGraph(),
-				roadsPlanarGraphModel,
+				city.roadsPlanarGraphModel.getFullRoadGraph(),
+				city.roadsPlanarGraphModel,
 				0.5,
-				123445634
+				new Random(123445634)
 			);
 			graphToDraw.edgeSet().forEach(drawRoad);
-			roadsPlanarGraphModel.getNetworks().stream().forEach(
-				cell -> cell.network().edgeSet().stream().forEach(drawRoad)
-			);
-		}
-
-		for (
-			Set<RectangleWithNeighbors> rectangleWithNeighborses
-			: geometry.buildingPlaces.values()
-			) {
-			for (RectangleWithNeighbors rectangleWithNeighbors : rectangleWithNeighborses) {
+			city.roadsPlanarGraphModel.getNetworks().stream()
+				.flatMap(cell -> cell.network().edgeSet().stream())
+				.forEach(drawRoad);
+			for (RectangleWithNeighbors buildingPlace : city.buildingPlaces) {
 				location.fillRectangle(
-					rectangleWithNeighbors.rectangle.intersectionWith(world.asRectangle()).get(),
+					buildingPlace.rectangle.intersectionWith(world.asRectangle()).get(),
 					Registry.wallTypes.get("wall_grey_stone")
 				);
-				for (Rectangle neighbor : rectangleWithNeighbors.neighbors) {
+				for (Rectangle neighbor : buildingPlace.neighbors) {
 					Optional<Rectangle> intersection = neighbor.intersectionWith(world.asRectangle());
 					if (intersection.isPresent()) {
 						location.fillRectangle(
@@ -98,8 +95,8 @@ public class CoastlinePixmap implements Runnable {
 					}
 				}
 			}
-		}
 
+		}
 
 		canvas.draw(world, DrawingWorld.withColorMap(new MainPlaceableToColor()));
 	}

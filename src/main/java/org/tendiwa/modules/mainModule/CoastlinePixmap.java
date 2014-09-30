@@ -14,9 +14,8 @@ import org.tendiwa.geometry.Segment2D;
 import org.tendiwa.geometry.extensions.CachedCellSet;
 import org.tendiwa.groovy.Registry;
 import org.tendiwa.settlements.RectangleWithNeighbors;
-import org.tendiwa.settlements.buildings.BuildingsTouchingStreets;
-import org.tendiwa.settlements.buildings.LotFacadeAssigner;
-import org.tendiwa.settlements.buildings.UrbanPlanner;
+import org.tendiwa.settlements.buildings.*;
+import org.tendiwa.settlements.streets.LotStreetAssigner;
 import org.tendiwa.settlements.streets.Namer;
 import org.tendiwa.settlements.utils.RoadRejector;
 import org.tendiwa.settlements.utils.StreetsDetector;
@@ -84,29 +83,41 @@ public class CoastlinePixmap implements Runnable {
 				new Random(123445634)
 			);
 			Set<ImmutableList<Point2D>> streets = StreetsDetector.detectStreets(actualRoadGraph);
-			BuildingsTouchingStreets b2s = new BuildingsTouchingStreets(streets, 3.3);
+			LotsTouchingStreets b2s = new LotsTouchingStreets(streets, 3.3);
 			Namer<List<Point2D>> streetNamer = (line) -> "Улица Говна";
-//			LotFacadeAssigner facadeAssigner = (lot) -> b2s.getStreetsForLot(lot).iterator().next();
-//			new UrbanPlanner(world.getDefaultPlane(), 3.3).addAvailableArchitecture();
+			LotFacadeAssigner facadeAssigner = FairLotFacadeAndStreetAssigner.create(b2s);
+			LotStreetAssigner streetAssigner = (LotStreetAssigner) facadeAssigner;
+			UrbanPlanner urbanPlanner = new UrbanPlanner(world.getDefaultPlane(), 3.3);
+			urbanPlanner.addAvailableArchitecture(
+				new House(),
+				new ArchitecturePolicyBuilder().withMinInstances(5).build()
+			);
+			urbanPlanner.addAvailableArchitecture(
+				new DummyArchitecture(),
+				new ArchitecturePolicyBuilder().withMinInstances(3).withMaxInstances(7).build()
+			);
+			City.builder()
+				.addLots(city.buildingPlaces)
+				.
 			actualRoadGraph.edgeSet().forEach(drawRoad);
 			city.roadsPlanarGraphModel.getNetworks().stream()
 				.flatMap(cell -> cell.network().edgeSet().stream())
 				.forEach(drawRoad);
-			for (RectangleWithNeighbors buildingPlace : city.buildingPlaces) {
-				location.fillRectangle(
-					buildingPlace.rectangle.intersectionWith(world.asRectangle()).get(),
-					Registry.wallTypes.get("wall_grey_stone")
-				);
-				for (Rectangle neighbor : buildingPlace.neighbors) {
-					Optional<Rectangle> intersection = neighbor.intersectionWith(world.asRectangle());
-					if (intersection.isPresent()) {
-						location.fillRectangle(
-							intersection.get(),
-							Registry.wallTypes.get("wall_grey_stone")
-						);
-					}
-				}
-			}
+//			for (RectangleWithNeighbors buildingPlace : city.buildingPlaces) {
+//				location.fillRectangle(
+//					buildingPlace.rectangle.intersectionWith(world.asRectangle()).get(),
+//					Registry.wallTypes.get("wall_grey_stone")
+//				);
+//				for (Rectangle neighbor : buildingPlace.neighbors) {
+//					Optional<Rectangle> intersection = neighbor.intersectionWith(world.asRectangle());
+//					if (intersection.isPresent()) {
+//						location.fillRectangle(
+//							intersection.get(),
+//							Registry.wallTypes.get("wall_grey_stone")
+//						);
+//					}
+//				}
+//			}
 
 		}
 

@@ -87,40 +87,44 @@ public class CoastlinePixmap implements Runnable {
 			Namer<List<Point2D>> streetNamer = (line) -> "Улица Говна";
 			LotFacadeAssigner facadeAssigner = FairLotFacadeAndStreetAssigner.create(b2s);
 			LotStreetAssigner streetAssigner = (LotStreetAssigner) facadeAssigner;
-			UrbanPlanner urbanPlanner = new UrbanPlanner(world.getDefaultPlane(), 3.3);
+			UrbanPlanner urbanPlanner = new UrbanPlanner(world.getDefaultPlane(), 3.3, new Random(565656565));
 			urbanPlanner.addAvailableArchitecture(
 				new House(),
-				new ArchitecturePolicyBuilder().withMinInstances(5).build()
+				new ArchitecturePolicyBuilder().withMinInstances(1).withMaxInstances(5).build()
 			);
 			urbanPlanner.addAvailableArchitecture(
 				new DummyArchitecture(),
-				new ArchitecturePolicyBuilder().withMinInstances(3).withMaxInstances(7).build()
+				new ArchitecturePolicyBuilder().withMinInstances(1).withMaxInstances(7).build()
 			);
 			City.builder()
 				.addLots(city.buildingPlaces)
-				.
+				.placeBuildings(urbanPlanner);
 			actualRoadGraph.edgeSet().forEach(drawRoad);
 			city.roadsPlanarGraphModel.getNetworks().stream()
 				.flatMap(cell -> cell.network().edgeSet().stream())
 				.forEach(drawRoad);
-//			for (RectangleWithNeighbors buildingPlace : city.buildingPlaces) {
-//				location.fillRectangle(
-//					buildingPlace.rectangle.intersectionWith(world.asRectangle()).get(),
-//					Registry.wallTypes.get("wall_grey_stone")
-//				);
-//				for (Rectangle neighbor : buildingPlace.neighbors) {
-//					Optional<Rectangle> intersection = neighbor.intersectionWith(world.asRectangle());
-//					if (intersection.isPresent()) {
-//						location.fillRectangle(
-//							intersection.get(),
-//							Registry.wallTypes.get("wall_grey_stone")
-//						);
-//					}
-//				}
-//			}
+//			drawShitInLots(world, location, city);
 
 		}
 
 		canvas.draw(world, DrawingWorld.withColorMap(new MainPlaceableToColor()));
+	}
+
+	private void drawShitInLots(World world, Location location, CoastlineCityGeometry city) {
+		for (RectangleWithNeighbors buildingPlace : city.buildingPlaces) {
+			location.fillRectangle(
+				buildingPlace.rectangle.intersectionWith(world.asRectangle()).get(),
+				Registry.floorTypes.get("water")
+			);
+			for (Rectangle neighbor : buildingPlace.neighbors) {
+				Optional<Rectangle> intersection = neighbor.intersectionWith(world.asRectangle());
+				if (intersection.isPresent()) {
+					location.fillRectangle(
+						intersection.get(),
+						Registry.floorTypes.get("water")
+					);
+				}
+			}
+		}
 	}
 }

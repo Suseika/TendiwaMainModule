@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 import static java.awt.Color.*;
 
 public class CoastlineGeometry implements Runnable {
-	TestCanvas canvas;
+	DrawableInto canvas;
 	CellSet water;
 	Collection<FiniteCellSet> shapeExitsSets;
 	List<List<Cell>> pathsBetweenCities;
@@ -88,7 +88,8 @@ public class CoastlineGeometry implements Runnable {
 
 		CityBoundsFactory boundsFactory = new CityBoundsFactory(water);
 		Rectangle worldSizeStretchedBy1 = worldSize.stretch(1);
-		canvas = new TestCanvas(3, worldSize.x + worldSize.getMaxX(), worldSize.y + worldSize.getMaxY());
+//		canvas = new TestCanvas(3, worldSize.x + worldSize.getMaxX(), worldSize.y + worldSize.getMaxY());
+		canvas = new FakeCanvas();
 		TestCanvas.canvas = canvas;
 		canvas.draw(borderWithCityCenters, DrawingCellSet.withColor(Color.PINK));
 		drawTerrain(worldSize, water, waterColor, grassColor);

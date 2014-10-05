@@ -20,7 +20,7 @@ public class House implements Architecture {
 		Cell pathEnd = pathStart.moveToSide(front, 3);
 		FiniteCellSet path = FiniteCellSet.of(CellSegment.vector(pathStart, pathEnd));
 
-		location.square(buildingRec, Registry.wallTypes.get("grey_stone_wall"), false);
+		location.square(buildingRec, Registry.wallTypes.get("wall_grey_stone"), false);
 		location.place(Registry.wallTypes.get("void"), doorCell);
 		location.fillRectangle(buildingRec, Registry.floorTypes.get("stone"));
 		location.drawCellSet(path, Registry.floorTypes.get("ground"));

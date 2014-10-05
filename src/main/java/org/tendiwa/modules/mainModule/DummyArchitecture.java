@@ -12,7 +12,7 @@ import org.tendiwa.settlements.buildings.BuildingTag;
 public class DummyArchitecture implements Architecture {
 	@Override
 	public void draw(BuildingFeatures features, CardinalDirection front, Location location) {
-		location.fillRectangle(location.getRelativeBounds().shrink(1), Registry.wallTypes.get("grey_stone_wall"));
+		location.fillRectangle(location.getRelativeBounds().shrink(1), Registry.wallTypes.get("wall_grey_stone"));
 	}
 
 	@Override

@@ -90,11 +90,11 @@ public class CoastlinePixmap implements Runnable {
 			UrbanPlanner urbanPlanner = new UrbanPlanner(world.getDefaultPlane(), 3.3, new Random(565656565));
 			urbanPlanner.addAvailableArchitecture(
 				new House(),
-				new ArchitecturePolicyBuilder().withMinInstances(1).withMaxInstances(5).build()
+				new ArchitecturePolicyBuilder().withMinInstancesNoGreaterThan(1).withMaxInstances(5).build()
 			);
 			urbanPlanner.addAvailableArchitecture(
 				new DummyArchitecture(),
-				new ArchitecturePolicyBuilder().withMinInstances(1).withMaxInstances(7).build()
+				new ArchitecturePolicyBuilder().withMinInstancesNoGreaterThan(1).withMaxInstances(7).build()
 			);
 			City.builder()
 				.addLots(city.buildingPlaces)

@@ -5,8 +5,11 @@ import org.jgrapht.UndirectedGraph;
 import org.tendiwa.core.Location;
 import org.tendiwa.core.Tendiwa;
 import org.tendiwa.core.World;
+import org.tendiwa.drawing.DrawableInto;
 import org.tendiwa.drawing.TestCanvas;
 import org.tendiwa.drawing.extensions.DrawingWorld;
+import org.tendiwa.drawing.extensions.FakeCanvas;
+import org.tendiwa.drawing.extensions.PieChartTimeProfiler;
 import org.tendiwa.geometry.CellSegment;
 import org.tendiwa.geometry.Point2D;
 import org.tendiwa.geometry.Rectangle;
@@ -24,12 +27,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 /**
  */
 public class CoastlinePixmap implements Runnable {
 	private final CoastlineGeometry geometry;
+	static PieChartTimeProfiler profiler = new PieChartTimeProfiler(400, TimeUnit.MILLISECONDS);
 
 	public static void main(String[] args) {
 //		Demos.run(CoastlinePixmap.class);
@@ -38,16 +43,26 @@ public class CoastlinePixmap implements Runnable {
 	}
 
 	public CoastlinePixmap() {
+
+		profiler.saveTime("Just started");
 		this.geometry = new CoastlineGeometry();
 		geometry.run();
+		profiler.saveTime("Geometry");
 	}
 
 	@Override
 	public void run() {
 		Tendiwa.loadModules();
-		TestCanvas canvas = new TestCanvas(1, 300, 300);
-		World world = new World(300, 300);
-		Location location = new Location(world.getDefaultPlane(), 0, 0, 300, 300);
+		DrawableInto canvas = new TestCanvas(1, geometry.worldSize.width, geometry.worldSize.height);
+//		DrawableInto canvas = new FakeCanvas();
+		World world = new World(geometry.worldSize.width, geometry.worldSize.height);
+		Location location = new Location(
+			world.getDefaultPlane(),
+			0,
+			0,
+			geometry.worldSize.width,
+			geometry.worldSize.height
+		);
 		CachedCellSet waterCells = new CachedCellSet(
 			geometry.water,
 			world.asRectangle()
@@ -108,6 +123,8 @@ public class CoastlinePixmap implements Runnable {
 		}
 
 		canvas.draw(world, DrawingWorld.withColorMap(new MainPlaceableToColor()));
+		profiler.saveTime("Cities");
+//		profiler.draw();
 	}
 
 	private void drawShitInLots(World world, Location location, CoastlineCityGeometry city) {

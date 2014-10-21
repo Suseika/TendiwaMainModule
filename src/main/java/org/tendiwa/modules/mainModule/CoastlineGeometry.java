@@ -28,6 +28,7 @@ public class CoastlineGeometry implements Runnable {
 	Collection<FiniteCellSet> shapeExitsSets;
 	List<List<Cell>> pathsBetweenCities;
 	Collection<CoastlineCityGeometry> cities = new HashSet<>();
+	Rectangle worldSize = new Rectangle(0, 0, 600, 600);
 
 
 	public static void main(String[] args) {
@@ -42,17 +43,16 @@ public class CoastlineGeometry implements Runnable {
 	public void run() {
 		// Constants and most general shapes
 		PieChartTimeProfiler chart = new PieChartTimeProfiler();
-		int maxCityRadius = 35;
+		int maxCityRadius = 40;
 		int minDistanceFromCoastToCityBorder = 3;
-		int minDistanceBetweenCityCenters = maxCityRadius * 3;
+		int minDistanceBetweenCityCenters = maxCityRadius * 7;
 		int minDistanceFromCoastToCityCenter = 20;
 		SimpleNoiseSource noise = (x, y) -> Noise.noise(
 			((double) x + 0) / 50,
 			((double) y + 0) / 40,
 			7
 		);
-		Rectangle worldSize = new Rectangle(0, 0, 300, 300);
-		water = (x, y) -> noise.noise(x, y) <= 110;
+		water = (x, y) -> noise.noise(x, y) <= 100;
 		chart.saveTime("Constants");
 
 		// Find city centers
@@ -66,6 +66,7 @@ public class CoastlineGeometry implements Runnable {
 			worldSize
 		);
 		chart.saveTime("City centers");
+		Rectangle cityCentersRectangle = worldSize.shrink(0);
 		DistantCellsFinder cityCenters = new DistantCellsFinder(
 			borderWithCityCenters,
 			minDistanceBetweenCityCenters
@@ -88,16 +89,19 @@ public class CoastlineGeometry implements Runnable {
 
 		CityBoundsFactory boundsFactory = new CityBoundsFactory(water);
 		Rectangle worldSizeStretchedBy1 = worldSize.stretch(1);
-//		canvas = new TestCanvas(3, worldSize.x + worldSize.getMaxX(), worldSize.y + worldSize.getMaxY());
-		canvas = new FakeCanvas();
+		canvas = new TestCanvas(1, worldSize.x + worldSize.getMaxX(), worldSize.y + worldSize.getMaxY());
+//		canvas = new FakeCanvas();
 		TestCanvas.canvas = canvas;
 		canvas.draw(borderWithCityCenters, DrawingCellSet.withColor(Color.PINK));
 		drawTerrain(worldSize, water, waterColor, grassColor);
 		chart.saveTime("Draw terrain");
-//        canvas.draw(borderWithCityCenters, DrawingCellSet.withColor(Color.RED));
+        canvas.draw(borderWithCityCenters, DrawingCellSet.withColor(Color.RED));
 		shapeExitsSets = new HashSet<>();
 		MutableCellSet citiesCells = new ScatteredMutableCellSet();
 		for (Cell cell : cityCenters) {
+			if (!cityCentersRectangle.contains(cell)) {
+				continue;
+			}
 			CoastlineCityGeometry cityGeometry = new CoastlineCityGeometry();
 			cities.add(cityGeometry);
 			chart.saveTime("0");
@@ -118,23 +122,23 @@ public class CoastlineGeometry implements Runnable {
 				maxCityRadiusModified
 			).computeFull();
 			chart.saveTime("2");
-//            canvas.draw(cell, DrawingCell.withColorAndSize(Color.black, 6));
-//            canvas.draw(cityShape, DrawingCellSet.withColor(Color.BLACK));
+            canvas.draw(cell, DrawingCell.withColorAndSize(Color.black, 6));
+            canvas.draw(cityShape, DrawingCellSet.withColor(Color.BLACK));
 			UndirectedGraph<Point2D, Segment2D> cityBounds = boundsFactory.create(
 				cityShape,
 				cell,
 				maxCityRadiusModified
 			);
 			chart.saveTime("3");
-//            canvas.draw(cityBounds, DrawingGraph.withColorAndVertexSize(RED, 2));
+            canvas.draw(cityBounds, DrawingGraph.withColorAndVertexSize(RED, 2));
 			RoadsPlanarGraphModel roadsPlanarGraphModel = new CityGeometryBuilder(cityBounds)
 				.withDefaults()
 				.withRoadsFromPoint(4)
 				.withDeviationAngle(Math.PI / 30)
 				.withSecondaryRoadNetworkDeviationAngle(0.1)
-				.withRoadSegmentLength(30)
+				.withRoadSegmentLength(40)
 				.withConnectivity(1)
-				.withMaxStartPointsPerCycle(3)
+				.withMaxStartPointsPerCycle(1)
 				.build();
 			chart.saveTime("4");
 			citiesCells.addAll(ShapeFromOutline.from(roadsPlanarGraphModel.getLowLevelRoadGraph()));
@@ -169,6 +173,7 @@ public class CoastlineGeometry implements Runnable {
 			shapeExitsSets.add(exitCells);
 			chart.saveTime("7");
 			Set<RectangleWithNeighbors> buildingPlaces = RectangularBuildingLots.placeInside(roadsPlanarGraphModel);
+			chart.saveTime("8: Find building places");
 			cityGeometry.roadsPlanarGraphModel = roadsPlanarGraphModel;
 			cityGeometry.buildingPlaces = buildingPlaces;
 			canvas.drawAll(
@@ -176,6 +181,7 @@ public class CoastlineGeometry implements Runnable {
 				DrawingRectangleWithNeighbors.withColorAndDefaultBorder(Color.blue, Color.magenta)
 			);
 			cityGeometry.streets = StreetsDetector.detectStreets(roadsPlanarGraphModel.getFullRoadGraph());
+			chart.saveTime("9: Detect streets");
 
 			// End of city geometry
 		}
@@ -211,7 +217,7 @@ public class CoastlineGeometry implements Runnable {
 			.collect(Collectors.toList());
 		chart.saveTime("Final drawing");
 		canvas.draw(cellsCloseToCoast, DrawingCellSet.withColor(Color.PINK));
-//		chart.draw();
+		chart.draw();
 
 	}
 

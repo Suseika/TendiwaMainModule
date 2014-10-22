@@ -10,6 +10,7 @@ import org.tendiwa.drawing.TestCanvas
 import org.tendiwa.drawing.extensions.*
 import org.tendiwa.geometry.*
 import org.tendiwa.geometry.extensions.*
+import org.tendiwa.geometry.extensions.intershapeNetwork.IntershapeNetwork
 import org.tendiwa.noise.Noise
 import org.tendiwa.noise.SimpleNoiseSource
 import org.tendiwa.pathfinding.astar.AStar

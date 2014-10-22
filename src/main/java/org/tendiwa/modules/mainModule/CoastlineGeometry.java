@@ -1,13 +1,14 @@
 package org.tendiwa.modules.mainModule;
 
-import com.google.common.collect.ImmutableList;
 import org.jgrapht.UndirectedGraph;
+import org.jgrapht.graph.UnmodifiableUndirectedGraph;
 import org.tendiwa.demos.Demos;
 import org.tendiwa.demos.settlements.CityDrawer;
 import org.tendiwa.drawing.*;
 import org.tendiwa.drawing.extensions.*;
 import org.tendiwa.geometry.*;
 import org.tendiwa.geometry.extensions.*;
+import org.tendiwa.geometry.extensions.intershapeNetwork.IntershapeNetwork;
 import org.tendiwa.noise.Noise;
 import org.tendiwa.noise.SimpleNoiseSource;
 import org.tendiwa.pathfinding.astar.AStar;
@@ -66,7 +67,7 @@ public class CoastlineGeometry implements Runnable {
 			worldSize
 		);
 		chart.saveTime("City centers");
-		Rectangle cityCentersRectangle = worldSize.shrink(0);
+		Rectangle cityCentersRectangle = worldSize.shrink(20);
 		DistantCellsFinder cityCenters = new DistantCellsFinder(
 			borderWithCityCenters,
 			minDistanceBetweenCityCenters
@@ -95,7 +96,7 @@ public class CoastlineGeometry implements Runnable {
 		canvas.draw(borderWithCityCenters, DrawingCellSet.withColor(Color.PINK));
 		drawTerrain(worldSize, water, waterColor, grassColor);
 		chart.saveTime("Draw terrain");
-        canvas.draw(borderWithCityCenters, DrawingCellSet.withColor(Color.RED));
+		canvas.draw(borderWithCityCenters, DrawingCellSet.withColor(Color.RED));
 		shapeExitsSets = new HashSet<>();
 		MutableCellSet citiesCells = new ScatteredMutableCellSet();
 		for (Cell cell : cityCenters) {
@@ -122,15 +123,15 @@ public class CoastlineGeometry implements Runnable {
 				maxCityRadiusModified
 			).computeFull();
 			chart.saveTime("2");
-            canvas.draw(cell, DrawingCell.withColorAndSize(Color.black, 6));
-            canvas.draw(cityShape, DrawingCellSet.withColor(Color.BLACK));
+			canvas.draw(cell, DrawingCell.withColorAndSize(Color.black, 6));
+			canvas.draw(cityShape, DrawingCellSet.withColor(Color.BLACK));
 			UndirectedGraph<Point2D, Segment2D> cityBounds = boundsFactory.create(
 				cityShape,
 				cell,
 				maxCityRadiusModified
 			);
 			chart.saveTime("3");
-            canvas.draw(cityBounds, DrawingGraph.withColorAndVertexSize(RED, 2));
+			canvas.draw(cityBounds, DrawingGraph.withColorAndVertexSize(RED, 2));
 			RoadsPlanarGraphModel roadsPlanarGraphModel = new CityGeometryBuilder(cityBounds)
 				.withDefaults()
 				.withRoadsFromPoint(4)
@@ -201,12 +202,12 @@ public class CoastlineGeometry implements Runnable {
 		);
 		chart.saveTime("Space between cities");
 
-		IntershapeNetwork network = IntershapeNetwork
+		UnmodifiableUndirectedGraph<FiniteCellSet, CellSegment> network = IntershapeNetwork
 			.withShapeExits(shapeExitsSets)
 			.withWalkableCells(spaceBetweenCities);
 		chart.saveTime("Network");
 
-		pathsBetweenCities = network.getGraph().edgeSet()
+		pathsBetweenCities = network.edgeSet()
 			.stream()
 			.map(
 				segment -> new AStar(

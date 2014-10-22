@@ -115,7 +115,7 @@ for (Cell cell : cityCenters) {
             .withMaxStartPointsPerCycle(3)
             .build();
     chart.saveTime("4");
-    citiesCells.addAll(ShapeFromOutline.from(city.getLowLevelRoadGraph()));
+    citiesCells.addAll(ShapeToRaster.from(city.getLowLevelRoadGraph()));
     chart.saveTime("5");
     canvas.draw(city, new CityDrawer());
     FiniteCellSet exitCells = null;

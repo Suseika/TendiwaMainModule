@@ -22,6 +22,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.awt.Color.*;
+import static org.tendiwa.geometry.DSL.rectangle;
 
 public class CoastlineGeometry implements Runnable {
 	DrawableInto canvas;
@@ -29,7 +30,8 @@ public class CoastlineGeometry implements Runnable {
 	Collection<FiniteCellSet> shapeExitsSets;
 	List<List<Cell>> pathsBetweenCities;
 	Collection<CoastlineCityGeometry> cities = new HashSet<>();
-	Rectangle worldSize = new Rectangle(0, 0, 600, 600);
+	Rectangle worldSize = rectangle(400, 400);
+	private PieChartTimeProfiler chart;
 
 
 	public static void main(String[] args) {
@@ -43,10 +45,10 @@ public class CoastlineGeometry implements Runnable {
 	@Override
 	public void run() {
 		// Constants and most general shapes
-		PieChartTimeProfiler chart = new PieChartTimeProfiler();
-		int maxCityRadius = 40;
+		chart = new PieChartTimeProfiler();
+		int maxCityRadius = 80;
 		int minDistanceFromCoastToCityBorder = 3;
-		int minDistanceBetweenCityCenters = maxCityRadius * 7;
+		int minDistanceBetweenCityCenters = maxCityRadius * 3;
 		int minDistanceFromCoastToCityCenter = 20;
 		SimpleNoiseSource noise = (x, y) -> Noise.noise(
 			((double) x + 0) / 50,
@@ -57,7 +59,7 @@ public class CoastlineGeometry implements Runnable {
 		chart.saveTime("Constants");
 
 		// Find city centers
-		CellSet reducingMask = (x, y) -> (x + y) % 20 == 0;
+		CellSet reducingMask = (x, y) -> (x + y) % 200 == 0;
 		ChebyshevDistanceBufferBorder cityCenterBorder = new ChebyshevDistanceBufferBorder(
 			minDistanceFromCoastToCityCenter,
 			(x, y) -> worldSize.contains(x, y) && water.contains(x, y)
@@ -202,12 +204,22 @@ public class CoastlineGeometry implements Runnable {
 		);
 		chart.saveTime("Space between cities");
 
+//		pathsBetweenCities = computePathsBetweenCities(spaceBetweenCities);
+		pathsBetweenCities = new ArrayList<>(1);
+		chart.saveTime("Paths between cities");
+//		canvas.draw(cellsCloseToCoast, DrawingCellSet.withColor(Color.PINK));
+//		chart.saveTime("Final drawing");
+		chart.draw();
+
+	}
+
+	private List<List<Cell>> computePathsBetweenCities(CellSet spaceBetweenCities) {
 		UnmodifiableUndirectedGraph<FiniteCellSet, CellSegment> network = IntershapeNetwork
 			.withShapeExits(shapeExitsSets)
 			.withWalkableCells(spaceBetweenCities);
 		chart.saveTime("Network");
 
-		pathsBetweenCities = network.edgeSet()
+		return network.edgeSet()
 			.stream()
 			.map(
 				segment -> new AStar(
@@ -216,10 +228,6 @@ public class CoastlineGeometry implements Runnable {
 				).path(segment.start, segment.end)
 			)
 			.collect(Collectors.toList());
-		chart.saveTime("Final drawing");
-		canvas.draw(cellsCloseToCoast, DrawingCellSet.withColor(Color.PINK));
-		chart.draw();
-
 	}
 
 	private void drawTerrain(

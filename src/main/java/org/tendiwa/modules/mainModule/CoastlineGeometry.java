@@ -91,7 +91,6 @@ public class CoastlineGeometry implements Runnable {
 		DrawingAlgorithm<Cell> waterColor = DrawingCell.withColor(BLUE);
 
 		CityBoundsFactory boundsFactory = new CityBoundsFactory(water);
-		Rectangle worldSizeStretchedBy1 = worldSize.stretch(1);
 		canvas = new TestCanvas(1, worldSize.x + worldSize.getMaxX(), worldSize.y + worldSize.getMaxY());
 //		canvas = new FakeCanvas();
 		TestCanvas.canvas = canvas;
@@ -121,7 +120,7 @@ public class CoastlineGeometry implements Runnable {
 			BoundedCellSet cityShape = new PathTable(
 				cell.x,
 				cell.y,
-				(x, y) -> worldSizeStretchedBy1.contains(x, y) && !coast.contains(x, y),
+				(x, y) -> worldSize.contains(x, y) && !coast.contains(x, y),
 				maxCityRadiusModified
 			).computeFull();
 			chart.saveTime("2");
@@ -141,11 +140,11 @@ public class CoastlineGeometry implements Runnable {
 				.withSecondaryRoadNetworkDeviationAngle(0.1)
 				.withRoadSegmentLength(40)
 				.withConnectivity(1)
-				.withMaxStartPointsPerCycle(1)
+				.withMaxStartPointsPerCycle(2)
 				.build();
 			chart.saveTime("4");
 			citiesCells.addAll(ShapeFromOutline.from(roadsPlanarGraphModel.getLowLevelRoadGraph()));
-			chart.saveTime("5");
+			chart.saveTime("ShapeFromOutline");
 			canvas.draw(roadsPlanarGraphModel, new CityDrawer());
 			FiniteCellSet exitCells = null;
 			try {

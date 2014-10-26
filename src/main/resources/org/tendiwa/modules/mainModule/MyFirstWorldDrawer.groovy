@@ -16,6 +16,7 @@ import org.tendiwa.noise.SimpleNoiseSource
 import org.tendiwa.pathfinding.astar.AStar
 import org.tendiwa.pathfinding.dijkstra.PathTable
 import org.tendiwa.settlements.*
+import org.tendiwa.settlements.cityBounds.CityBounds
 import org.tendiwa.settlements.utils.RectangularBuildingLots
 
 import java.awt.Color
@@ -40,7 +41,7 @@ Rectangle worldSize = new Rectangle(20, 20, 1000, 1000);
 CellSet water = { int x, int y -> noise.noise(x, y) <= 110; } as CellSet
 chart.saveTime("Constants");
 CellSet reducingMask = { x, y -> (x + y) % 20 == 0; } as CellSet
-ChebyshevDistanceBufferBorder cityCenterBorder = new ChebyshevDistanceBufferBorder(
+ChebyshovDistanceBufferBorder cityCenterBorder = new ChebyshovDistanceBufferBorder(
         minDistanceFromCoastToCityCenter,
         { int x, int y -> worldSize.contains(x, y) && water.contains(x, y) } as CellSet
 );
@@ -67,7 +68,7 @@ chart.saveTime("Distant cells");
 DrawingAlgorithm<Cell> grassColor = DrawingCell.withColor(Color.GREEN);
 DrawingAlgorithm<Cell> waterColor = DrawingCell.withColor(Color.BLUE);
 
-CityBoundsFactory boundsFactory = new CityBoundsFactory(water);
+CityBounds boundsFactory = new CityBounds(water);
 Rectangle worldSizeStretchedBy1 = worldSize.stretch(1);
 canvas = new TestCanvas(1, worldSize.x + worldSize.getMaxX(), worldSize.y + worldSize.getMaxY());
 TestCanvas.canvas = canvas;
@@ -85,7 +86,7 @@ for (Cell cell : cityCenters) {
             .intersectionWith(worldSize)
             .get();
     CachedCellSet coast = new CachedCellSet(
-            new ChebyshevDistanceBufferBorder(minDistanceFromCoastToCityBorder, water),
+            new ChebyshovDistanceBufferBorder(minDistanceFromCoastToCityBorder, water),
             cityBoundRec
     );
     chart.saveTime("1");

@@ -14,6 +14,7 @@ import org.tendiwa.noise.SimpleNoiseSource;
 import org.tendiwa.pathfinding.astar.AStar;
 import org.tendiwa.pathfinding.dijkstra.PathTable;
 import org.tendiwa.settlements.*;
+import org.tendiwa.settlements.cityBounds.CityBounds;
 import org.tendiwa.settlements.utils.RectangularBuildingLots;
 import org.tendiwa.settlements.utils.StreetsDetector;
 
@@ -60,7 +61,7 @@ public class CoastlineGeometry implements Runnable {
 
 		// Find city centers
 		CellSet reducingMask = (x, y) -> (x + y) % 200 == 0;
-		ChebyshevDistanceBufferBorder cityCenterBorder = new ChebyshevDistanceBufferBorder(
+		ChebyshovDistanceBufferBorder cityCenterBorder = new ChebyshovDistanceBufferBorder(
 			minDistanceFromCoastToCityCenter,
 			(x, y) -> worldSize.contains(x, y) && water.contains(x, y)
 		);
@@ -90,7 +91,6 @@ public class CoastlineGeometry implements Runnable {
 		DrawingAlgorithm<Cell> grassColor = DrawingCell.withColor(Color.GREEN);
 		DrawingAlgorithm<Cell> waterColor = DrawingCell.withColor(BLUE);
 
-		CityBoundsFactory boundsFactory = new CityBoundsFactory(water);
 		canvas = new TestCanvas(1, worldSize.x + worldSize.getMaxX(), worldSize.y + worldSize.getMaxY());
 //		canvas = new FakeCanvas();
 		TestCanvas.canvas = canvas;
@@ -113,7 +113,7 @@ public class CoastlineGeometry implements Runnable {
 				.intersectionWith(worldSize)
 				.get();
 			CachedCellSet coast = new CachedCellSet(
-				new ChebyshevDistanceBufferBorder(minDistanceFromCoastToCityBorder, water),
+				new ChebyshovDistanceBufferBorder(minDistanceFromCoastToCityBorder, water),
 				cityBoundRec
 			);
 			chart.saveTime("1");
@@ -126,7 +126,7 @@ public class CoastlineGeometry implements Runnable {
 			chart.saveTime("2");
 			canvas.draw(cell, DrawingCell.withColorAndSize(Color.black, 6));
 			canvas.draw(cityShape, DrawingCellSet.withColor(Color.BLACK));
-			UndirectedGraph<Point2D, Segment2D> cityBounds = boundsFactory.create(
+			UndirectedGraph<Point2D, Segment2D> cityBounds = CityBounds.create(
 				cityShape,
 				cell,
 				maxCityRadiusModified

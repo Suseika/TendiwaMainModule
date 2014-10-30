@@ -15,6 +15,9 @@ import org.tendiwa.pathfinding.astar.AStar;
 import org.tendiwa.pathfinding.dijkstra.PathTable;
 import org.tendiwa.settlements.*;
 import org.tendiwa.settlements.cityBounds.CityBounds;
+import org.tendiwa.settlements.networks.CityGeometryBuilder;
+import org.tendiwa.settlements.networks.NetworkWithinCycle;
+import org.tendiwa.settlements.networks.RoadsPlanarGraphModel;
 import org.tendiwa.settlements.utils.RectangularBuildingLots;
 import org.tendiwa.settlements.utils.StreetsDetector;
 
@@ -174,6 +177,7 @@ public class CoastlineGeometry implements Runnable {
 			chart.saveTime("6");
 			shapeExitsSets.add(exitCells);
 			chart.saveTime("7");
+			System.out.println("Networks: " + roadsPlanarGraphModel.getNetworks().size());
 			Set<RectangleWithNeighbors> buildingPlaces = RectangularBuildingLots.placeInside(roadsPlanarGraphModel);
 			chart.saveTime("8: Find building places");
 			cityGeometry.roadsPlanarGraphModel = roadsPlanarGraphModel;

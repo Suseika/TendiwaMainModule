@@ -41,6 +41,7 @@ public class CoastlinePixmap implements Runnable {
 	public void run() {
 		Tendiwa.loadModules();
 		DrawableInto canvas = new TestCanvas(1, geometry.worldSize.width, geometry.worldSize.height);
+		TestCanvas.canvas = canvas;
 //		DrawableInto canvas = new FakeCanvas();
 		World world = new World(geometry.worldSize.width, geometry.worldSize.height);
 		Location location = new Location(

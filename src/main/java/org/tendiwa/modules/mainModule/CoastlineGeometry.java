@@ -55,7 +55,7 @@ public class CoastlineGeometry implements Runnable {
 		int minDistanceBetweenCityCenters = maxCityRadius * 3;
 		int minDistanceFromCoastToCityCenter = 20;
 		SimpleNoiseSource noise = (x, y) -> Noise.noise(
-			((double) x + 0) / 50,
+			((double) x + 500) / 50,
 			((double) y + 0) / 40,
 			7
 		);
@@ -94,7 +94,7 @@ public class CoastlineGeometry implements Runnable {
 		DrawingAlgorithm<Cell> grassColor = DrawingCell.withColor(Color.GREEN);
 		DrawingAlgorithm<Cell> waterColor = DrawingCell.withColor(BLUE);
 
-		canvas = new TestCanvas(1, worldSize.x + worldSize.getMaxX(), worldSize.y + worldSize.getMaxY());
+		canvas = new TestCanvas(2, worldSize.x + worldSize.getMaxX(), worldSize.y + worldSize.getMaxY());
 //		canvas = new FakeCanvas();
 		TestCanvas.canvas = canvas;
 		canvas.draw(borderWithCityCenters, DrawingCellSet.withColor(Color.PINK));
@@ -194,7 +194,7 @@ public class CoastlineGeometry implements Runnable {
 		CellSet shapeExitsCombined = shapeExitsSets
 			.stream()
 			.map(a -> (CellSet) a)
-			.reduce(CellSet.empty(), (a, b) -> a.or(b));
+			.reduce(CellSet.empty(), CellSet::or);
 		chart.saveTime("Combined sets");
 
 		CellSet spaceBetweenCities = new CachedCellSet(

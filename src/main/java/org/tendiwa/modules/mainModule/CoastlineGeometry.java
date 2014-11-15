@@ -34,7 +34,7 @@ public class CoastlineGeometry implements Runnable {
 	Collection<FiniteCellSet> shapeExitsSets;
 	List<List<Cell>> pathsBetweenCities;
 	Collection<CoastlineCityGeometry> cities = new HashSet<>();
-	Rectangle worldSize = rectangle(400, 400);
+	Rectangle worldSize = rectangle(1000, 1000);
 	private PieChartTimeProfiler chart;
 
 
@@ -55,11 +55,11 @@ public class CoastlineGeometry implements Runnable {
 		int minDistanceBetweenCityCenters = maxCityRadius * 3;
 		int minDistanceFromCoastToCityCenter = 20;
 		SimpleNoiseSource noise = (x, y) -> Noise.noise(
-			((double) x + 500) / 50,
-			((double) y + 0) / 40,
+			((double) x + 400) / 100,
+			((double) y + 200) / 100,
 			7
 		);
-		water = (x, y) -> noise.noise(x, y) <= 100;
+		water = (x, y) -> noise.noise(x, y) <= 110;
 		chart.saveTime("Constants");
 
 		// Find city centers
@@ -94,7 +94,7 @@ public class CoastlineGeometry implements Runnable {
 		DrawingAlgorithm<Cell> grassColor = DrawingCell.withColor(Color.GREEN);
 		DrawingAlgorithm<Cell> waterColor = DrawingCell.withColor(BLUE);
 
-		canvas = new TestCanvas(2, worldSize.x + worldSize.getMaxX(), worldSize.y + worldSize.getMaxY());
+		canvas = new TestCanvas(1, worldSize.x + worldSize.getMaxX(), worldSize.y + worldSize.getMaxY());
 //		canvas = new FakeCanvas();
 		TestCanvas.canvas = canvas;
 		canvas.draw(borderWithCityCenters, DrawingCellSet.withColor(Color.PINK));
@@ -142,6 +142,7 @@ public class CoastlineGeometry implements Runnable {
 				.withDeviationAngle(Math.PI / 30)
 				.withSecondaryRoadNetworkDeviationAngle(0.1)
 				.withRoadSegmentLength(40)
+				.withSnapSize(10)
 				.withConnectivity(1)
 				.withMaxStartPointsPerCycle(2)
 				.build();
@@ -164,6 +165,7 @@ public class CoastlineGeometry implements Runnable {
 									.anyMatch(e -> e.start.equals(p) || e.end.equals(p))
 							)
 							.map(Point2D::toCell)
+							.distinct()
 					)
 					.collect(CellSet.toCellSet());
 			} catch (Exception exc) {
@@ -172,7 +174,7 @@ public class CoastlineGeometry implements Runnable {
 				for (NetworkWithinCycle net : roadsPlanarGraphModel.getNetworks()) {
 					cvs.draw(net.cycle(), DrawingGraph.withColorAndAntialiasing(Color.BLACK));
 				}
-				throw new RuntimeException();
+				throw new RuntimeException(exc);
 			}
 			chart.saveTime("6");
 			shapeExitsSets.add(exitCells);

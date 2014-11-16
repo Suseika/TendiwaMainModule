@@ -147,7 +147,7 @@ public class CoastlineGeometry implements Runnable {
 				.withMaxStartPointsPerCycle(2)
 				.build();
 			chart.saveTime("4");
-			citiesCells.addAll(ShapeFromOutline.from(roadsPlanarGraphModel.getLowLevelRoadGraph()));
+			citiesCells.addAll(ShapeFromOutline.from(roadsPlanarGraphModel.getOriginalRoadGraph()));
 			chart.saveTime("ShapeFromOutline");
 			canvas.draw(roadsPlanarGraphModel, new CityDrawer());
 			FiniteCellSet exitCells = null;

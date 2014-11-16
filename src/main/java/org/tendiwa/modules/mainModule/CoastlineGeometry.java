@@ -55,7 +55,7 @@ public class CoastlineGeometry implements Runnable {
 		int minDistanceBetweenCityCenters = maxCityRadius * 3;
 		int minDistanceFromCoastToCityCenter = 20;
 		SimpleNoiseSource noise = (x, y) -> Noise.noise(
-			((double) x + 400) / 100,
+			((double) x + 700) / 100,
 			((double) y + 200) / 100,
 			7
 		);

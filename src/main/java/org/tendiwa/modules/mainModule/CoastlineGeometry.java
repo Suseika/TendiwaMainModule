@@ -94,7 +94,8 @@ public class CoastlineGeometry implements Runnable {
 		DrawingAlgorithm<Cell> grassColor = DrawingCell.withColor(Color.GREEN);
 		DrawingAlgorithm<Cell> waterColor = DrawingCell.withColor(BLUE);
 
-		canvas = new TestCanvas(1, worldSize.x + worldSize.getMaxX(), worldSize.y + worldSize.getMaxY());
+//		canvas = new MagnifierCanvas(8, 362, 626, 200, 200);
+		canvas = new TestCanvas(1, worldSize.width, worldSize.height);
 //		canvas = new FakeCanvas();
 		TestCanvas.canvas = canvas;
 		canvas.draw(borderWithCityCenters, DrawingCellSet.withColor(Color.PINK));
@@ -135,7 +136,7 @@ public class CoastlineGeometry implements Runnable {
 				maxCityRadiusModified
 			);
 			chart.saveTime("3");
-			canvas.draw(cityBounds, DrawingGraph.withColorAndVertexSize(RED, 2));
+//			canvas.draw(cityBounds, DrawingGraph.withColorAndVertexSize(RED, 2));
 			RoadsPlanarGraphModel roadsPlanarGraphModel = new CityGeometryBuilder(cityBounds)
 				.withDefaults()
 				.withRoadsFromPoint(4)
@@ -149,7 +150,7 @@ public class CoastlineGeometry implements Runnable {
 			chart.saveTime("4");
 			citiesCells.addAll(ShapeFromOutline.from(roadsPlanarGraphModel.getOriginalRoadGraph()));
 			chart.saveTime("ShapeFromOutline");
-			canvas.draw(roadsPlanarGraphModel, new CityDrawer());
+//			canvas.draw(roadsPlanarGraphModel, new CityDrawer());
 			FiniteCellSet exitCells = null;
 			try {
 				exitCells = roadsPlanarGraphModel

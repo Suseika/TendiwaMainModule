@@ -34,7 +34,7 @@ public class CoastlineGeometry implements Runnable {
 	Collection<FiniteCellSet> shapeExitsSets;
 	List<List<Cell>> pathsBetweenCities;
 	Collection<CoastlineCityGeometry> cities = new HashSet<>();
-	Rectangle worldSize = rectangle(1000, 1000);
+	Rectangle worldSize = rectangle(2000, 2000);
 	private PieChartTimeProfiler chart;
 
 
@@ -94,8 +94,8 @@ public class CoastlineGeometry implements Runnable {
 		DrawingAlgorithm<Cell> grassColor = DrawingCell.withColor(Color.GREEN);
 		DrawingAlgorithm<Cell> waterColor = DrawingCell.withColor(BLUE);
 
-//		canvas = new MagnifierCanvas(8, 362, 626, 200, 200);
-		canvas = new TestCanvas(1, worldSize.width, worldSize.height);
+		canvas = new MagnifierCanvas(4, 176, 1264, 800, 800);
+//		canvas = new TestCanvas(1, worldSize.width, worldSize.height);
 //		canvas = new FakeCanvas();
 		TestCanvas.canvas = canvas;
 		canvas.draw(borderWithCityCenters, DrawingCellSet.withColor(Color.PINK));

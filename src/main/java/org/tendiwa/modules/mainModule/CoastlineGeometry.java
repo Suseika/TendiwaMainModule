@@ -94,7 +94,7 @@ public class CoastlineGeometry implements Runnable {
 		DrawingAlgorithm<Cell> grassColor = DrawingCell.withColor(Color.GREEN);
 		DrawingAlgorithm<Cell> waterColor = DrawingCell.withColor(BLUE);
 
-		canvas = new MagnifierCanvas(4, 176, 1264, 800, 800);
+		canvas = new MagnifierCanvas(5, 226, 1248, 800, 800);
 //		canvas = new TestCanvas(1, worldSize.width, worldSize.height);
 //		canvas = new FakeCanvas();
 		TestCanvas.canvas = canvas;
@@ -185,10 +185,10 @@ public class CoastlineGeometry implements Runnable {
 			chart.saveTime("8: Find building places");
 			cityGeometry.roadsPlanarGraphModel = roadsPlanarGraphModel;
 			cityGeometry.buildingPlaces = buildingPlaces;
-			canvas.drawAll(
-				buildingPlaces,
-				DrawingRectangleWithNeighbors.withColorAndDefaultBorder(Color.blue, Color.magenta)
-			);
+//			canvas.drawAll(
+//				buildingPlaces,
+//				DrawingRectangleWithNeighbors.withColorAndDefaultBorder(Color.blue, Color.magenta)
+//			);
 			cityGeometry.streets = StreetsDetector.detectStreets(roadsPlanarGraphModel.getFullRoadGraph());
 			chart.saveTime("9: Detect streets");
 

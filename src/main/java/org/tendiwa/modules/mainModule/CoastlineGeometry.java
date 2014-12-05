@@ -94,7 +94,8 @@ public class CoastlineGeometry implements Runnable {
 		DrawingAlgorithm<Cell> grassColor = DrawingCell.withColor(Color.GREEN);
 		DrawingAlgorithm<Cell> waterColor = DrawingCell.withColor(BLUE);
 
-		canvas = new MagnifierCanvas(5, 335, 712, 800, 800);
+//		canvas = new MagnifierCanvas(8, 40, 1768, 8*2*40, 8*40*2);
+		canvas = new MagnifierCanvas(5, 293, 690, 500, 500);
 //		canvas = new TestCanvas(1, worldSize.width, worldSize.height);
 //		canvas = new FakeCanvas();
 		TestCanvas.canvas = canvas;

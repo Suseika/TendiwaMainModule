@@ -55,7 +55,7 @@ public class CoastlineGeometry implements Runnable {
 		int minDistanceBetweenCityCenters = maxCityRadius * 3;
 		int minDistanceFromCoastToCityCenter = 20;
 		SimpleNoiseSource noise = (x, y) -> Noise.noise(
-			((double) x + 700) / 100,
+			((double) x + 600) / 100,
 			((double) y + 200) / 100,
 			7
 		);
@@ -94,8 +94,8 @@ public class CoastlineGeometry implements Runnable {
 		DrawingAlgorithm<Cell> grassColor = DrawingCell.withColor(Color.GREEN);
 		DrawingAlgorithm<Cell> waterColor = DrawingCell.withColor(BLUE);
 
-//		canvas = new MagnifierCanvas(10, 1017, 480, 600, 600);
-		canvas = new MagnifierCanvas(6, 426, 1629, 600, 600);
+//		canvas = new MagnifierCanvas(10, 719, 1102, 600, 600);
+		canvas = new MagnifierCanvas(5, 1168-50, 1351-50, 800, 800);
 //		canvas = new MagnifierCanvas(6, 566, 749, 600, 600);
 //		canvas = new MagnifierCanvas(5, 252, 715, 500, 500);
 //		canvas = new TestCanvas(1, worldSize.width, worldSize.height);

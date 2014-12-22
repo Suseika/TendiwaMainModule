@@ -4,16 +4,22 @@ import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.UnmodifiableUndirectedGraph;
 import org.tendiwa.demos.Demos;
 import org.tendiwa.demos.settlements.CityDrawer;
-import org.tendiwa.drawing.*;
+import org.tendiwa.drawing.DrawableInto;
+import org.tendiwa.drawing.DrawingAlgorithm;
+import org.tendiwa.drawing.LargerScaleCanvasModule;
+import org.tendiwa.drawing.TestCanvas;
 import org.tendiwa.drawing.extensions.*;
 import org.tendiwa.geometry.*;
-import org.tendiwa.geometry.extensions.*;
+import org.tendiwa.geometry.extensions.CachedCellSet;
+import org.tendiwa.geometry.extensions.ChebyshevDistanceBuffer;
+import org.tendiwa.geometry.extensions.ChebyshovDistanceBufferBorder;
+import org.tendiwa.geometry.extensions.ShapeFromOutline;
 import org.tendiwa.geometry.extensions.intershapeNetwork.IntershapeNetwork;
 import org.tendiwa.noise.Noise;
 import org.tendiwa.noise.SimpleNoiseSource;
 import org.tendiwa.pathfinding.astar.AStar;
 import org.tendiwa.pathfinding.dijkstra.PathTable;
-import org.tendiwa.settlements.*;
+import org.tendiwa.settlements.utils.RectangleWithNeighbors;
 import org.tendiwa.settlements.cityBounds.CityBounds;
 import org.tendiwa.settlements.networks.CityGeometryBuilder;
 import org.tendiwa.settlements.networks.NetworkWithinCycle;
@@ -34,7 +40,7 @@ public class CoastlineGeometry implements Runnable {
 	Collection<FiniteCellSet> shapeExitsSets;
 	List<List<Cell>> pathsBetweenCities;
 	Collection<CoastlineCityGeometry> cities = new HashSet<>();
-	Rectangle worldSize = rectangle(2000, 2000);
+	Rectangle worldSize = rectangle(800, 800);
 	private PieChartTimeProfiler chart;
 
 
@@ -55,7 +61,7 @@ public class CoastlineGeometry implements Runnable {
 		int minDistanceBetweenCityCenters = maxCityRadius * 3;
 		int minDistanceFromCoastToCityCenter = 20;
 		SimpleNoiseSource noise = (x, y) -> Noise.noise(
-			((double) x + 23700) / 100,
+			((double) x + 700) / 100,
 			((double) y + 200) / 100,
 			7
 		);
@@ -153,7 +159,7 @@ public class CoastlineGeometry implements Runnable {
 			chart.saveTime("4");
 			citiesCells.addAll(ShapeFromOutline.from(roadsPlanarGraphModel.getOriginalRoadGraph()));
 			chart.saveTime("ShapeFromOutline");
-//			canvas.draw(roadsPlanarGraphModel, new CityDrawer());
+			canvas.draw(roadsPlanarGraphModel, new CityDrawer());
 			FiniteCellSet exitCells = null;
 			try {
 				exitCells = roadsPlanarGraphModel
@@ -188,10 +194,7 @@ public class CoastlineGeometry implements Runnable {
 			chart.saveTime("8: Find building places");
 			cityGeometry.roadsPlanarGraphModel = roadsPlanarGraphModel;
 			cityGeometry.buildingPlaces = buildingPlaces;
-//			canvas.drawAll(
-//				buildingPlaces,
-//				DrawingRectangleWithNeighbors.withColorAndDefaultBorder(Color.blue, Color.magenta)
-//			);
+//			drawLots(buildingPlaces);
 			cityGeometry.streets = StreetsDetector.detectStreets(roadsPlanarGraphModel.getFullRoadGraph());
 			chart.saveTime("9: Detect streets");
 
@@ -218,8 +221,15 @@ public class CoastlineGeometry implements Runnable {
 		chart.saveTime("Paths between cities");
 //		canvas.draw(cellsCloseToCoast, DrawingCellSet.withColor(Color.PINK));
 //		chart.saveTime("Final drawing");
-		chart.draw();
+//		chart.draw();
 
+	}
+
+	private void drawLots(Set<RectangleWithNeighbors> buildingPlaces) {
+		canvas.drawAll(
+			buildingPlaces,
+			DrawingRectangleWithNeighbors.withColorAndDefaultBorder(Color.blue, Color.magenta)
+		);
 	}
 
 	private List<List<Cell>> computePathsBetweenCities(CellSet spaceBetweenCities) {

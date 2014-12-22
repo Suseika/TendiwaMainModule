@@ -15,11 +15,11 @@ import org.tendiwa.noise.Noise
 import org.tendiwa.noise.SimpleNoiseSource
 import org.tendiwa.pathfinding.astar.AStar
 import org.tendiwa.pathfinding.dijkstra.PathTable
-import org.tendiwa.settlements.*
 import org.tendiwa.settlements.cityBounds.CityBounds
 import org.tendiwa.settlements.networks.CityGeometryBuilder
 import org.tendiwa.settlements.networks.NetworkWithinCycle
 import org.tendiwa.settlements.networks.RoadsPlanarGraphModel
+import org.tendiwa.settlements.utils.RectangleWithNeighbors
 import org.tendiwa.settlements.utils.RectangularBuildingLots
 
 import java.awt.Color

@@ -4,7 +4,7 @@ import org.tendiwa.core.CardinalDirection;
 import org.tendiwa.core.Location;
 import org.tendiwa.geometry.Rectangle;
 import org.tendiwa.groovy.Registry;
-import org.tendiwa.settlements.RectangleWithNeighbors;
+import org.tendiwa.settlements.utils.RectangleWithNeighbors;
 import org.tendiwa.settlements.buildings.Architecture;
 import org.tendiwa.settlements.buildings.BuildingFeatures;
 import org.tendiwa.settlements.buildings.BuildingTag;

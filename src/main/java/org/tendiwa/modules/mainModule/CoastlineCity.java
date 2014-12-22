@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 class CoastlineCity {
+	public static final double STREETS_WIDTH = 3.3;
 	private World world;
 	private Consumer<Segment2D> drawRoad;
 	private CoastlineCityGeometry city;
@@ -35,24 +36,33 @@ class CoastlineCity {
 			new Random(123445634)
 		);
 		Set<ImmutableList<Point2D>> streets = StreetsDetector.detectStreets(actualRoadGraph);
-		LotsTouchingStreets b2s = new LotsTouchingStreets(streets, 3.3);
+		StreetEntranceSystem b2s = new StreetEntranceSystem(streets, city.buildingPlaces, STREETS_WIDTH);
 		Namer<List<Point2D>> streetNamer = (street) -> "Улица Говна";
 		FairLotFacadeAndStreetAssigner assigner = FairLotFacadeAndStreetAssigner.create(b2s);
 		LotFacadeAssigner facadeAssigner = assigner;
 		LotStreetAssigner streetAssigner = assigner;
-		UrbanPlanner urbanPlanner = new UrbanPlanner(world.getDefaultPlane(), 3.3, new Random(565656565));
+		UrbanPlanner urbanPlanner = new UrbanPlanner(
+			world.getDefaultPlane(),
+			STREETS_WIDTH,
+			facadeAssigner,
+			new Random(565656565)
+		);
 		urbanPlanner.addAvailableArchitecture(
 			new House(),
-			new ArchitecturePolicyBuilder().withMinInstancesNoGreaterThan(1).withMaxInstances(5).build()
+			new ArchitecturePolicyBuilder().withMinInstancesNoGreaterThan(7).withMaxInstances(20).build()
 		);
 		urbanPlanner.addAvailableArchitecture(
 			new DummyArchitecture(),
-			new ArchitecturePolicyBuilder().withMinInstancesNoGreaterThan(1).withMaxInstances(7).build()
+			new ArchitecturePolicyBuilder().build()
 		);
 		City.builder()
 			.addLots(city.buildingPlaces)
 			.placeBuildings(urbanPlanner);
 		actualRoadGraph.edgeSet().forEach(drawRoad);
+		drawRoads();
+	}
+
+	private void drawRoads() {
 		city.roadsPlanarGraphModel.getNetworks().stream()
 			.flatMap(cell -> cell.network().edgeSet().stream())
 			.forEach(drawRoad);

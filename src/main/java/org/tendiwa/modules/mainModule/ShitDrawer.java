@@ -4,7 +4,7 @@ import org.tendiwa.core.Location;
 import org.tendiwa.core.World;
 import org.tendiwa.geometry.Rectangle;
 import org.tendiwa.groovy.Registry;
-import org.tendiwa.settlements.RectangleWithNeighbors;
+import org.tendiwa.settlements.utils.RectangleWithNeighbors;
 
 import java.util.Optional;
 

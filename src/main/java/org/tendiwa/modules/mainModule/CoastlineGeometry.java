@@ -4,10 +4,7 @@ import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.UnmodifiableUndirectedGraph;
 import org.tendiwa.demos.Demos;
 import org.tendiwa.demos.settlements.CityDrawer;
-import org.tendiwa.drawing.DrawableInto;
-import org.tendiwa.drawing.DrawingAlgorithm;
-import org.tendiwa.drawing.LargerScaleCanvasModule;
-import org.tendiwa.drawing.TestCanvas;
+import org.tendiwa.drawing.*;
 import org.tendiwa.drawing.extensions.*;
 import org.tendiwa.geometry.*;
 import org.tendiwa.geometry.extensions.CachedCellSet;
@@ -100,12 +97,12 @@ public class CoastlineGeometry implements Runnable {
 		DrawingAlgorithm<Cell> grassColor = DrawingCell.withColor(Color.GREEN);
 		DrawingAlgorithm<Cell> waterColor = DrawingCell.withColor(BLUE);
 
-//		canvas = new MagnifierCanvas(10, 719, 1102, 600, 600);
+//		canvas = new MagnifierCanvas(10, 60, 301, 600, 600);
 //		canvas = new MagnifierCanvas(8, 1057, 1324, 800, 800);
 //		canvas = new MagnifierCanvas(6, 566, 749, 600, 600);
 //		canvas = new MagnifierCanvas(5, 252, 715, 500, 500);
-		canvas = new TestCanvas(1, worldSize.width, worldSize.height);
-//		canvas = new NullCanvas();
+//		canvas = new TestCanvas(1, worldSize.width, worldSize.height);
+		canvas = new NullCanvas();
 		TestCanvas.canvas = canvas;
 		canvas.draw(borderWithCityCenters, DrawingCellSet.withColor(Color.PINK));
 		drawTerrain(worldSize, water, waterColor, grassColor);

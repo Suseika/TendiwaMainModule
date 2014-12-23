@@ -4,6 +4,7 @@ import org.tendiwa.core.Location;
 import org.tendiwa.core.Tendiwa;
 import org.tendiwa.core.World;
 import org.tendiwa.drawing.DrawableInto;
+import org.tendiwa.drawing.MagnifierCanvas;
 import org.tendiwa.drawing.TestCanvas;
 import org.tendiwa.drawing.extensions.DrawingWorld;
 import org.tendiwa.drawing.extensions.PieChartTimeProfiler;
@@ -41,8 +42,8 @@ public class CoastlinePixmap implements Runnable {
 	public void run() {
 		Tendiwa.loadModules();
 		DrawableInto canvas = new TestCanvas(1, geometry.worldSize.width, geometry.worldSize.height);
+//		DrawableInto canvas = new MagnifierCanvas(10, 60, 301, 600, 600);
 		TestCanvas.canvas = canvas;
-//		DrawableInto canvas = new FakeCanvas();
 		World world = new World(geometry.worldSize.width, geometry.worldSize.height);
 		Location location = new Location(
 			world.getDefaultPlane(),

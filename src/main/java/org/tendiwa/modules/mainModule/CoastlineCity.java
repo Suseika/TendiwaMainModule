@@ -49,7 +49,7 @@ class CoastlineCity {
 		);
 		urbanPlanner.addAvailableArchitecture(
 			new House(),
-			new ArchitecturePolicyBuilder().withMinInstancesNoGreaterThan(7).withMaxInstances(20).build()
+			new ArchitecturePolicyBuilder().withMinInstancesNoGreaterThan(100).build()
 		);
 		urbanPlanner.addAvailableArchitecture(
 			new DummyArchitecture(),

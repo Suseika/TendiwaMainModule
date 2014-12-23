@@ -39,7 +39,7 @@ public class CoastlineGeometry implements Runnable {
 	CellSet water;
 	Collection<FiniteCellSet> shapeExitsSets;
 	List<List<Cell>> pathsBetweenCities;
-	Collection<CoastlineCityGeometry> cities = new HashSet<>();
+	Collection<CoastlineCityGeometry> cities = new LinkedHashSet<>();
 	Rectangle worldSize = rectangle(800, 800);
 	private PieChartTimeProfiler chart;
 
@@ -104,8 +104,8 @@ public class CoastlineGeometry implements Runnable {
 //		canvas = new MagnifierCanvas(8, 1057, 1324, 800, 800);
 //		canvas = new MagnifierCanvas(6, 566, 749, 600, 600);
 //		canvas = new MagnifierCanvas(5, 252, 715, 500, 500);
-//		canvas = new TestCanvas(1, worldSize.width, worldSize.height);
-		canvas = new FakeCanvas();
+		canvas = new TestCanvas(1, worldSize.width, worldSize.height);
+//		canvas = new NullCanvas();
 		TestCanvas.canvas = canvas;
 		canvas.draw(borderWithCityCenters, DrawingCellSet.withColor(Color.PINK));
 		drawTerrain(worldSize, water, waterColor, grassColor);
@@ -189,7 +189,8 @@ public class CoastlineGeometry implements Runnable {
 			chart.saveTime("6");
 			shapeExitsSets.add(exitCells);
 			chart.saveTime("7");
-			Set<RectangleWithNeighbors> buildingPlaces = RectangularBuildingLots.placeInside(roadsPlanarGraphModel);
+			Set<RectangleWithNeighbors> buildingPlaces = RectangularBuildingLots.placeInside
+				(roadsPlanarGraphModel);
 			chart.saveTime("8: Find building places");
 			cityGeometry.roadsPlanarGraphModel = roadsPlanarGraphModel;
 			cityGeometry.buildingPlaces = buildingPlaces;

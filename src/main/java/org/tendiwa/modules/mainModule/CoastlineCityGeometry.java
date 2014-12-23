@@ -5,6 +5,7 @@ import org.tendiwa.geometry.Point2D;
 import org.tendiwa.settlements.utils.RectangleWithNeighbors;
 import org.tendiwa.settlements.networks.RoadsPlanarGraphModel;
 
+import java.util.Collection;
 import java.util.Set;
 
 class CoastlineCityGeometry {

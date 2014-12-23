@@ -35,8 +35,10 @@ class CoastlineCity {
 			0.5,
 			new Random(123445634)
 		);
+//		System.out.println(city.roadsPlanarGraphModel.getFullRoadGraph().vertexSet());
 		Set<ImmutableList<Point2D>> streets = StreetsDetector.detectStreets(actualRoadGraph);
-		StreetEntranceSystem b2s = new StreetEntranceSystem(streets, city.buildingPlaces, STREETS_WIDTH);
+		System.out.println(streets);
+		PolylineProximity b2s = new PolylineProximity(streets, city.buildingPlaces, STREETS_WIDTH);
 		Namer<List<Point2D>> streetNamer = (street) -> "Улица Говна";
 		FairLotFacadeAndStreetAssigner assigner = FairLotFacadeAndStreetAssigner.create(b2s);
 		LotFacadeAssigner facadeAssigner = assigner;

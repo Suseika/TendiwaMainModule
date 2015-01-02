@@ -100,9 +100,9 @@ public class CoastlineGeometry implements Runnable {
 //		canvas = new MagnifierCanvas(10, 60, 301, 600, 600);
 //		canvas = new MagnifierCanvas(8, 1057, 1324, 800, 800);
 //		canvas = new MagnifierCanvas(6, 566, 749, 600, 600);
-//		canvas = new MagnifierCanvas(5, 252, 715, 500, 500);
+		canvas = new MagnifierCanvas(5, 710, 340, 500, 500);
 //		canvas = new TestCanvas(1, worldSize.width, worldSize.height);
-		canvas = new NullCanvas();
+//		canvas = new NullCanvas();
 		TestCanvas.canvas = canvas;
 		canvas.draw(borderWithCityCenters, DrawingCellSet.withColor(Color.PINK));
 		drawTerrain(worldSize, water, waterColor, grassColor);

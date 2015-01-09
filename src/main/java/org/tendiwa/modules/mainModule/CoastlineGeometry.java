@@ -37,7 +37,7 @@ public class CoastlineGeometry implements Runnable {
 	Collection<FiniteCellSet> shapeExitsSets;
 	List<List<Cell>> pathsBetweenCities;
 	Collection<CoastlineCityGeometry> cities = new LinkedHashSet<>();
-	Rectangle worldSize = rectangle(800, 800);
+	Rectangle worldSize = rectangle(1800, 1800);
 	private PieChartTimeProfiler chart;
 
 
@@ -100,7 +100,7 @@ public class CoastlineGeometry implements Runnable {
 //		canvas = new MagnifierCanvas(10, 60, 301, 600, 600);
 //		canvas = new MagnifierCanvas(8, 1057, 1324, 800, 800);
 //		canvas = new MagnifierCanvas(6, 566, 749, 600, 600);
-//		canvas = new MagnifierCanvas(5, 135, 305, 500, 500);
+//		canvas = new MagnifierCanvas(5, 32, 204, 500, 500);
 		canvas = new TestCanvas(1, worldSize.width, worldSize.height);
 //		canvas = new NullCanvas();
 		TestCanvas.canvas = canvas;
@@ -213,8 +213,8 @@ public class CoastlineGeometry implements Runnable {
 		);
 		chart.saveTime("Space between cities");
 
-//		pathsBetweenCities = computePathsBetweenCities(spaceBetweenCities);
-		pathsBetweenCities = new ArrayList<>(1);
+		pathsBetweenCities = computePathsBetweenCities(spaceBetweenCities);
+//		pathsBetweenCities = new ArrayList<>(1);
 		chart.saveTime("Paths between cities");
 //		canvas.draw(cellsCloseToCoast, DrawingCellSet.withColor(Color.PINK));
 //		chart.saveTime("Final drawing");

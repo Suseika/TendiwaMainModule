@@ -3,7 +3,6 @@ package org.tendiwa.modules.mainModule;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.UnmodifiableUndirectedGraph;
 import org.tendiwa.demos.Demos;
-import org.tendiwa.demos.settlements.CityDrawer;
 import org.tendiwa.drawing.*;
 import org.tendiwa.drawing.extensions.*;
 import org.tendiwa.geometry.*;
@@ -16,11 +15,12 @@ import org.tendiwa.noise.Noise;
 import org.tendiwa.noise.SimpleNoiseSource;
 import org.tendiwa.pathfinding.astar.AStar;
 import org.tendiwa.pathfinding.dijkstra.PathTable;
+import org.tendiwa.settlements.networks.algorithms.SegmentNetworkAlgorithms;
 import org.tendiwa.settlements.utils.RectangleWithNeighbors;
 import org.tendiwa.settlements.cityBounds.CityBounds;
-import org.tendiwa.settlements.networks.CityGeometryBuilder;
+import org.tendiwa.settlements.networks.SegmentNetworkBuilder;
 import org.tendiwa.settlements.networks.NetworkWithinCycle;
-import org.tendiwa.settlements.networks.RoadsPlanarGraphModel;
+import org.tendiwa.settlements.networks.SegmentNetwork;
 import org.tendiwa.settlements.utils.RectangularBuildingLots;
 import org.tendiwa.settlements.utils.StreetsDetector;
 
@@ -143,7 +143,7 @@ public class CoastlineGeometry implements Runnable {
 			);
 			chart.saveTime("3");
 //			canvas.draw(cityBounds, DrawingGraph.withColorAndVertexSize(RED, 2));
-			RoadsPlanarGraphModel roadsPlanarGraphModel = new CityGeometryBuilder(cityBounds)
+			SegmentNetwork segmentNetwork = new SegmentNetworkBuilder(cityBounds)
 				.withDefaults()
 				.withRoadsFromPoint(4)
 				.withDeviationAngle(Math.PI / 30)
@@ -154,12 +154,12 @@ public class CoastlineGeometry implements Runnable {
 				.withMaxStartPointsPerCycle(2)
 				.build();
 			chart.saveTime("4");
-			citiesCells.addAll(ShapeFromOutline.from(roadsPlanarGraphModel.getOriginalRoadGraph()));
+			citiesCells.addAll(ShapeFromOutline.from(segmentNetwork.getFullCycleGraph()));
 			chart.saveTime("ShapeFromOutline");
 //			canvas.draw(roadsPlanarGraphModel, new CityDrawer());
 			FiniteCellSet exitCells = null;
 			try {
-				exitCells = roadsPlanarGraphModel
+				exitCells = segmentNetwork
 					.getNetworks()
 					.stream()
 					.flatMap(c -> c
@@ -178,7 +178,7 @@ public class CoastlineGeometry implements Runnable {
 			} catch (Exception exc) {
 				TestCanvas cvs = new TestCanvas(2, worldSize.x + worldSize.getMaxX(),
 					worldSize.y + worldSize.getMaxY());
-				for (NetworkWithinCycle net : roadsPlanarGraphModel.getNetworks()) {
+				for (NetworkWithinCycle net : segmentNetwork.getNetworks()) {
 					cvs.draw(net.cycle(), DrawingGraph.withColorAndAntialiasing(Color.BLACK));
 				}
 				throw new RuntimeException(exc);
@@ -187,12 +187,16 @@ public class CoastlineGeometry implements Runnable {
 			shapeExitsSets.add(exitCells);
 			chart.saveTime("7");
 			Set<RectangleWithNeighbors> buildingPlaces = RectangularBuildingLots.placeInside
-				(roadsPlanarGraphModel);
+				(segmentNetwork);
 			chart.saveTime("8: Find building places");
-			cityGeometry.roadsPlanarGraphModel = roadsPlanarGraphModel;
+			cityGeometry.segmentNetwork = segmentNetwork;
 			cityGeometry.buildingPlaces = buildingPlaces;
 			drawLots(buildingPlaces);
-			cityGeometry.streets = StreetsDetector.detectStreets(roadsPlanarGraphModel.getFullRoadGraph());
+			cityGeometry.streets = StreetsDetector.detectStreets(
+				SegmentNetworkAlgorithms.createFullGraph(
+					segmentNetwork
+				)
+			);
 			chart.saveTime("9: Detect streets");
 
 			// End of city geometry

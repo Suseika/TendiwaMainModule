@@ -30,8 +30,8 @@ class CoastlineCity {
 
 	public void invoke() {
 		UndirectedGraph<Point2D, Segment2D> actualRoadGraph = RoadRejector.rejectPartOfNetworksBorders(
-			city.segmentNetwork.getFullRoadGraph(),
-			city.segmentNetwork,
+			city.segment2DSmartMesh.getFullRoadGraph(),
+			city.segment2DSmartMesh,
 			0.5,
 			new Random(123445634)
 		);
@@ -63,7 +63,7 @@ class CoastlineCity {
 	}
 
 	private void drawRoads() {
-		city.segmentNetwork.getNetworks().stream()
+		city.segment2DSmartMesh.getNetworks().stream()
 			.flatMap(cell -> cell.network().edgeSet().stream())
 			.forEach(drawRoad);
 	}

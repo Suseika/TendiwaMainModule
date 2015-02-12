@@ -20,7 +20,7 @@ import org.tendiwa.settlements.utils.RectangleWithNeighbors;
 import org.tendiwa.settlements.cityBounds.CityBounds;
 import org.tendiwa.settlements.networks.SegmentNetworkBuilder;
 import org.tendiwa.settlements.networks.NetworkWithinCycle;
-import org.tendiwa.settlements.networks.SegmentNetwork;
+import org.tendiwa.settlements.networks.Segment2DSmartMesh;
 import org.tendiwa.settlements.utils.RectangularBuildingLots;
 import org.tendiwa.settlements.utils.StreetsDetector;
 
@@ -143,7 +143,7 @@ public class CoastlineGeometry implements Runnable {
 			);
 			chart.saveTime("3");
 //			canvas.draw(cityBounds, DrawingGraph.withColorAndVertexSize(RED, 2));
-			SegmentNetwork segmentNetwork = new SegmentNetworkBuilder(cityBounds)
+			Segment2DSmartMesh segment2DSmartMesh = new SegmentNetworkBuilder(cityBounds)
 				.withDefaults()
 				.withRoadsFromPoint(4)
 				.withDeviationAngle(Math.PI / 30)
@@ -154,12 +154,12 @@ public class CoastlineGeometry implements Runnable {
 				.withMaxStartPointsPerCycle(2)
 				.build();
 			chart.saveTime("4");
-			citiesCells.addAll(ShapeFromOutline.from(segmentNetwork.getFullCycleGraph()));
+			citiesCells.addAll(ShapeFromOutline.from(segment2DSmartMesh.getFullCycleGraph()));
 			chart.saveTime("ShapeFromOutline");
 //			canvas.draw(roadsPlanarGraphModel, new CityDrawer());
 			FiniteCellSet exitCells = null;
 			try {
-				exitCells = segmentNetwork
+				exitCells = segment2DSmartMesh
 					.getNetworks()
 					.stream()
 					.flatMap(c -> c
@@ -178,7 +178,7 @@ public class CoastlineGeometry implements Runnable {
 			} catch (Exception exc) {
 				TestCanvas cvs = new TestCanvas(2, worldSize.x + worldSize.getMaxX(),
 					worldSize.y + worldSize.getMaxY());
-				for (NetworkWithinCycle net : segmentNetwork.getNetworks()) {
+				for (NetworkWithinCycle net : segment2DSmartMesh.getNetworks()) {
 					cvs.draw(net.cycle(), DrawingGraph.withColorAndAntialiasing(Color.BLACK));
 				}
 				throw new RuntimeException(exc);
@@ -187,14 +187,14 @@ public class CoastlineGeometry implements Runnable {
 			shapeExitsSets.add(exitCells);
 			chart.saveTime("7");
 			Set<RectangleWithNeighbors> buildingPlaces = RectangularBuildingLots.placeInside
-				(segmentNetwork);
+				(segment2DSmartMesh);
 			chart.saveTime("8: Find building places");
-			cityGeometry.segmentNetwork = segmentNetwork;
+			cityGeometry.segment2DSmartMesh = segment2DSmartMesh;
 			cityGeometry.buildingPlaces = buildingPlaces;
 			drawLots(buildingPlaces);
 			cityGeometry.streets = StreetsDetector.detectStreets(
 				SegmentNetworkAlgorithms.createFullGraph(
-					segmentNetwork
+					segment2DSmartMesh
 				)
 			);
 			chart.saveTime("9: Detect streets");

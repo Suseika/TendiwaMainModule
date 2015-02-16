@@ -15,12 +15,12 @@ import org.tendiwa.noise.Noise;
 import org.tendiwa.noise.SimpleNoiseSource;
 import org.tendiwa.pathfinding.astar.AStar;
 import org.tendiwa.pathfinding.dijkstra.PathTable;
-import org.tendiwa.settlements.networks.algorithms.SegmentNetworkAlgorithms;
+import org.tendiwa.geometry.smartMesh.algorithms.SegmentNetworkAlgorithms;
 import org.tendiwa.settlements.utils.RectangleWithNeighbors;
 import org.tendiwa.settlements.cityBounds.CityBounds;
-import org.tendiwa.settlements.networks.SegmentNetworkBuilder;
-import org.tendiwa.settlements.networks.NetworkWithinCycle;
-import org.tendiwa.settlements.networks.Segment2DSmartMesh;
+import org.tendiwa.geometry.smartMesh.SegmentNetworkBuilder;
+import org.tendiwa.geometry.smartMesh.NetworkWithinCycle;
+import org.tendiwa.geometry.smartMesh.Segment2DSmartMesh;
 import org.tendiwa.settlements.utils.RectangularBuildingLots;
 import org.tendiwa.settlements.utils.StreetsDetector;
 

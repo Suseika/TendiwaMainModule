@@ -160,7 +160,7 @@ public class CoastlineGeometry implements Runnable {
 			FiniteCellSet exitCells = null;
 			try {
 				exitCells = segment2DSmartMesh
-					.getNetworks()
+					.networks()
 					.stream()
 					.flatMap(c -> c
 							.exitsOnCycles()
@@ -178,7 +178,7 @@ public class CoastlineGeometry implements Runnable {
 			} catch (Exception exc) {
 				TestCanvas cvs = new TestCanvas(2, worldSize.x + worldSize.getMaxX(),
 					worldSize.y + worldSize.getMaxY());
-				for (NetworkWithinCycle net : segment2DSmartMesh.getNetworks()) {
+				for (NetworkWithinCycle net : segment2DSmartMesh.networks()) {
 					cvs.draw(net.cycle(), DrawingGraph.withColorAndAntialiasing(Color.BLACK));
 				}
 				throw new RuntimeException(exc);

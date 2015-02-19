@@ -63,7 +63,7 @@ class CoastlineCity {
 	}
 
 	private void drawRoads() {
-		city.segment2DSmartMesh.getNetworks().stream()
+		city.segment2DSmartMesh.networks().stream()
 			.flatMap(cell -> cell.network().edgeSet().stream())
 			.forEach(drawRoad);
 	}

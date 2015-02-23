@@ -11,16 +11,16 @@ import org.tendiwa.geometry.extensions.ChebyshevDistanceBuffer;
 import org.tendiwa.geometry.extensions.ChebyshovDistanceBufferBorder;
 import org.tendiwa.geometry.extensions.ShapeFromOutline;
 import org.tendiwa.geometry.extensions.intershapeNetwork.IntershapeNetwork;
+import org.tendiwa.geometry.smartMesh.NetworkWithinCycle;
+import org.tendiwa.geometry.smartMesh.Segment2DSmartMesh;
+import org.tendiwa.geometry.smartMesh.SegmentNetworkBuilder;
+import org.tendiwa.geometry.smartMesh.algorithms.SegmentNetworkAlgorithms;
 import org.tendiwa.noise.Noise;
 import org.tendiwa.noise.SimpleNoiseSource;
 import org.tendiwa.pathfinding.astar.AStar;
 import org.tendiwa.pathfinding.dijkstra.PathTable;
-import org.tendiwa.geometry.smartMesh.algorithms.SegmentNetworkAlgorithms;
-import org.tendiwa.settlements.utils.RectangleWithNeighbors;
 import org.tendiwa.settlements.cityBounds.CityBounds;
-import org.tendiwa.geometry.smartMesh.SegmentNetworkBuilder;
-import org.tendiwa.geometry.smartMesh.NetworkWithinCycle;
-import org.tendiwa.geometry.smartMesh.Segment2DSmartMesh;
+import org.tendiwa.settlements.utils.RectangleWithNeighbors;
 import org.tendiwa.settlements.utils.RectangularBuildingLots;
 import org.tendiwa.settlements.utils.StreetsDetector;
 
@@ -28,7 +28,6 @@ import java.awt.Color;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.awt.Color.*;
 import static org.tendiwa.geometry.DSL.rectangle;
 
 public class CoastlineGeometry implements Runnable {
@@ -37,7 +36,7 @@ public class CoastlineGeometry implements Runnable {
 	Collection<FiniteCellSet> shapeExitsSets;
 	List<List<Cell>> pathsBetweenCities;
 	Collection<CoastlineCityGeometry> cities = new LinkedHashSet<>();
-	Rectangle worldSize = rectangle(600, 600);
+	Rectangle worldSize = rectangle(1600, 1600);
 	private PieChartTimeProfiler chart;
 
 
@@ -58,7 +57,7 @@ public class CoastlineGeometry implements Runnable {
 		int minDistanceBetweenCityCenters = maxCityRadius * 3;
 		int minDistanceFromCoastToCityCenter = 20;
 		SimpleNoiseSource noise = (x, y) -> Noise.noise(
-			((double) x + 1700) / 100,
+			((double) x + 900) / 100,
 			((double) y + 200) / 100,
 			7
 		);
@@ -77,7 +76,7 @@ public class CoastlineGeometry implements Runnable {
 		);
 		chart.saveTime("City centers");
 		Rectangle cityCentersRectangle = worldSize.shrink(20);
-		DistantCellsFinder cityCenters = new DistantCellsFinder(
+		Iterable<Cell> cityCenters = new DistantCellsFinder(
 			borderWithCityCenters,
 			minDistanceBetweenCityCenters
 		);
@@ -94,14 +93,14 @@ public class CoastlineGeometry implements Runnable {
 		chart.saveTime("Cells close to coast");
 
 
-		DrawingAlgorithm<Cell> grassColor = DrawingCell.withColor(Color.GREEN);
-		DrawingAlgorithm<Cell> waterColor = DrawingCell.withColor(BLUE);
+		DrawingAlgorithm<Cell> grassColor = DrawingCell.withColor(Color.green);
+		DrawingAlgorithm<Cell> waterColor = DrawingCell.withColor(Color.blue);
 
 //		canvas = new MagnifierCanvas(10, 60, 301, 600, 600);
 //		canvas = new MagnifierCanvas(8, 1057, 1324, 800, 800);
-//		canvas = new MagnifierCanvas(6, 566, 749, 600, 600);
-//		canvas = new MagnifierCanvas(5, 178, 70, 800, 800);
-		canvas = new TestCanvas(4, worldSize.width, worldSize.height);
+//		canvas = new MagnifierCanvas(12, 1483, 1123, 600, 600);
+		canvas = new MagnifierCanvas(5, 1449, 1148, 800, 800);
+//		canvas = new TestCanvas(1, worldSize.width, worldSize.height);
 //		canvas = new NullCanvas();
 		TestCanvas.canvas = canvas;
 		canvas.draw(borderWithCityCenters, DrawingCellSet.withColor(Color.PINK));
@@ -145,12 +144,11 @@ public class CoastlineGeometry implements Runnable {
 //			canvas.draw(cityBounds, DrawingGraph.withColorAndVertexSize(RED, 2));
 			Segment2DSmartMesh segment2DSmartMesh = new SegmentNetworkBuilder(cityBounds)
 				.withDefaults()
-				.withRoadsFromPoint(4)
+				.withRoadsFromPoint(2)
 				.withDeviationAngle(Math.PI / 30)
 				.withSecondaryRoadNetworkDeviationAngle(0.1)
 				.withRoadSegmentLength(40)
 				.withSnapSize(10)
-				.withConnectivity(1)
 				.withMaxStartPointsPerCycle(2)
 				.build();
 			chart.saveTime("4");

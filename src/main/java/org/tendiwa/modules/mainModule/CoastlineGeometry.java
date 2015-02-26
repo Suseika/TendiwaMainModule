@@ -97,9 +97,9 @@ public class CoastlineGeometry implements Runnable {
 		DrawingAlgorithm<Cell> waterColor = DrawingCell.withColor(Color.blue);
 
 //		canvas = new MagnifierCanvas(10, 60, 301, 600, 600);
-//		canvas = new MagnifierCanvas(8, 1057, 1324, 800, 800);
-//		canvas = new MagnifierCanvas(12, 1483, 1123, 600, 600);
-		canvas = new MagnifierCanvas(5, 1449, 1148, 800, 800);
+		canvas = new MagnifierCanvas(6, 580, 1243, 800, 800);
+//		canvas = new MagnifierCanvas(6, 54, 972, 800, 800);
+//		canvas = new MagnifierCanvas(5, 1449, 1148, 800, 800);
 //		canvas = new TestCanvas(1, worldSize.width, worldSize.height);
 //		canvas = new NullCanvas();
 		TestCanvas.canvas = canvas;
@@ -189,7 +189,7 @@ public class CoastlineGeometry implements Runnable {
 			chart.saveTime("8: Find building places");
 			cityGeometry.segment2DSmartMesh = segment2DSmartMesh;
 			cityGeometry.buildingPlaces = buildingPlaces;
-			drawLots(buildingPlaces);
+//			drawLots(buildingPlaces);
 			cityGeometry.streets = StreetsDetector.detectStreets(
 				SegmentNetworkAlgorithms.createFullGraph(
 					segment2DSmartMesh

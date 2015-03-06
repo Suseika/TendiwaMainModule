@@ -95,13 +95,9 @@ public class CoastlineGeometry implements Runnable {
 
 		DrawingAlgorithm<Cell> grassColor = DrawingCell.withColor(Color.green);
 		DrawingAlgorithm<Cell> waterColor = DrawingCell.withColor(Color.blue);
+		createCanvas();
 
-//		canvas = new MagnifierCanvas(10, 60, 301, 600, 600);
-		canvas = new MagnifierCanvas(6, 580, 1243, 800, 800);
-//		canvas = new MagnifierCanvas(6, 54, 972, 800, 800);
-//		canvas = new MagnifierCanvas(5, 1449, 1148, 800, 800);
-//		canvas = new TestCanvas(1, worldSize.width, worldSize.height);
-//		canvas = new NullCanvas();
+
 		TestCanvas.canvas = canvas;
 		canvas.draw(borderWithCityCenters, DrawingCellSet.withColor(Color.PINK));
 		drawTerrain(worldSize, water, waterColor, grassColor);
@@ -222,6 +218,15 @@ public class CoastlineGeometry implements Runnable {
 //		chart.saveTime("Final drawing");
 //		chart.draw();
 
+	}
+
+	private void createCanvas() {
+		//		canvas = new MagnifierCanvas(10, 60, 301, 600, 600);
+//		canvas = new MagnifierCanvas(6, 620, 1241, 800, 800);
+		canvas = new MagnifierCanvas(8, 1468, 1165, 800, 800);
+//		canvas = new MagnifierCanvas(5, 1449, 1148, 800, 800);
+//		canvas = new TestCanvas(1, worldSize.width, worldSize.height);
+//		canvas = new NullCanvas();
 	}
 
 	private void drawLots(Set<RectangleWithNeighbors> buildingPlaces) {

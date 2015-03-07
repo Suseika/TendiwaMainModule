@@ -223,9 +223,9 @@ public class CoastlineGeometry implements Runnable {
 	private void createCanvas() {
 		//		canvas = new MagnifierCanvas(10, 60, 301, 600, 600);
 //		canvas = new MagnifierCanvas(6, 620, 1241, 800, 800);
-		canvas = new MagnifierCanvas(8, 1468, 1165, 800, 800);
+//		canvas = new MagnifierCanvas(8, 1468, 1165, 800, 800);
 //		canvas = new MagnifierCanvas(5, 1449, 1148, 800, 800);
-//		canvas = new TestCanvas(1, worldSize.width, worldSize.height);
+		canvas = new TestCanvas(1, worldSize.width, worldSize.height);
 //		canvas = new NullCanvas();
 	}
 

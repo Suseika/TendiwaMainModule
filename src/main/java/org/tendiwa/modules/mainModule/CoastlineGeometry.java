@@ -3,6 +3,7 @@ package org.tendiwa.modules.mainModule;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.UnmodifiableUndirectedGraph;
 import org.tendiwa.demos.Demos;
+import org.tendiwa.demos.settlements.CityDrawer;
 import org.tendiwa.drawing.*;
 import org.tendiwa.drawing.extensions.*;
 import org.tendiwa.geometry.*;
@@ -36,7 +37,7 @@ public class CoastlineGeometry implements Runnable {
 	Collection<FiniteCellSet> shapeExitsSets;
 	List<List<Cell>> pathsBetweenCities;
 	Collection<CoastlineCityGeometry> cities = new LinkedHashSet<>();
-	Rectangle worldSize = rectangle(200, 200);
+	Rectangle worldSize = rectangle(1200, 1200);
 	private PieChartTimeProfiler chart;
 
 
@@ -137,7 +138,7 @@ public class CoastlineGeometry implements Runnable {
 				maxCityRadiusModified
 			);
 			chart.saveTime("3");
-//			canvas.draw(cityBounds, DrawingGraph.withColorAndVertexSize(RED, 2));
+			canvas.draw(cityBounds, DrawingGraph.withColorAndAntialiasing(Color.red));
 			Segment2DSmartMesh segment2DSmartMesh = new SegmentNetworkBuilder(cityBounds)
 				.withDefaults()
 				.withRoadsFromPoint(2)
@@ -150,7 +151,7 @@ public class CoastlineGeometry implements Runnable {
 			chart.saveTime("4");
 			citiesCells.addAll(ShapeFromOutline.from(segment2DSmartMesh.getFullCycleGraph()));
 			chart.saveTime("ShapeFromOutline");
-//			canvas.draw(roadsPlanarGraphModel, new CityDrawer());
+//			canvas.draw(segment2DSmartMesh, new CityDrawer());
 			FiniteCellSet exitCells = null;
 			try {
 				exitCells = segment2DSmartMesh
@@ -221,8 +222,8 @@ public class CoastlineGeometry implements Runnable {
 	}
 
 	private void createCanvas() {
-//		canvas = new MagnifierCanvas(3, 757, 1252, 800, 800);
-		canvas = new TestCanvas(3, worldSize.width, worldSize.height);
+//		canvas = new MagnifierCanvas(20, 35, 561, 800, 800);
+		canvas = new TestCanvas(1, worldSize.width, worldSize.height);
 //		canvas = new NullCanvas();
 	}
 

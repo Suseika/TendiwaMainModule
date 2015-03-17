@@ -3,7 +3,6 @@ package org.tendiwa.modules.mainModule;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.UnmodifiableUndirectedGraph;
 import org.tendiwa.demos.Demos;
-import org.tendiwa.demos.settlements.CityDrawer;
 import org.tendiwa.drawing.*;
 import org.tendiwa.drawing.extensions.*;
 import org.tendiwa.geometry.*;
@@ -23,7 +22,7 @@ import org.tendiwa.pathfinding.dijkstra.PathTable;
 import org.tendiwa.settlements.cityBounds.CityBounds;
 import org.tendiwa.settlements.utils.RectangleWithNeighbors;
 import org.tendiwa.settlements.utils.RectangularBuildingLots;
-import org.tendiwa.settlements.utils.StreetsDetector;
+import org.tendiwa.settlements.utils.streetsDetector.DetectedStreets;
 
 import java.awt.Color;
 import java.util.*;
@@ -187,7 +186,7 @@ public class CoastlineGeometry implements Runnable {
 			cityGeometry.segment2DSmartMesh = segment2DSmartMesh;
 			cityGeometry.buildingPlaces = buildingPlaces;
 //			drawLots(buildingPlaces);
-			cityGeometry.streets = StreetsDetector.detectStreets(
+			cityGeometry.streets = DetectedStreets.toChain2DStream(
 				SegmentNetworkAlgorithms.createFullGraph(
 					segment2DSmartMesh
 				)

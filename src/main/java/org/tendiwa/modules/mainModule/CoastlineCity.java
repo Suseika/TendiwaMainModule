@@ -9,7 +9,7 @@ import org.tendiwa.settlements.buildings.*;
 import org.tendiwa.settlements.streets.LotStreetAssigner;
 import org.tendiwa.settlements.streets.Namer;
 import org.tendiwa.settlements.utils.RoadRejector;
-import org.tendiwa.settlements.utils.StreetsDetector;
+import org.tendiwa.settlements.utils.streetsDetector.DetectedStreets;
 
 import java.util.List;
 import java.util.Random;
@@ -35,7 +35,7 @@ class CoastlineCity {
 			0.5,
 			new Random(123445634)
 		);
-		Set<ImmutableList<Point2D>> streets = StreetsDetector.detectStreets(actualRoadGraph);
+		Set<ImmutableList<Point2D>> streets = DetectedStreets.toChain2DStream(actualRoadGraph);
 		PolylineProximity b2s = new PolylineProximity(streets, city.buildingPlaces, STREETS_WIDTH);
 		Namer<List<Point2D>> streetNamer = (street) -> "Улица Говна";
 		FairLotFacadeAndStreetAssigner assigner = FairLotFacadeAndStreetAssigner.create(b2s);

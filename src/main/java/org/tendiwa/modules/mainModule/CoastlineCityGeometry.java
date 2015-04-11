@@ -4,7 +4,7 @@ import org.jgrapht.UndirectedGraph;
 import org.tendiwa.geometry.*;
 import org.tendiwa.geometry.extensions.CachedCellSet;
 import org.tendiwa.geometry.extensions.ChebyshovDistanceBufferBorder;
-import org.tendiwa.geometry.smartMesh.NetworkWithinCycle;
+import org.tendiwa.geometry.smartMesh.OriginalMeshCell;
 import org.tendiwa.geometry.smartMesh.Segment2DSmartMesh;
 import org.tendiwa.geometry.smartMesh.SegmentNetworkBuilder;
 import org.tendiwa.pathfinding.dijkstra.PathTable;
@@ -106,7 +106,7 @@ final class CoastlineCityGeometry {
 			.collect(CellSet.toCellSet());
 	}
 
-	private Stream<Cell> cellsAtCycleExits(NetworkWithinCycle network) {
+	private Stream<Cell> cellsAtCycleExits(OriginalMeshCell network) {
 		return network
 			.exitsOnCycles()
 			.stream()

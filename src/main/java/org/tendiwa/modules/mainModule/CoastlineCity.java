@@ -9,8 +9,7 @@ import org.tendiwa.geometry.CellSegment;
 import org.tendiwa.geometry.Chain2D;
 import org.tendiwa.geometry.Point2D;
 import org.tendiwa.geometry.Segment2D;
-import org.tendiwa.geometry.smartMesh.Segment2DSmartMesh;
-import org.tendiwa.groovy.Registry;
+import org.tendiwa.geometry.smartMesh.SmartMesh2D;
 import org.tendiwa.settlements.buildings.*;
 import org.tendiwa.settlements.streets.LotStreetAssigner;
 import org.tendiwa.settlements.streets.Namer;
@@ -69,9 +68,9 @@ class CoastlineCity {
 			.collect(Collectors.toImmutableSet());
 	}
 
-	private UndirectedGraph<Point2D, Segment2D> rejectExtraRoads(Segment2DSmartMesh mesh) {
+	private UndirectedGraph<Point2D, Segment2D> rejectExtraRoads(SmartMesh2D mesh) {
 		return RoadRejector.rejectPartOfNetworksBorders(
-			mesh.getFullRoadGraph(),
+			mesh.graph(),
 			mesh,
 			0.5,
 			random

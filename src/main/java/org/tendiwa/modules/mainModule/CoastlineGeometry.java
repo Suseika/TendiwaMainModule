@@ -1,6 +1,5 @@
 package org.tendiwa.modules.mainModule;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import org.tendiwa.core.World;
 import org.tendiwa.core.worlds.Genesis;
@@ -74,7 +73,7 @@ public final class CoastlineGeometry implements Genesis {
 		);
 	}
 
-	private CoastlineCityGeometry cityAroundCell(Cell cell) {
+	private CoastlineCityGeometry cityAroundCell(BasicCell cell) {
 		return new CoastlineCityGeometry(
 			config,
 			progress,

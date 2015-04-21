@@ -15,9 +15,9 @@ public class House implements Architecture {
 	public void draw(BuildingFeatures features, CardinalDirection front, Location location) {
 		Rectangle bounds = location.getRelativeBounds();
 		Rectangle buildingRec = bounds.shrink(3);
-		Cell doorCell = buildingRec.getSideAsSidePiece(front).getCellInside(front.left(), 3);
-		Cell pathStart = doorCell.moveToSide(front);
-		Cell pathEnd = pathStart.moveToSide(front, 3);
+		BasicCell doorCell = buildingRec.getSideAsSidePiece(front).getCellInside(front.left(), 3);
+		BasicCell pathStart = doorCell.moveToSide(front);
+		BasicCell pathEnd = pathStart.moveToSide(front, 3);
 		FiniteCellSet path = FiniteCellSet.of(CellSegment.vector(pathStart, pathEnd));
 
 		location.square(buildingRec, Registry.wallTypes.get("wall_grey_stone"), false);

@@ -19,7 +19,7 @@ final class PathNetwork {
 	private final Rectangle worldSize;
 	private final CellSet water;
 	private final Collection<FiniteCellSet> shapeExitsSets = new LinkedList<>();
-	private final List<List<Cell>> paths;
+	private final List<List<BasicCell>> paths;
 
 	PathNetwork(
 		CoastlineGeometryConfig config,
@@ -50,7 +50,7 @@ final class PathNetwork {
 //		chart.draw();
 	}
 
-	List<List<Cell>> paths() {
+	List<List<BasicCell>> paths() {
 		return paths;
 	}
 
@@ -80,7 +80,7 @@ final class PathNetwork {
 		);
 	}
 
-	private List<Cell> pathFromStartToEnd(CellSegment segment, MovementCost cost) {
+	private List<BasicCell> pathFromStartToEnd(CellSegment segment, MovementCost cost) {
 		return new AStar(cost).path(segment.start, segment.end);
 	}
 }

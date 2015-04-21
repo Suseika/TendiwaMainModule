@@ -28,13 +28,13 @@ newSoundType {
 newCharacterAbility {
     name "shout"
     action([act: { Character actor ->
-        actor.getTimeStream().makeSound(actor.getX(), actor.getY(), DSL.soundTypes.shout, actor)
+        actor.getTimeStream().makeSound(actor.x(), actor.y(), DSL.soundTypes.shout, actor)
     }] as ActionWithoutTarget)
 }
 newCharacterAbility {
     name "objects.actions.ladder.sound";
     action([act: { Character actor ->
-        actor.getTimeStream().makeSound(actor.getX(), actor.getY(), DSL.soundTypes.shout, actor);
+        actor.getTimeStream().makeSound(actor.x(), actor.y(), DSL.soundTypes.shout, actor);
     }] as ActionWithoutTarget)
 }
 newCharacterAbility {
@@ -98,8 +98,8 @@ newSpell {
             void run() {
                 caster.emitEvent(new EventProjectileFly(
                         new SpellProjectile(action.getResourceName()),
-                        caster.getX(),
-                        caster.getY(),
+                        caster.x(),
+                        caster.y(),
                         x,
                         y,
                         EventProjectileFly.FlightStyle.PROPELLED

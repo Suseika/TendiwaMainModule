@@ -43,7 +43,6 @@ public class CoastlinePixmap implements Genesis {
 		this.geometry = geometry;
 		this.random = random;
 
-		Tendiwa.loadModules();
 		this.world = new World(config.worldSize);
 		this.location = new Location(
 			world.getDefaultPlane(),

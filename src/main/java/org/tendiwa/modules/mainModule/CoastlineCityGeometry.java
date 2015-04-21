@@ -1,11 +1,11 @@
 package org.tendiwa.modules.mainModule;
 
-import org.jgrapht.UndirectedGraph;
 import org.tendiwa.geometry.*;
 import org.tendiwa.geometry.extensions.CachedCellSet;
 import org.tendiwa.geometry.extensions.ChebyshovDistanceBufferBorder;
+import org.tendiwa.geometry.graphs2d.Cycle2D;
 import org.tendiwa.geometry.smartMesh.OriginalMeshCell;
-import org.tendiwa.geometry.smartMesh.Segment2DSmartMesh;
+import org.tendiwa.geometry.smartMesh.SmartMesh2D;
 import org.tendiwa.geometry.smartMesh.SegmentNetworkBuilder;
 import org.tendiwa.pathfinding.dijkstra.PathTable;
 import org.tendiwa.settlements.cityBounds.CityBounds;
@@ -18,10 +18,10 @@ import java.util.stream.Stream;
 
 final class CoastlineCityGeometry {
 	private final CoastlineGeometryConfig config;
-	private final Cell citySeed;
+	private final BasicCell citySeed;
 	private final Rectangle worldSize;
 
-	Segment2DSmartMesh mesh;
+	SmartMesh2D mesh;
 	Set<RectangleWithNeighbors> buildingPlaces;
 	Stream<Chain2D> streets;
 	FiniteCellSet exits;
@@ -29,36 +29,27 @@ final class CoastlineCityGeometry {
 	CoastlineCityGeometry(
 		CoastlineGeometryConfig config,
 		ProgressDrawing progress,
-		Cell citySeed,
+		BasicCell citySeed,
 		Rectangle worldSize,
 		CellSet water
 	) {
 		this.config = config;
 		this.citySeed = citySeed;
 		this.worldSize = worldSize;
-
-		CachedCellSet coast = findNearbyCoast(water);
-
-		BoundedCellSet cityShape = computeCityShape(coast);
-
+		BoundedCellSet cityShape = new CityShape(
+			new NearbyCoast(
+				water
+			)
+		);
 		progress.drawCityBackground(citySeed, cityShape);
-		UndirectedGraph<Point2D, Segment2D> cityBounds = CityBounds.create(
+		Cycle2D outerCycle = CityBounds.create(
 			cityShape,
 			citySeed,
 			cityRadiusModified()
 		);
-		progress.drawCityBounds(cityBounds);
+		progress.drawCityBounds(outerCycle);
 
-		mesh = computeMesh(cityBounds);
-//			canvas.draw(segment2DSmartMesh, new CityDrawer());
-		exits = exitsSet();
-		buildingPlaces = RectangularBuildingLots.placeInside(mesh);
-			progress.drawLots(buildingPlaces);
-		streets = DetectedStreets.toChain2DStream(mesh.getFullRoadGraph());
-	}
-
-	private Segment2DSmartMesh computeMesh(UndirectedGraph<Point2D, Segment2D> cityBounds) {
-		return new SegmentNetworkBuilder(cityBounds)
+		mesh = new SegmentNetworkBuilder(outerCycle.graph())
 			.withDefaults()
 			.withRoadsFromPoint(2)
 			.withDeviationAngle(Math.PI / 30)
@@ -67,28 +58,69 @@ final class CoastlineCityGeometry {
 			.withSnapSize(10)
 			.withMaxStartPointsPerCycle(2)
 			.build();
+
+//			canvas.draw(segment2DSmartMesh, new CityDrawer());
+		exits = exitsSet();
+		buildingPlaces = RectangularBuildingLots.placeInside(mesh);
+		progress.drawLots(buildingPlaces);
+		streets = DetectedStreets.toChain2DStream(mesh.graph());
 	}
 
-	private BoundedCellSet computeCityShape(CachedCellSet coast) {
-		return new PathTable(
-			citySeed,
-			worldSize.without(coast),
-			cityRadiusModified()
-		).computeFull();
+	private final class CityShape extends BoundedCellSetWr {
+
+		public CityShape(BoundedCellSet coast) {
+			super(
+				new PathTable(
+					citySeed,
+					worldSize.without(coast),
+					cityRadiusModified()
+				).computeFull()
+			);
+		}
 	}
 
-	private CachedCellSet findNearbyCoast(CellSet water) {
-		return new CachedCellSet(
-			new ChebyshovDistanceBufferBorder(
-				config.minDistanceFromCoastToCityBorder,
-				water
-			),
-			cityBoundRectangle()
-		);
+
+	private final class NearbyCoast extends BoundedCellSetWr {
+
+		NearbyCoast(CellSet cells) {
+			super(
+				new CachedCellSet(
+					new ChebyshovDistanceBufferBorder(
+						config.minDistanceFromCoastToCityBorder,
+						cells
+					),
+					cityBoundRectangle()
+				)
+			);
+		}
+	}
+
+	private final class Exits extends FiniteCellSetWr {
+		Exits() {
+			return mesh
+				.networks()
+				.stream()
+				.flatMap(this::cellsAtCycleExits)
+				.collect(CellSet.toCellSet());
+		}
+
+		private Stream<BasicCell> cellsAtCycleExits(OriginalMeshCell network) {
+			return network
+				.exitsOnCycles()
+				.stream()
+				.filter(p -> network
+						.network()
+						.edgeSet()
+						.stream()
+						.anyMatch(e -> e.start.equals(p) || e.end.equals(p))
+				)
+				.map(Point2D::toCell)
+				.distinct();
+		}
 	}
 
 	private Rectangle cityBoundRectangle() {
-		return Recs
+		return StupidPriceduralRecs
 			.rectangleByCenterPoint(citySeed, cityRadiusModified() * 2 + 1, cityRadiusModified() * 2 + 1)
 			.intersectionWith(worldSize)
 			.get();
@@ -99,24 +131,7 @@ final class CoastlineCityGeometry {
 	}
 
 	private FiniteCellSet exitsSet() {
-		return mesh
-			.networks()
-			.stream()
-			.flatMap(this::cellsAtCycleExits)
-			.collect(CellSet.toCellSet());
+		return;
 	}
 
-	private Stream<Cell> cellsAtCycleExits(OriginalMeshCell network) {
-		return network
-			.exitsOnCycles()
-			.stream()
-			.filter(p -> network
-					.network()
-					.edgeSet()
-					.stream()
-					.anyMatch(e -> e.start.equals(p) || e.end.equals(p))
-			)
-			.map(Point2D::toCell)
-			.distinct();
-	}
 }

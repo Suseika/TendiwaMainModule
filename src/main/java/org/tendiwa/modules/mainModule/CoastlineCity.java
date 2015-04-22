@@ -5,10 +5,7 @@ import org.jgrapht.UndirectedGraph;
 import org.tendiwa.collections.Collectors;
 import org.tendiwa.core.Location;
 import org.tendiwa.core.World;
-import org.tendiwa.geometry.CellSegment;
-import org.tendiwa.geometry.Chain2D;
-import org.tendiwa.geometry.Point2D;
-import org.tendiwa.geometry.Segment2D;
+import org.tendiwa.geometry.*;
 import org.tendiwa.geometry.smartMesh.SmartMesh2D;
 import org.tendiwa.settlements.buildings.*;
 import org.tendiwa.settlements.streets.LotStreetAssigner;
@@ -44,7 +41,7 @@ class CoastlineCity {
 
 	private Consumer<Segment2D> roadDrawingAlgorithm(World world, Location location) {
 		return segment ->
-			new CellSegment(segment)
+			new BasicCellSegment(segment)
 				.asList()
 				.stream()
 				.filter(c -> world.asRectangle().contains(c))

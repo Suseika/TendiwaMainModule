@@ -80,7 +80,7 @@ final class PathNetwork {
 		);
 	}
 
-	private List<BasicCell> pathFromStartToEnd(CellSegment segment, MovementCost cost) {
+	private List<BasicCell> pathFromStartToEnd(BasicCellSegment segment, MovementCost cost) {
 		return new AStar(cost).path(segment.start, segment.end);
 	}
 }

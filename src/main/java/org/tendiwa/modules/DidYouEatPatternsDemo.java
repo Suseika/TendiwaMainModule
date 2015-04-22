@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.tendiwa.drawing.TestCanvas;
 import org.tendiwa.drawing.extensions.DrawingModule;
 import org.tendiwa.drawing.extensions.DrawingRectangleSystem;
-import org.tendiwa.geometry.RectSet;
+import org.tendiwa.geometry.RecTree;
 import org.tendiwa.geometry.Placement;
 import org.tendiwa.geometry.RectangleBuilderTemplate;
 import org.tendiwa.geometry.RectangleSystem;
@@ -52,7 +52,7 @@ public RectangleSystem build() {
 
 @Test
 public void draw() throws InterruptedException {
-	RectSet template = new DidYouEatPatternsDemo();
+	RecTree template = new DidYouEatPatternsDemo();
 	RectangleSystem phrases = builder(0).
 		place(
 			builder(0)

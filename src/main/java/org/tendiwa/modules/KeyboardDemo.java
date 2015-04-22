@@ -14,6 +14,8 @@ import org.tendiwa.drawing.TestCanvas;
 import java.awt.*;
 
 import static org.tendiwa.geometry.DSL.*;
+import static org.tendiwa.geometry.RectanglePointer.first;
+import static org.tendiwa.geometry.RectanglePointer.previous;
 
 @RunWith(JukitoRunner.class)
 @UseModules(DrawingModule.class)
@@ -24,11 +26,11 @@ TestCanvas canvas;
 @Test
 public void draw() {
 
-	RectangleBuilderTemplate keyboard = new KeyboardDemo();
-	RectangleSystem keyboards = builder(1)
+	RecTree keyboard = new KeyboardDemo().build();
+	RecTree keyboards = builder(1)
 		.place(keyboard, atPoint(5, 5))
-		.place(keyboard.rotate(CLOCKWISE), awayFrom(LAST_BOUNDING_REC).fromSide(S).margin(10).align(E))
-		.place(keyboard.rotate(HALF_CIRCLE), awayFrom(LAST_BOUNDING_REC).fromSide(S).margin(2).inMiddle())
+		.place(keyboard.rotate(CLOCKWISE), awayFrom(previous).fromSide(S).margin(10).align(E))
+		.place(keyboard.rotate(HALF_CIRCLE), awayFrom(previous).fromSide(S).margin(2).inMiddle())
 		.done();
 	canvas.draw(keyboards, DrawingRectangleSystem.withColors(Color.GRAY, Color.LIGHT_GRAY));
 	try {
@@ -47,24 +49,23 @@ public RectangleSystem build() {
 	return builder(1)
 		// Esc
 		.place(topRowButton, somewhere())
-		.rememberRectangle()
 			// Functional row
 		.place(
 			topRowButton
 				.repeat(4)
-				.placingNextAt(near(LAST_RECTANGLE).fromSide(E).inMiddle())
+				.placingNextAt(near(previous).fromSide(E).inMiddle())
 				.repeat(3)
-				.placingNextAt(awayFrom(LAST_RECTANGLE).fromSide(E).margin(5).inMiddle()),
-			awayFrom(LAST_RECTANGLE).fromSide(E).margin(3).inMiddle()
+				.placingNextAt(awayFrom(previous).fromSide(E).margin(5).inMiddle()),
+			awayFrom(previous).fromSide(E).margin(3).inMiddle()
 		)
 			// Shit key
-		.place(rectangle(10, 1), near(LAST_BOUNDING_REC).fromSide(E).align(N))
+		.place(rectangle(10, 1), near(previous).fromSide(E).align(N))
 			// ~ 1-0 - =
 		.place(
 			button
 				.repeat(13)
-				.placingNextAt(near(LAST_RECTANGLE).fromSide(E).inMiddle()),
-			awayFrom(REMEMBERED_RECTANGLE).fromSide(S).margin(2).align(W)
+				.placingNextAt(near(previous).fromSide(E).inMiddle()),
+			awayFrom(first).fromSide(S).margin(2).align(W)
 		)
 		.rememberBoundingRec()
 			// Backspace

@@ -18,7 +18,7 @@ public class House implements Architecture {
 		BasicCell doorCell = buildingRec.getSideAsSidePiece(front).getCellInside(front.left(), 3);
 		BasicCell pathStart = doorCell.moveToSide(front);
 		BasicCell pathEnd = pathStart.moveToSide(front, 3);
-		FiniteCellSet path = FiniteCellSet.of(CellSegment.vector(pathStart, pathEnd));
+		FiniteCellSet path = FiniteCellSet.of(BasicCellSegment.vector(pathStart, pathEnd));
 
 		location.square(buildingRec, Registry.wallTypes.get("wall_grey_stone"), false);
 		location.place(Registry.wallTypes.get("void"), doorCell);

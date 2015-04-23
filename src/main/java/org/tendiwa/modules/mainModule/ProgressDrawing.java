@@ -1,11 +1,15 @@
 package org.tendiwa.modules.mainModule;
 
 import org.tendiwa.core.World;
+import org.tendiwa.core.meta.Cell;
+import org.tendiwa.demos.settlements.DrawableCellSet;
 import org.tendiwa.drawing.DrawableInto;
-import org.tendiwa.drawing.DrawingAlgorithm;
 import org.tendiwa.drawing.TestCanvas;
 import org.tendiwa.drawing.extensions.*;
-import org.tendiwa.geometry.*;
+import org.tendiwa.geometry.BoundedCellSet;
+import org.tendiwa.geometry.CellSet;
+import org.tendiwa.geometry.FiniteCellSet;
+import org.tendiwa.geometry.Rectangle;
 import org.tendiwa.geometry.graphs2d.Cycle2D;
 import org.tendiwa.settlements.utils.RectangleWithNeighbors;
 
@@ -17,8 +21,8 @@ final class ProgressDrawing {
 	private final CoastlineGeometryConfig config;
 	private final DrawableInto canvas;
 	private final TimeProfiler profiler;
-	private final DrawingAlgorithm<BasicCell> grassColor = DrawingCell.withColor(Color.green);
-	private final DrawingAlgorithm<BasicCell> waterColor = DrawingCell.withColor(Color.blue);
+	private final Color grassColor = Color.green;
+	private final Color waterColor = Color.blue;
 
 	@Inject
 	ProgressDrawing(
@@ -34,18 +38,27 @@ final class ProgressDrawing {
 
 	void drawTerrain(CellSet water) {
 		Rectangle worldSize = config.worldSize;
-		for (BasicCell cell : worldSize) {
-			canvas.draw(
-				cell,
-				water.contains(cell.x, cell.y) ? waterColor : grassColor
-			);
-		}
+		canvas.drawAll(
+			worldSize,
+			cell ->
+				new DrawableCell(
+					cell,
+					water.contains(cell) ? waterColor : grassColor
+				)
+		);
 		profiler.saveTime("Draw terrain");
 	}
 
-	void drawCityBackground(BasicCell citySeed, BoundedCellSet cityShape) {
-		canvas.draw(citySeed, DrawingCell.withColorAndSize(Color.black, 6));
-		canvas.draw(cityShape, DrawingCellSet.withColor(Color.BLACK));
+	void drawCityBackground(Cell citySeed, BoundedCellSet cityShape) {
+		canvas.draw(
+			new DrawableCell(citySeed, Color.black)
+		);
+		canvas.draw(
+			new DrawableCellSet(
+				cityShape,
+				Color.black
+			)
+		);
 	}
 
 	void drawCityBounds(Cycle2D cityBounds) {
@@ -63,7 +76,12 @@ final class ProgressDrawing {
 	}
 
 	void drawBorderWithCityCenters(FiniteCellSet borderWithCityCenters) {
-		canvas.draw(borderWithCityCenters, DrawingCellSet.withColor(Color.RED));
+		canvas.draw(
+			new DrawableCellSet.Finite(
+				borderWithCityCenters,
+				Color.red
+			)
+		);
 	}
 
 	void drawWorld(World world) {

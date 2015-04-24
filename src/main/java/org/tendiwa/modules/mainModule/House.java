@@ -4,7 +4,7 @@ import org.tendiwa.core.CardinalDirection;
 import org.tendiwa.core.Location;
 import org.tendiwa.geometry.*;
 import org.tendiwa.groovy.Registry;
-import org.tendiwa.settlements.utils.RectangleWithNeighbors;
+import org.tendiwa.settlements.utils.BasicRectangleWithNeighbors;
 import org.tendiwa.settlements.buildings.Architecture;
 import org.tendiwa.settlements.buildings.BuildingFeatures;
 import org.tendiwa.settlements.buildings.BuildingTag;
@@ -30,7 +30,7 @@ public class House implements Architecture {
 	}
 
 	@Override
-	public boolean fits(RectangleWithNeighbors place) {
+	public boolean fits(BasicRectangleWithNeighbors place) {
 		return place.rectangle.width >= 9 && place.rectangle.height >= 9;
 	}
 

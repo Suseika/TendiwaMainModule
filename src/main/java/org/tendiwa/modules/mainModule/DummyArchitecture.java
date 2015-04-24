@@ -4,7 +4,7 @@ import org.tendiwa.core.CardinalDirection;
 import org.tendiwa.core.Location;
 import org.tendiwa.geometry.Rectangle;
 import org.tendiwa.groovy.Registry;
-import org.tendiwa.settlements.utils.RectangleWithNeighbors;
+import org.tendiwa.settlements.utils.BasicRectangleWithNeighbors;
 import org.tendiwa.settlements.buildings.Architecture;
 import org.tendiwa.settlements.buildings.BuildingFeatures;
 import org.tendiwa.settlements.buildings.BuildingTag;
@@ -16,7 +16,7 @@ public class DummyArchitecture implements Architecture {
 	}
 
 	@Override
-	public boolean fits(RectangleWithNeighbors lot) {
+	public boolean fits(BasicRectangleWithNeighbors lot) {
 		return lot.rectangle.width >= 3 && lot.rectangle.height >= 3;
 	}
 

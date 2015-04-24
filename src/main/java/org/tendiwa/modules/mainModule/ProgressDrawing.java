@@ -3,7 +3,9 @@ package org.tendiwa.modules.mainModule;
 import org.tendiwa.core.World;
 import org.tendiwa.core.meta.Cell;
 import org.tendiwa.demos.settlements.DrawableCellSet;
-import org.tendiwa.drawing.DrawableInto;
+import org.tendiwa.drawing.Canvas;
+import org.tendiwa.drawing.DrawableRectangleWithNeighbors;
+import org.tendiwa.drawing.DrawableWorld;
 import org.tendiwa.drawing.TestCanvas;
 import org.tendiwa.drawing.extensions.*;
 import org.tendiwa.geometry.BoundedCellSet;
@@ -19,7 +21,7 @@ import java.util.Set;
 
 final class ProgressDrawing {
 	private final CoastlineGeometryConfig config;
-	private final DrawableInto canvas;
+	private final Canvas canvas;
 	private final TimeProfiler profiler;
 	private final Color grassColor = Color.green;
 	private final Color waterColor = Color.blue;
@@ -27,7 +29,7 @@ final class ProgressDrawing {
 	@Inject
 	ProgressDrawing(
 		CoastlineGeometryConfig config,
-		DrawableInto canvas,
+		Canvas canvas,
 		TimeProfiler profiler
 	) {
 		this.config = config;
@@ -62,15 +64,23 @@ final class ProgressDrawing {
 	}
 
 	void drawCityBounds(Cycle2D cityBounds) {
-		canvas.draw(cityBounds.graph(), DrawingGraph.withColorAndAntialiasing(Color.red));
+		canvas.draw(
+			new DrawableGraph2D.Thin(
+				cityBounds.graph(),
+				Color.red
+			)
+		);
 	}
 
 	void drawLots(Set<RectangleWithNeighbors> buildingPlaces) {
 		canvas.drawAll(
 			buildingPlaces,
-			DrawingRectangleWithNeighbors.withColorAndDefaultBorder(
+			place -> new DrawableRectangleWithNeighbors(
+				place,
 				Color.blue,
-				Color.magenta
+				Color.blue.darker(),
+				Color.magenta,
+				Color.magenta.darker()
 			)
 		);
 	}
@@ -86,8 +96,10 @@ final class ProgressDrawing {
 
 	void drawWorld(World world) {
 		canvas.draw(
-			world,
-			DrawingWorld.withColorMap(new MainPlaceableToColor())
+			new DrawableWorld(
+				world,
+				new MainPlaceableToColor()
+			)
 		);
 	}
 }

@@ -2,12 +2,16 @@ package org.tendiwa.modules.mainModule;
 
 import org.tendiwa.core.CardinalDirection;
 import org.tendiwa.core.Location;
+import org.tendiwa.core.meta.Cell;
 import org.tendiwa.geometry.*;
 import org.tendiwa.groovy.Registry;
 import org.tendiwa.settlements.utils.BasicRectangleWithNeighbors;
 import org.tendiwa.settlements.buildings.Architecture;
 import org.tendiwa.settlements.buildings.BuildingFeatures;
 import org.tendiwa.settlements.buildings.BuildingTag;
+import org.tendiwa.settlements.utils.RectangleWithNeighbors;
+
+import static org.tendiwa.geometry.GeometryPrimitives.rectangle;
 
 public class House implements Architecture {
 
@@ -15,10 +19,10 @@ public class House implements Architecture {
 	public void draw(BuildingFeatures features, CardinalDirection front, Location location) {
 		Rectangle bounds = location.getRelativeBounds();
 		Rectangle buildingRec = bounds.shrink(3);
-		BasicCell doorCell = buildingRec.getSideAsSidePiece(front).getCellInside(front.left(), 3);
-		BasicCell pathStart = doorCell.moveToSide(front);
-		BasicCell pathEnd = pathStart.moveToSide(front, 3);
-		FiniteCellSet path = FiniteCellSet.of(BasicCellSegment.vector(pathStart, pathEnd));
+		Cell doorCell = buildingRec.side(front).getCellInside(front.left(), 3);
+		Cell pathStart = doorCell.moveToSide(front);
+		Cell pathEnd = pathStart.moveToSide(front, 3);
+		FiniteCellSet path = FiniteCellSet.of(CellSegment.vector(pathStart, pathEnd));
 
 		location.square(buildingRec, Registry.wallTypes.get("wall_grey_stone"), false);
 		location.place(Registry.wallTypes.get("void"), doorCell);
@@ -30,13 +34,13 @@ public class House implements Architecture {
 	}
 
 	@Override
-	public boolean fits(BasicRectangleWithNeighbors place) {
-		return place.rectangle.width >= 9 && place.rectangle.height >= 9;
+	public boolean fits(RectangleWithNeighbors place) {
+		return place.mainRectangle().width() >= 9 && place.mainRectangle().height() >= 9;
 	}
 
 	@Override
 	public Rectangle typicalBuildingPlace() {
-		return new Rectangle(0, 0, 17, 13);
+		return rectangle(0, 0, 17, 13);
 	}
 
 	@Override

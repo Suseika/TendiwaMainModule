@@ -2,6 +2,7 @@ package org.tendiwa.modules.mainModule;
 
 import com.google.inject.Inject;
 import org.tendiwa.core.World;
+import org.tendiwa.core.meta.Cell;
 import org.tendiwa.core.worlds.Genesis;
 import org.tendiwa.demos.Demos;
 import org.tendiwa.drawing.extensions.DrawingModule;
@@ -73,7 +74,7 @@ public final class CoastlineGeometry implements Genesis {
 		);
 	}
 
-	private CoastlineCityGeometry cityAroundCell(BasicCell cell) {
+	private CoastlineCityGeometry cityAroundCell(Cell cell) {
 		return new CoastlineCityGeometry(
 			config,
 			progress,

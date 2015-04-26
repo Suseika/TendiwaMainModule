@@ -4,7 +4,7 @@ import org.tendiwa.core.worlds.Genesis;
 import org.tendiwa.core.worlds.GenesisConfig;
 import org.tendiwa.geometry.Rectangle;
 
-import static org.tendiwa.geometry.DSL.rectangle;
+import static org.tendiwa.geometry.GeometryPrimitives.rectangle;
 
 final class CoastlineGeometryConfig implements GenesisConfig {
 	int maxCityRadius = 80;

@@ -1,16 +1,17 @@
 package org.tendiwa.modules.mainModule;
 
 import org.tendiwa.drawing.extensions.PlaceableToColorMap;
-import org.tendiwa.groovy.Registry;
+import org.tendiwa.modules.mainModule.ontology.*;
+import org.tendiwa.modules.mainModule.ontology.Water;
 
 import java.awt.Color;
 
 public final class MainPlaceableToColor extends PlaceableToColorMap {
 	public MainPlaceableToColor() {
-		setColor(Registry.floorTypes.get("grass"), Color.green);
-		setColor(Registry.floorTypes.get("water"), Color.blue);
-		setColor(Registry.floorTypes.get("ground"), Color.orange);
-		setColor(Registry.floorTypes.get("stone"), Color.lightGray);
-		setColor(Registry.wallTypes.get("wall_grey_stone"), Color.darkGray);
+		setColor(Grass.piece, Color.green);
+		setColor(Water.piece, Color.blue);
+		setColor(Ground.piece, Color.orange);
+		setColor(StoneFloor.piece, Color.lightGray);
+		setColor(GreyStoneWall.piece, Color.darkGray);
 	}
 }

@@ -4,8 +4,8 @@ import com.google.inject.Inject;
 import org.tendiwa.core.World;
 import org.tendiwa.core.meta.Cell;
 import org.tendiwa.core.worlds.Genesis;
-import org.tendiwa.demos.Demos;
-import org.tendiwa.drawing.extensions.DrawingModule;
+import org.tendiwa.drawing.TestCanvas;
+import org.tendiwa.drawing.extensions.PieChartTimeProfiler;
 import org.tendiwa.geometry.*;
 import org.tendiwa.geometry.extensions.ChebyshovDistanceBufferBorder;
 import org.tendiwa.geometry.extensions.ShapeFromOutline;
@@ -25,9 +25,14 @@ public final class CoastlineGeometry implements Genesis {
 
 
 	public static void main(String[] args) {
-		Demos.genesis(CoastlineGeometry.class,
-			new DrawingModule(),
-			new CoastlineModule()
+		CoastlineGeometryConfig config = new CoastlineGeometryConfig();
+		new CoastlineGeometry(
+			config,
+			new ProgressDrawing(
+				config,
+				new TestCanvas(1, config.worldSize),
+				new PieChartTimeProfiler()
+			)
 		);
 	}
 
@@ -58,7 +63,7 @@ public final class CoastlineGeometry implements Genesis {
 			.map(this::cityAroundCell)
 			.forEach(cities::add);
 		CellSet citiesCells = cities.stream()
-			.map(city -> city.mesh.getFullCycleGraph())
+			.map(city -> city.network.getFullCycleGraph())
 			.map(ShapeFromOutline::from)
 			.flatMap(BoundedCellSet::stream)
 			.collect(CellSet.toCellSet());

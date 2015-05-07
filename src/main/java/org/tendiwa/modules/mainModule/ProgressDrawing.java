@@ -7,12 +7,10 @@ import org.tendiwa.drawing.Canvas;
 import org.tendiwa.drawing.DrawableRectangleWithNeighbors;
 import org.tendiwa.drawing.DrawableWorld;
 import org.tendiwa.drawing.TestCanvas;
-import org.tendiwa.drawing.extensions.*;
-import org.tendiwa.geometry.BoundedCellSet;
-import org.tendiwa.geometry.CellSet;
-import org.tendiwa.geometry.FiniteCellSet;
-import org.tendiwa.geometry.Rectangle;
-import org.tendiwa.geometry.graphs2d.Cycle2D;
+import org.tendiwa.drawing.extensions.DrawableCell;
+import org.tendiwa.drawing.extensions.DrawablePolygon;
+import org.tendiwa.drawing.extensions.TimeProfiler;
+import org.tendiwa.geometry.*;
 import org.tendiwa.settlements.utils.RectangleWithNeighbors;
 
 import javax.inject.Inject;
@@ -40,14 +38,20 @@ final class ProgressDrawing {
 
 	void drawTerrain(CellSet water) {
 		Rectangle worldSize = config.worldSize;
-		canvas.drawAll(
-			worldSize,
-			cell ->
-				new DrawableCell(
+		worldSize.forEach(cell ->
+				canvas.drawCell(
 					cell,
 					water.contains(cell) ? waterColor : grassColor
 				)
 		);
+//		canvas.drawAll(
+//			worldSize,
+//			cell ->
+//				new DrawableCell(
+//					cell,
+//					water.contains(cell) ? waterColor : grassColor
+//				)
+//		);
 		profiler.saveTime("Draw terrain");
 	}
 
@@ -63,10 +67,10 @@ final class ProgressDrawing {
 		);
 	}
 
-	void drawCityBounds(Cycle2D cityBounds) {
+	void drawCityBounds(Polygon cityBounds) {
 		canvas.draw(
-			new DrawableGraph2D.Thin(
-				cityBounds.graph(),
+			new DrawablePolygon.Thin(
+				cityBounds,
 				Color.red
 			)
 		);

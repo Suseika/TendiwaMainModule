@@ -6,8 +6,8 @@ import org.tendiwa.geometry.extensions.CachedCellSet;
 import org.tendiwa.geometry.extensions.ChebyshovDistanceBufferBorder;
 import org.tendiwa.geometry.graphs2d.Cycle2D;
 import org.tendiwa.geometry.smartMesh.OriginalMeshCell;
-import org.tendiwa.geometry.smartMesh.SmartMesh2D;
-import org.tendiwa.geometry.smartMesh.SegmentNetworkBuilder;
+import org.tendiwa.geometry.smartMesh.SmartMeshedNetwork;
+import org.tendiwa.geometry.smartMesh.MeshedNetworkBuilder;
 import org.tendiwa.pathfinding.dijkstra.PathTable;
 import org.tendiwa.settlements.cityBounds.CityBounds;
 import org.tendiwa.settlements.utils.RectangleWithNeighbors;
@@ -22,7 +22,7 @@ final class CoastlineCityGeometry {
 	private final Cell citySeed;
 	private final Rectangle worldSize;
 
-	SmartMesh2D mesh;
+	SmartMeshedNetwork network;
 	Set<RectangleWithNeighbors> buildingPlaces;
 	Stream<Chain2D> streets;
 	FiniteCellSet exits;
@@ -50,7 +50,7 @@ final class CoastlineCityGeometry {
 		);
 		progress.drawCityBounds(outerCycle);
 
-		mesh = new SegmentNetworkBuilder(outerCycle.graph())
+		network = new MeshedNetworkBuilder(outerCycle)
 			.withDefaults()
 			.withRoadsFromPoint(2)
 			.withDeviationAngle(Math.PI / 30)
@@ -62,9 +62,9 @@ final class CoastlineCityGeometry {
 
 //			canvas.draw(segment2DSmartMesh, new CityDrawer());
 		exits = exitsSet();
-		buildingPlaces = RectangularBuildingLots.placeInside(mesh);
+		buildingPlaces = RectangularBuildingLots.placeInside(network);
 		progress.drawLots(buildingPlaces);
-		streets = DetectedStreets.toChain2DStream(mesh.graph());
+		streets = DetectedStreets.toChain2DStream(network.fullGraph());
 	}
 
 	private final class CityShape extends BoundedCellSetWr {
@@ -99,7 +99,7 @@ final class CoastlineCityGeometry {
 	private final class Exits extends FiniteCellSet_Wr {
 		Exits() {
 			super(
-				mesh
+				network
 					.networks()
 					.stream()
 					.flatMap(CoastlineCityGeometry.this::cellsAtCycleExits)

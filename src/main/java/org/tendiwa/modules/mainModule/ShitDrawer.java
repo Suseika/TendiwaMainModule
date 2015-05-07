@@ -3,8 +3,8 @@ package org.tendiwa.modules.mainModule;
 import org.tendiwa.core.Location;
 import org.tendiwa.core.World;
 import org.tendiwa.geometry.Rectangle;
-import org.tendiwa.groovy.Registry;
-import org.tendiwa.settlements.utils.BasicRectangleWithNeighbors;
+import org.tendiwa.modules.mainModule.ontology.Water;
+import org.tendiwa.settlements.utils.RectangleWithNeighbors;
 
 import java.util.Optional;
 
@@ -20,17 +20,17 @@ class ShitDrawer {
 	}
 
 	public void invoke() {
-		for (BasicRectangleWithNeighbors buildingPlace : city.buildingPlaces) {
+		for (RectangleWithNeighbors buildingPlace : city.buildingPlaces) {
 			location.fillRectangle(
-				buildingPlace.rectangle.intersectionWith(world.asRectangle()).get(),
-				Registry.floorTypes.get("water")
+				buildingPlace.mainRectangle().intersection(world.asRectangle()).get(),
+				Water.piece
 			);
-			for (Rectangle neighbor : buildingPlace.neighbors) {
-				Optional<Rectangle> intersection = neighbor.intersectionWith(world.asRectangle());
+			for (Rectangle neighbor : buildingPlace.neighbors()) {
+				Optional<Rectangle> intersection = neighbor.intersection(world.asRectangle());
 				if (intersection.isPresent()) {
 					location.fillRectangle(
 						intersection.get(),
-						Registry.floorTypes.get("water")
+						Water.piece
 					);
 				}
 			}

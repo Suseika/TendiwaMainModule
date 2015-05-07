@@ -1,22 +1,26 @@
 package org.tendiwa.modules.mainModule;
 
-import com.google.inject.util.Modules;
+import com.google.inject.AbstractModule;
+import com.google.inject.Scopes;
+import com.google.inject.name.Names;
+import org.apache.commons.math3.random.RandomAdaptor;
 import org.tendiwa.core.Location;
-import org.tendiwa.core.Tendiwa;
 import org.tendiwa.core.World;
 import org.tendiwa.core.worlds.Genesis;
 import org.tendiwa.demos.Demos;
-import org.tendiwa.drawing.extensions.DrawingModule;
+import org.tendiwa.drawing.TestCanvas;
+import org.tendiwa.drawing.extensions.PieChartTimeProfiler;
 import org.tendiwa.geometry.BoundedCellSet;
 import org.tendiwa.geometry.FiniteCellSet;
 import org.tendiwa.geometry.extensions.CachedCellSet;
+import org.tendiwa.modules.mainModule.ontology.*;
+import org.tendiwa.modules.mainModule.ontology.Water;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
 import java.util.Random;
 
-import static org.tendiwa.groovy.Registry.floorTypes;
 
 /**
  */
@@ -27,10 +31,22 @@ public class CoastlinePixmap implements Genesis {
 	private final Location location;
 
 	public static void main(String[] args) {
-		Demos.genesis(
-			CoastlinePixmap.class,
-			Modules.override(new DrawingModule()).with(new CoastlineModule())
+		CoastlineGeometryConfig config = new CoastlineGeometryConfig();
+		TestCanvas canvas = new TestCanvas(1, config.worldSize);
+		ProgressDrawing progress = new ProgressDrawing(
+			config,
+			canvas,
+			new PieChartTimeProfiler()
 		);
+		new CoastlinePixmap(
+			new CoastlineGeometry(
+				config,
+				progress
+			),
+			progress,
+			config,
+			new Random(0)
+		).world();
 	}
 
 	@Inject
@@ -71,19 +87,19 @@ public class CoastlinePixmap implements Genesis {
 			.stream()
 			.flatMap(Collection::stream)
 			.filter(world.asRectangle()::contains)
-			.forEach(cell -> location.place(floorTypes.get("ground"), cell));
+			.forEach(cell -> location.place(Ground.piece, cell));
 	}
 
 	private void placeGrass(BoundedCellSet waterCells) {
 		location.drawCellSet(
 			(x, y) -> !waterCells.contains(x, y),
 			waterCells.getBounds(),
-			floorTypes.get("grass")
+			Grass.piece
 		);
 	}
 
 	private void placeWater(FiniteCellSet waterCells) {
-		location.drawCellSet(waterCells, floorTypes.get("water"));
+		location.drawCellSet(waterCells, Water.piece);
 	}
 
 	@Override

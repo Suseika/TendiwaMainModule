@@ -1,6 +1,7 @@
 package org.tendiwa.modules.mainModule;
 
 import org.jgrapht.graph.UnmodifiableUndirectedGraph;
+import org.tendiwa.core.meta.Cell;
 import org.tendiwa.drawing.extensions.TimeProfiler;
 import org.tendiwa.geometry.*;
 import org.tendiwa.geometry.extensions.CachedCellSet;
@@ -19,7 +20,7 @@ final class PathNetwork {
 	private final Rectangle worldSize;
 	private final CellSet water;
 	private final Collection<FiniteCellSet> shapeExitsSets = new LinkedList<>();
-	private final List<List<BasicCell>> paths;
+	private final List<List<Cell>> paths;
 
 	PathNetwork(
 		CoastlineGeometryConfig config,
@@ -50,7 +51,7 @@ final class PathNetwork {
 //		chart.draw();
 	}
 
-	List<List<BasicCell>> paths() {
+	List<List<Cell>> paths() {
 		return paths;
 	}
 
@@ -80,7 +81,7 @@ final class PathNetwork {
 		);
 	}
 
-	private List<BasicCell> pathFromStartToEnd(BasicCellSegment segment, MovementCost cost) {
-		return new AStar(cost).path(segment.start, segment.end);
+	private List<Cell> pathFromStartToEnd(CellSegment segment, MovementCost cost) {
+		return new AStar(cost).path(segment.start(), segment.end());
 	}
 }

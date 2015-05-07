@@ -3,7 +3,7 @@ package org.tendiwa.modules.mainModule;
 import org.tendiwa.core.CardinalDirection;
 import org.tendiwa.core.Location;
 import org.tendiwa.geometry.Rectangle;
-import org.tendiwa.groovy.Registry;
+import org.tendiwa.modules.mainModule.ontology.GreyStoneWall;
 import org.tendiwa.settlements.buildings.Architecture;
 import org.tendiwa.settlements.buildings.BuildingFeatures;
 import org.tendiwa.settlements.buildings.BuildingTag;
@@ -14,7 +14,7 @@ import static org.tendiwa.geometry.GeometryPrimitives.rectangle;
 public final class DummyArchitecture implements Architecture {
 	@Override
 	public void draw(BuildingFeatures features, CardinalDirection front, Location location) {
-		location.fillRectangle(location.getRelativeBounds().shrink(1), Registry.wallTypes.get("wall_grey_stone"));
+		location.fillRectangle(location.getRelativeBounds().shrink(1), GreyStoneWall.piece);
 	}
 
 	@Override

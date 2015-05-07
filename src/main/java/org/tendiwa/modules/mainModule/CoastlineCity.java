@@ -6,11 +6,12 @@ import org.tendiwa.collections.Collectors;
 import org.tendiwa.core.Location;
 import org.tendiwa.core.World;
 import org.tendiwa.geometry.*;
-import org.tendiwa.geometry.smartMesh.SmartMesh2D;
+import org.tendiwa.geometry.smartMesh.SmartMeshedNetwork;
+import org.tendiwa.modules.mainModule.ontology.Ground;
 import org.tendiwa.settlements.buildings.*;
 import org.tendiwa.settlements.streets.LotStreetAssigner;
 import org.tendiwa.settlements.streets.Namer;
-import org.tendiwa.settlements.utils.RoadRejector;
+import org.tendiwa.settlements.utils.NetworkGraphWithHolesInHull;
 import org.tendiwa.settlements.utils.streetsDetector.DetectedStreets;
 
 import java.util.List;
@@ -18,7 +19,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import static org.tendiwa.groovy.Registry.floorTypes;
 
 class CoastlineCity {
 	public static final double STREETS_WIDTH = 3.3;
@@ -45,11 +45,11 @@ class CoastlineCity {
 				.asList()
 				.stream()
 				.filter(c -> world.asRectangle().contains(c))
-				.forEach(c -> location.place(floorTypes.get("ground"), c));
+				.forEach(c -> location.place(Ground.piece, c));
 	}
 
 	void placeContents() {
-		UndirectedGraph<Point2D, Segment2D> actualRoadGraph = rejectExtraRoads(city.mesh);
+		UndirectedGraph<Point2D, Segment2D> actualRoadGraph = rejectExtraRoads(city.network);
 		Set<Chain2D> streets = detectStreets(actualRoadGraph);
 		UrbanPlanner urbanPlanner = createUrbanPlanner(streets);
 		City.builder()
@@ -65,9 +65,9 @@ class CoastlineCity {
 			.collect(Collectors.toImmutableSet());
 	}
 
-	private UndirectedGraph<Point2D, Segment2D> rejectExtraRoads(SmartMesh2D mesh) {
-		return RoadRejector.rejectPartOfNetworksBorders(
-			mesh.graph(),
+	private UndirectedGraph<Point2D, Segment2D> rejectExtraRoads(SmartMeshedNetwork mesh) {
+		return NetworkGraphWithHolesInHull.rejectPartOfNetworksBorders(
+			mesh.fullGraph(),
 			mesh,
 			0.5,
 			random
@@ -98,8 +98,8 @@ class CoastlineCity {
 	}
 
 	private void drawRoads() {
-		city.mesh.networks().stream()
-			.flatMap(cell -> cell.network().edgeSet().stream())
+		city.network.meshes().stream()
+			.flatMap(cell -> cell.edgeSet().stream())
 			.forEach(drawRoad);
 	}
 }

@@ -5,7 +5,7 @@ import org.tendiwa.geometry.*;
 import org.tendiwa.geometry.extensions.CachedCellSet;
 import org.tendiwa.geometry.extensions.ChebyshovDistanceBufferBorder;
 import org.tendiwa.geometry.graphs2d.Cycle2D;
-import org.tendiwa.geometry.smartMesh.OriginalMeshCell;
+import org.tendiwa.geometry.graphs2d.Mesh2D;
 import org.tendiwa.geometry.smartMesh.SmartMeshedNetwork;
 import org.tendiwa.geometry.smartMesh.MeshedNetworkBuilder;
 import org.tendiwa.pathfinding.dijkstra.PathTable;
@@ -17,7 +17,7 @@ import org.tendiwa.settlements.utils.streetsDetector.DetectedStreets;
 import java.util.Set;
 import java.util.stream.Stream;
 
-final class CoastlineCityGeometry {
+final class CityAroundCell {
 	private final CoastlineGeometryConfig config;
 	private final Cell citySeed;
 	private final Rectangle worldSize;
@@ -27,10 +27,10 @@ final class CoastlineCityGeometry {
 	Stream<Chain2D> streets;
 	FiniteCellSet exits;
 
-	CoastlineCityGeometry(
+	CityAroundCell(
+		Cell citySeed,
 		CoastlineGeometryConfig config,
 		ProgressDrawing progress,
-		Cell citySeed,
 		Rectangle worldSize,
 		CellSet water
 	) {
@@ -49,7 +49,6 @@ final class CoastlineCityGeometry {
 			cityRadiusModified()
 		);
 		progress.drawCityBounds(outerCycle);
-
 		network = new MeshedNetworkBuilder(outerCycle)
 			.withDefaults()
 			.withRoadsFromPoint(2)
@@ -59,8 +58,6 @@ final class CoastlineCityGeometry {
 			.withSnapSize(10)
 			.withMaxStartPointsPerCycle(2)
 			.build();
-
-//			canvas.draw(segment2DSmartMesh, new CityDrawer());
 		exits = exitsSet();
 		buildingPlaces = RectangularBuildingLots.placeInside(network);
 		progress.drawLots(buildingPlaces);
@@ -94,33 +91,6 @@ final class CoastlineCityGeometry {
 				)
 			);
 		}
-	}
-
-	private final class Exits extends FiniteCellSet_Wr {
-		Exits() {
-			super(
-				network
-					.networks()
-					.stream()
-					.flatMap(CoastlineCityGeometry.this::cellsAtCycleExits)
-					.collect(CellSet.toCellSet())
-			);
-		}
-
-	}
-
-	private Stream<Cell> cellsAtCycleExits(OriginalMeshCell network) {
-		return network
-			.exitsOnCycles()
-			.stream()
-			.filter(p -> network
-					.network()
-					.edgeSet()
-					.stream()
-					.anyMatch(e -> e.start().equals(p) || e.end().equals(p))
-			)
-			.map(Point2D::toCell)
-			.distinct();
 	}
 
 	private Rectangle cityBoundRectangle() {

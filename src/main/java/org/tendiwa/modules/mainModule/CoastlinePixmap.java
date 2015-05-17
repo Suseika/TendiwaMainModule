@@ -1,23 +1,19 @@
 package org.tendiwa.modules.mainModule;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Scopes;
-import com.google.inject.name.Names;
-import org.apache.commons.math3.random.RandomAdaptor;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import org.tendiwa.core.Location;
 import org.tendiwa.core.World;
 import org.tendiwa.core.worlds.Genesis;
-import org.tendiwa.demos.Demos;
 import org.tendiwa.drawing.TestCanvas;
 import org.tendiwa.drawing.extensions.PieChartTimeProfiler;
 import org.tendiwa.geometry.BoundedCellSet;
 import org.tendiwa.geometry.FiniteCellSet;
 import org.tendiwa.geometry.extensions.CachedCellSet;
-import org.tendiwa.modules.mainModule.ontology.*;
+import org.tendiwa.modules.mainModule.ontology.Grass;
+import org.tendiwa.modules.mainModule.ontology.Ground;
 import org.tendiwa.modules.mainModule.ontology.Water;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.Collection;
 import java.util.Random;
 

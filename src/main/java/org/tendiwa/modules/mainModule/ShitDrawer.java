@@ -11,9 +11,9 @@ import java.util.Optional;
 class ShitDrawer {
 	private final World world;
 	private final Location location;
-	private final CoastlineCityGeometry city;
+	private final CityAroundCell city;
 
-	public ShitDrawer(World world, Location location, CoastlineCityGeometry city) {
+	public ShitDrawer(World world, Location location, CityAroundCell city) {
 		this.world = world;
 		this.location = location;
 		this.city = city;

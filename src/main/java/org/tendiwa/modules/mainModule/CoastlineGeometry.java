@@ -1,8 +1,6 @@
 package org.tendiwa.modules.mainModule;
 
-import com.google.inject.Inject;
 import org.tendiwa.core.World;
-import org.tendiwa.core.meta.Cell;
 import org.tendiwa.core.worlds.Genesis;
 import org.tendiwa.drawing.TestCanvas;
 import org.tendiwa.drawing.extensions.PieChartTimeProfiler;
@@ -21,7 +19,7 @@ public final class CoastlineGeometry implements Genesis {
 
 	CellSet water;
 	PathNetwork pathsBetweenCities;
-	Collection<CoastlineCityGeometry> cities = new LinkedHashSet<>();
+	Collection<CityAroundCell> cities = new LinkedHashSet<>();
 
 
 	public static void main(String[] args) {
@@ -33,10 +31,9 @@ public final class CoastlineGeometry implements Genesis {
 				new TestCanvas(1, config.worldSize),
 				new PieChartTimeProfiler()
 			)
-		);
+		).run();
 	}
 
-	@Inject
 	CoastlineGeometry(
 		CoastlineGeometryConfig config,
 		ProgressDrawing progress
@@ -44,7 +41,6 @@ public final class CoastlineGeometry implements Genesis {
 		this.config = config;
 		this.progress = progress;
 		this.worldSize = config.worldSize;
-		run();
 	}
 
 	@Override
@@ -54,13 +50,20 @@ public final class CoastlineGeometry implements Genesis {
 
 	private void run() {
 		water = new Water();
-
 		progress.drawTerrain(water);
 		Rectangle cityCentersRectangle = config.worldSize.shrink(20);
 		cityCenters()
 			.stream()
 			.filter(cityCentersRectangle::contains)
-			.map(this::cityAroundCell)
+			.map(cell ->
+					new CityAroundCell(
+						cell,
+						config,
+						progress,
+						worldSize,
+						water
+					)
+			)
 			.forEach(cities::add);
 		CellSet citiesCells = cities.stream()
 			.map(city -> city.network.getFullCycleGraph())
@@ -75,16 +78,6 @@ public final class CoastlineGeometry implements Genesis {
 			config,
 			worldSize,
 			citiesCells,
-			water
-		);
-	}
-
-	private CoastlineCityGeometry cityAroundCell(Cell cell) {
-		return new CoastlineCityGeometry(
-			config,
-			progress,
-			cell,
-			worldSize,
 			water
 		);
 	}

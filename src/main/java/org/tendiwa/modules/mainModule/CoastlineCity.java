@@ -6,7 +6,8 @@ import org.tendiwa.collections.Collectors;
 import org.tendiwa.core.Location;
 import org.tendiwa.core.World;
 import org.tendiwa.geometry.*;
-import org.tendiwa.geometry.smartMesh.SmartMeshedNetwork;
+import org.tendiwa.geometry.graphs2d.Graph2D;
+import org.tendiwa.geometry.smartMesh.MeshedNetwork;
 import org.tendiwa.modules.mainModule.ontology.Ground;
 import org.tendiwa.settlements.buildings.*;
 import org.tendiwa.settlements.streets.LotStreetAssigner;
@@ -25,12 +26,12 @@ class CoastlineCity {
 	private World world;
 	private final Random random;
 	private Consumer<Segment2D> drawRoad;
-	private CoastlineCityGeometry city;
+	private CityAroundCell city;
 
 	public CoastlineCity(
 		World world,
 		Location location,
-		CoastlineCityGeometry city,
+		CityAroundCell city,
 		Random random
 	) {
 		this.world = world;
@@ -65,9 +66,8 @@ class CoastlineCity {
 			.collect(Collectors.toImmutableSet());
 	}
 
-	private UndirectedGraph<Point2D, Segment2D> rejectExtraRoads(SmartMeshedNetwork mesh) {
-		return NetworkGraphWithHolesInHull.rejectPartOfNetworksBorders(
-			mesh.fullGraph(),
+	private Graph2D rejectExtraRoads(MeshedNetwork mesh) {
+		return new NetworkGraphWithHolesInHull(
 			mesh,
 			0.5,
 			random

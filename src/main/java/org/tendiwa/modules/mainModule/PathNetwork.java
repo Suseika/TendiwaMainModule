@@ -2,12 +2,11 @@ package org.tendiwa.modules.mainModule;
 
 import org.jgrapht.graph.UnmodifiableUndirectedGraph;
 import org.tendiwa.core.meta.Cell;
-import org.tendiwa.drawing.extensions.TimeProfiler;
 import org.tendiwa.geometry.*;
 import org.tendiwa.geometry.extensions.CachedCellSet;
 import org.tendiwa.geometry.extensions.ChebyshovDistanceBuffer;
 import org.tendiwa.geometry.extensions.intershapeNetwork.IntershapeNetwork;
-import org.tendiwa.pathfinding.astar.AStar;
+import org.tendiwa.pathfinding.astar.Path;
 import org.tendiwa.pathfinding.astar.MovementCost;
 
 import java.util.Collection;
@@ -42,13 +41,14 @@ final class PathNetwork {
 		) -> (spaceBetweenCities.contains(to) ? 1 : 100000000) * from.diagonalComponent(to);
 		paths = network.edgeSet()
 			.stream()
-			.map(segment -> pathFromStartToEnd(segment, cost))
+			.map(segment ->
+					new Path(
+						segment.start(),
+						segment.end(),
+						cost
+					)
+			)
 			.collect(Collectors.toList());
-//		pathsBetweenCities = new ArrayList<>(1);
-		TimeProfiler.profiler.saveTime("Paths between cities");
-//		canvas.draw(cellsCloseToCoast, DrawingCellSet.withColor(Color.PINK));
-//		chart.saveTime("Final drawing");
-//		chart.draw();
 	}
 
 	List<List<Cell>> paths() {
@@ -79,9 +79,5 @@ final class PathNetwork {
 			),
 			worldSize
 		);
-	}
-
-	private List<Cell> pathFromStartToEnd(CellSegment segment, MovementCost cost) {
-		return new AStar(cost).path(segment.start(), segment.end());
 	}
 }

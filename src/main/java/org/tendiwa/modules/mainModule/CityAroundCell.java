@@ -4,9 +4,8 @@ import org.tendiwa.core.meta.Cell;
 import org.tendiwa.geometry.*;
 import org.tendiwa.geometry.extensions.CachedCellSet;
 import org.tendiwa.geometry.extensions.ChebyshovDistanceBufferBorder;
-import org.tendiwa.geometry.graphs2d.Cycle2D;
-import org.tendiwa.geometry.graphs2d.Mesh2D;
-import org.tendiwa.geometry.smartMesh.SmartMeshedNetwork;
+import org.tendiwa.geometry.graphs2d.Graph2D;
+import org.tendiwa.geometry.smartMesh.MeshedNetwork;
 import org.tendiwa.geometry.smartMesh.MeshedNetworkBuilder;
 import org.tendiwa.pathfinding.dijkstra.PathTable;
 import org.tendiwa.settlements.cityBounds.CityBounds;
@@ -22,7 +21,7 @@ final class CityAroundCell {
 	private final Cell citySeed;
 	private final Rectangle worldSize;
 
-	SmartMeshedNetwork network;
+	MeshedNetwork network;
 	Set<RectangleWithNeighbors> buildingPlaces;
 	Stream<Chain2D> streets;
 	FiniteCellSet exits;
@@ -43,7 +42,7 @@ final class CityAroundCell {
 			)
 		);
 		progress.drawCityBackground(citySeed, cityShape);
-		Cycle2D outerCycle = CityBounds.create(
+		Graph2D outerCycle = CityBounds.create(
 			cityShape,
 			citySeed,
 			cityRadiusModified()
@@ -61,7 +60,7 @@ final class CityAroundCell {
 		exits = exitsSet();
 		buildingPlaces = RectangularBuildingLots.placeInside(network);
 		progress.drawLots(buildingPlaces);
-		streets = DetectedStreets.toChain2DStream(network.fullGraph());
+		streets = DetectedStreets.toChain2DStream(network);
 	}
 
 	private final class CityShape extends BoundedCellSetWr {

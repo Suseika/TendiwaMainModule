@@ -8,9 +8,11 @@ import org.tendiwa.drawing.DrawableRectangleWithNeighbors;
 import org.tendiwa.drawing.DrawableWorld;
 import org.tendiwa.drawing.TestCanvas;
 import org.tendiwa.drawing.extensions.DrawableCell;
+import org.tendiwa.drawing.extensions.DrawableGraph2D;
 import org.tendiwa.drawing.extensions.DrawablePolygon;
 import org.tendiwa.drawing.extensions.TimeProfiler;
 import org.tendiwa.geometry.*;
+import org.tendiwa.geometry.graphs2d.Graph2D;
 import org.tendiwa.settlements.utils.RectangleWithNeighbors;
 
 import javax.inject.Inject;
@@ -67,9 +69,9 @@ final class ProgressDrawing {
 		);
 	}
 
-	void drawCityBounds(Polygon cityBounds) {
+	void drawCityBounds(Graph2D cityBounds) {
 		canvas.draw(
-			new DrawablePolygon.Thin(
+			new DrawableGraph2D.Thin(
 				cityBounds,
 				Color.red
 			)

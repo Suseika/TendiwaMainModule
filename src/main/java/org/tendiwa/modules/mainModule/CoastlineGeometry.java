@@ -66,7 +66,7 @@ public final class CoastlineGeometry implements Genesis {
 			)
 			.forEach(cities::add);
 		CellSet citiesCells = cities.stream()
-			.map(city -> city.network.getFullCycleGraph())
+			.map(city -> city.network.outerHull())
 			.map(ShapeFromOutline::from)
 			.flatMap(BoundedCellSet::stream)
 			.collect(CellSet.toCellSet());

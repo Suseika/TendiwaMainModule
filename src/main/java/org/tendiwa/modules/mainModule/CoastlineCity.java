@@ -1,11 +1,13 @@
 package org.tendiwa.modules.mainModule;
 
 import com.google.common.collect.ImmutableSet;
-import org.jgrapht.UndirectedGraph;
 import org.tendiwa.collections.Collectors;
 import org.tendiwa.core.Location;
 import org.tendiwa.core.World;
-import org.tendiwa.geometry.*;
+import org.tendiwa.geometry.BasicCellSegment;
+import org.tendiwa.geometry.Chain2D;
+import org.tendiwa.geometry.Point2D;
+import org.tendiwa.geometry.Segment2D;
 import org.tendiwa.geometry.graphs2d.Graph2D;
 import org.tendiwa.geometry.smartMesh.MeshedNetwork;
 import org.tendiwa.modules.mainModule.ontology.Ground;
@@ -50,7 +52,7 @@ class CoastlineCity {
 	}
 
 	void placeContents() {
-		UndirectedGraph<Point2D, Segment2D> actualRoadGraph = rejectExtraRoads(city.network);
+		Graph2D actualRoadGraph = rejectExtraRoads(city.network);
 		Set<Chain2D> streets = detectStreets(actualRoadGraph);
 		UrbanPlanner urbanPlanner = createUrbanPlanner(streets);
 		City.builder()
@@ -60,7 +62,7 @@ class CoastlineCity {
 		drawRoads();
 	}
 
-	private ImmutableSet<Chain2D> detectStreets(UndirectedGraph<Point2D, Segment2D> actualRoadGraph) {
+	private ImmutableSet<Chain2D> detectStreets(Graph2D actualRoadGraph) {
 		return DetectedStreets
 			.toChain2DStream(actualRoadGraph)
 			.collect(Collectors.toImmutableSet());
@@ -98,8 +100,6 @@ class CoastlineCity {
 	}
 
 	private void drawRoads() {
-		city.network.meshes().stream()
-			.flatMap(cell -> cell.edgeSet().stream())
-			.forEach(drawRoad);
+		city.network.edgeSet().forEach(drawRoad);
 	}
 }
